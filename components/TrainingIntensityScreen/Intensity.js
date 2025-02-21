@@ -1,48 +1,41 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
-import usePersonContext from "../../hooks/usePersonContext";
-import { personActions } from "../../context/person";
-export default function Target({
+export default function Intensity({
   heading,
   description,
-  status,
   selected,
+  status,
   onPress,
 }) {
-  const [state, dispatch] = usePersonContext();
-  const { target } = state;
-  function handleSetSelected() {
-    onPress(target === status ? "" : status);
-  }
   return (
     <Pressable
       style={({ pressed }) =>
         pressed
-          ? [styles.targetContainer, { opacity: 0.7 }]
+          ? [styles.intensityContainer, { opacity: 0.7 }]
           : [
-              styles.targetContainer,
+              styles.intensityContainer,
               selected
                 ? { borderColor: colors.primaryColor, borderWidth: 1 }
                 : {},
             ]
       }
-      onPress={handleSetSelected}
+      onPress={onPress}
     >
       <Text
         style={[
-          styles.targetHeading,
+          styles.intensityHeading,
           selected ? { color: colors.primaryColor } : {},
         ]}
       >
         {heading}
       </Text>
-      <Text style={styles.targetDescription}>{description}</Text>
+      <Text style={styles.intensityDescription}>{description}</Text>
     </Pressable>
   );
 }
 
-const styles = StyleSheet.create({
-  targetContainer: {
+const styles = StyleSheet({
+  intensityContainer: {
     width: "85%",
     padding: 20,
     borderRadius: 40,
@@ -58,12 +51,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "transparent",
   },
-  targetHeading: {
+  intensityHeading: {
     textAlign: "center",
     fontSize: 20,
     color: colors.textColor,
   },
-  targetDescription: {
+  intensityDescription: {
     textAlign: "center",
     fontSize: 16,
     color: colors.descriptionTextColor,

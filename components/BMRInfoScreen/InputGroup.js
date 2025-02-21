@@ -1,12 +1,13 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
-import { useState } from "react";
 
 export default function InputGroup({
   styleExtra,
   placeHolder = "placeholder...",
-  maxLength = 2,
+  maxLength = 3,
   label,
+  value,
+  onChangeText,
 }) {
   return (
     <View style={[styles.inputGroup, styleExtra]}>
@@ -16,6 +17,8 @@ export default function InputGroup({
         placeholder={placeHolder}
         keyboardType="numeric"
         maxLength={maxLength}
+        onChangeText={onChangeText}
+        value={value}
       />
     </View>
   );

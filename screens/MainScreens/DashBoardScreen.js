@@ -1,4 +1,3 @@
-import { useLayoutEffect } from "react";
 import {
   SafeAreaView,
   View,
@@ -12,9 +11,6 @@ import Calendar from "../../components/DashBoardScreen/Calendar";
 import ProgressBoard from "../../components/DashBoardScreen/ProgressBoard";
 import StatusWaterContainer from "../../components/DashBoardScreen/StatusWaterContainer";
 export default function DashBoardScreen({ navigation }) {
-  useLayoutEffect(() => {
-    navigation.setOptions({});
-  }, []);
   return (
     <SafeAreaView style={styles.screenContainer}>
       <ScrollView style={styles.screenContainer}>

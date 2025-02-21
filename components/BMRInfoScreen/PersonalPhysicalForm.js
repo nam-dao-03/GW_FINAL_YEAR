@@ -1,36 +1,56 @@
 import { StyleSheet, View, Text, TextInput } from "react-native";
 import DropdownGender from "./DropdownGender";
 import colors from "../../utils/Colors";
-
+import usePersonContext from "../../hooks/usePersonContext";
+import { personActions } from "../../context/person";
 export default function PersonalPhysicalForm() {
+  const [state, dispatch] = usePersonContext();
+  function changeHeightInput(value) {
+    const validValue = value.trim();
+    personActions.changeHeightInput(validValue, dispatch);
+  }
+  function changeWeightInput(value) {
+    const validValue = value.trim();
+    personActions.changeWeightInput(validValue, dispatch);
+  }
+  function changeAgeInput(value) {
+    const validValue = value.trim();
+    personActions.changeAgeInput(validValue, dispatch);
+  }
   return (
     <View style={styles.formContainer}>
       <Text style={styles.label}>Gender</Text>
       <DropdownGender />
-      <Text style={[styles.label, { marginTop: 10 }]}>Height</Text>
+      <Text style={[styles.label, { marginTop: 10 }]}>Height (cm)</Text>
       <TextInput
         style={styles.heightInput}
         keyboardType="numeric"
-        maxLength={2}
-        placeholder="Height"
+        maxLength={5}
+        placeholder="Height (cm)"
+        value={state.height}
+        onChangeText={changeHeightInput}
       />
       <View style={{ flexDirection: "row", gap: 20, marginTop: 10 }}>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Weight</Text>
+          <Text style={styles.label}>Weight (kg)</Text>
           <TextInput
             style={styles.heightInput}
             keyboardType="decimal-pad"
-            maxLength={4}
-            placeholder="Height"
+            maxLength={5}
+            placeholder="Weight (kg)"
+            value={state.weight}
+            onChangeText={changeWeightInput}
           />
         </View>
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Weight</Text>
+          <Text style={styles.label}>Age</Text>
           <TextInput
             style={styles.heightInput}
             keyboardType="numeric"
             maxLength={2}
             placeholder="Age"
+            value={state.age}
+            onChangeText={changeAgeInput}
           />
         </View>
       </View>

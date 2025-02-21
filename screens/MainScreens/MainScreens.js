@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { lazy, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import DashBoardScreen from "./DashBoardScreen";
-import FavoriteScreen from "./FavoriteScreen";
 import UserScreen from "./UserScreen";
 import colors from "../../utils/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { StyleSheet } from "react-native";
+import ManageFavoritesScreen from "./ManageFavoritesScreen/ManageFavoritesScree";
 const BottomTab = createBottomTabNavigator();
 
 export default function MainScreens({ navigation }) {
@@ -29,8 +30,8 @@ export default function MainScreens({ navigation }) {
         }}
       />
       <BottomTab.Screen
-        name="FavoriteScreen"
-        component={FavoriteScreen}
+        name="ManageFavoritesScreen"
+        component={ManageFavoritesScreen}
         options={{
           headerShown: false,
           tabBarLabel: "Favorite",
@@ -55,3 +56,5 @@ export default function MainScreens({ navigation }) {
     </BottomTab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({});

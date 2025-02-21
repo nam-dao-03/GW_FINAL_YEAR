@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import colors from "../../utils/Colors";
-
+import usePersonContext from "../../hooks/usePersonContext";
+import { personActions } from "../../context/person";
 const data = [
-  { label: "Male", value: "Male" },
-  { label: "Female", value: "Female" },
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
 ];
 
 const DropdownGender = () => {
-  const [value, setValue] = useState(null);
+  const [state, dispatch] = usePersonContext();
+  function changeGenderInput(value) {
+    personActions.changeGenderInput(value, dispatch);
+  }
   const [isFocus, setIsFocus] = useState(false);
 
   return (
@@ -17,24 +21,21 @@ const DropdownGender = () => {
       <Dropdown
         style={[
           styles.dropdown,
-          isFocus && { borderColor: colors.secondaryColor },
+          isFocus && { borderColor: colors.primaryColor },
         ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data}
-        search
         maxHeight={300}
         labelField="label"
         valueField="value"
         placeholder={!isFocus ? "Select Gender" : "..."}
-        searchPlaceholder="Search..."
-        value={value}
+        value={state.gender}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
-          setValue(item.value);
+          changeGenderInput(item.value);
           setIsFocus(false);
         }}
       />
@@ -64,9 +65,5 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 20,
   },
 });

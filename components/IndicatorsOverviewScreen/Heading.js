@@ -10,5 +10,6 @@ const styles = StyleSheet.create({
     color: colors.textColor,
     marginHorizontal: 20,
     marginVertical: 30,
+    lineHeight: 35,
   },
 });

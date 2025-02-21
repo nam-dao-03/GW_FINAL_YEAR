@@ -1,0 +1,50 @@
+import { StyleSheet, View, Text } from "react-native";
+import Modal from "react-native-modal";
+import colors from "../../utils/Colors";
+import AddTitle from "./AddTitle";
+import { useNavigation } from "@react-navigation/native";
+export default function ModalAdd({ isVisible, onBackdropPress }) {
+  const navigation = useNavigation();
+  return (
+    <Modal
+      isVisible={isVisible}
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
+      onBackdropPress={onBackdropPress}
+      style={styles.modalStyle}
+    >
+      <View style={styles.modalContainer}>
+        <AddTitle
+          onPress={() => {
+            onBackdropPress();
+            navigation.navigate("AddDishScreen");
+          }}
+        >
+          Add Dish
+        </AddTitle>
+        <AddTitle
+          onPress={() => {
+            onBackdropPress();
+            navigation.navigate("AddFoodScreen");
+          }}
+        >
+          Add Food
+        </AddTitle>
+      </View>
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  modalStyle: {
+    justifyContent: "flex-end",
+    margin: 0,
+  },
+  modalContainer: {
+    backgroundColor: colors.whiteColor,
+    width: "100%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+});
