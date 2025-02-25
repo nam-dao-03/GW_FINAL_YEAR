@@ -20,8 +20,10 @@
     "react-native": "0.76.7",
     "react-native-element-dropdown": "^2.12.4",
     "react-native-modal": "^13.0.1",
+    "react-native-pager-view": "6.5.1",
     "react-native-progress": "^5.0.1",
-    "react-native-pager-view": "6.5.1"
+    "react-native-reanimated": "~3.16.1",
+    "react-native-ui-datepicker": "^3.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

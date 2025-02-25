@@ -12,7 +12,7 @@ const data = [
 const DropdownGender = () => {
   const [state, dispatch] = usePersonContext();
   function changeGenderInput(value) {
-    personActions.changeGenderInput(value, dispatch);
+    dispatch(personActions.changeGenderInput(value));
   }
   const [isFocus, setIsFocus] = useState(false);
 

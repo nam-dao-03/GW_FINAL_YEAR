@@ -5,6 +5,7 @@ export function IngredientContainer({
   ingredientLabel,
   ingredientConsumedValue,
   ingredientTotalValue,
+  progress,
   extraStyle,
 }) {
   return (
@@ -12,7 +13,7 @@ export function IngredientContainer({
       <Text style={styles.ingredientLabel}>{ingredientLabel}</Text>
       <View style={styles.progressBar}>
         <Progress.Bar
-          progress={0.4}
+          progress={progress}
           height={3}
           borderColor={colors.remainingProgressColor}
           unfilledColor={colors.remainingProgressColor}

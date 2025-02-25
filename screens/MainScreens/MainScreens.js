@@ -9,12 +9,6 @@ import ManageFavoritesScreen from "./ManageFavoritesScreen/ManageFavoritesScree"
 const BottomTab = createBottomTabNavigator();
 
 export default function MainScreens({ navigation }) {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-      gestureEnabled: false,
-    });
-  }, []);
   return (
     <BottomTab.Navigator initialRouteName="DashBoardScreen">
       <BottomTab.Screen
@@ -22,7 +16,7 @@ export default function MainScreens({ navigation }) {
         component={DashBoardScreen}
         options={{
           headerShown: false,
-          tabBarLabel: "Dash Board",
+          tabBarLabel: "DashBoard",
           tabBarActiveTintColor: colors.primaryColor,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />

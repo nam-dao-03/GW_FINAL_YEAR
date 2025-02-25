@@ -4,99 +4,94 @@ class WaterIntake {
   static ID_COLUMN = "waterIntakeId";
   static DATE_COLUMN = "dateWaterIntake";
   static CUP_DRUNK_COLUMN = "cupDrunk";
-  static TOTAL_CUPS_COLUMN = "totalCups";
+  static WATER_PER_CUP = "waterPerCup";
   static WATER_INTAKE_VOLUME_COLUMN = "waterIntakeVolume";
 
   static CREATE_WATER_INTAKE_TABLE_QUERY = `
     CREATE TABLE IF NOT EXISTS ${WaterIntake.TABLE_NAME} (
-    ${WaterIntake.ID_COLUMN} INTEGER PRIMARY KEY AUTOINCREMENT,
-    ${User.ID_COLUMN} INTEGER,
+    ${WaterIntake.ID_COLUMN} TEXT PRIMARY KEY,
+    ${User.ID_COLUMN} TEXT,
     ${WaterIntake.DATE_COLUMN} TEXT,
     ${WaterIntake.CUP_DRUNK_COLUMN} INTEGER,
-    ${WaterIntake.TOTAL_CUPS_COLUMN} INTEGER,
+    ${WaterIntake.WATER_PER_CUP} INTEGER,
     ${WaterIntake.WATER_INTAKE_VOLUME_COLUMN} INTEGER,
     FOREIGN KEY (${User.ID_COLUMN}) REFERENCES 
     ${User.TABLE_NAME}(${User.ID_COLUMN})
     );
 `;
-  #waterIntakeId;
-  #userId;
-  #dateWaterIntake;
-  #cupDrunk;
-  #totalCups;
-  #waterIntakeVolume;
   constructor(
     waterIntakeId,
     userId,
     dateWaterIntake,
     cupDrunk,
-    totalCups,
+    waterPerCup,
     waterIntakeVolume
   ) {
-    this.#waterIntakeId = waterIntakeId;
-    this.#userId = userId;
-    this.#dateWaterIntake = dateWaterIntake;
-    this.#cupDrunk = cupDrunk;
-    this.#totalCups = totalCups;
-    this.#waterIntakeVolume = waterIntakeVolume;
+    this.waterIntakeId = waterIntakeId;
+    this.userId = userId;
+    this.dateWaterIntake = dateWaterIntake;
+    this.cupDrunk = cupDrunk;
+    this.waterPerCup = waterPerCup;
+    this.waterIntakeVolume = waterIntakeVolume;
   }
   // Phương thức lấy giá trị waterIntakeId
   getWaterIntakeId() {
-    return this.#waterIntakeId;
+    return this.waterIntakeId;
   }
 
   // Phương thức đặt giá trị waterIntakeId
   setWaterIntakeId(waterIntakeId) {
-    this.#waterIntakeId = waterIntakeId;
+    this.waterIntakeId = waterIntakeId;
   }
 
   // Phương thức lấy giá trị userId
   getUserId() {
-    return this.#userId;
+    return this.userId;
   }
 
   // Phương thức đặt giá trị userId
   setUserId(userId) {
-    this.#userId = userId;
+    this.userId = userId;
   }
 
   // Phương thức lấy giá trị dateWaterIntake
   getDateWaterIntake() {
-    return this.#dateWaterIntake;
+    return this.dateWaterIntake;
   }
 
   // Phương thức đặt giá trị dateWaterIntake
   setDateWaterIntake(dateWaterIntake) {
-    this.#dateWaterIntake = dateWaterIntake;
+    this.dateWaterIntake = dateWaterIntake;
   }
 
   // Phương thức lấy giá trị cupDrunk
   getCupDrunk() {
-    return this.#cupDrunk;
+    return this.cupDrunk;
   }
 
   // Phương thức đặt giá trị cupDrunk
   setCupDrunk(cupDrunk) {
-    this.#cupDrunk = cupDrunk;
+    this.cupDrunk = cupDrunk;
   }
 
-  // Phương thức lấy giá trị totalCups
-  getTotalCups() {
-    return this.#totalCups;
+  getWaterPerCup() {
+    return this.waterPerCup;
   }
 
-  // Phương thức đặt giá trị totalCups
-  setTotalCups(totalCups) {
-    this.#totalCups = totalCups;
+  setWaterPerCup(waterPerCup) {
+    this.waterPerCup = waterPerCup;
   }
 
   getWaterIntakeVolume() {
-    return this.#waterIntakeVolume;
+    return this.waterIntakeVolume;
   }
 
   setWaterIntakeVolume(waterIntakeVolume) {
-    this.#waterIntakeVolume = waterIntakeVolume;
+    this.waterIntakeVolume = waterIntakeVolume;
   }
 }
 
-export { WaterIntake };
+function createWaterIntakeInstance(newWaterIntake) {
+  return Object.assign(new WaterIntake(), newWaterIntake);
+}
+export { WaterIntake, createWaterIntakeInstance };

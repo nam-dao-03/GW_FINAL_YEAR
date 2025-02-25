@@ -1,5 +1,6 @@
 import { SafeAreaView, View, Text, StyleSheet, Pressable } from "react-native";
 import colors from "../../../../utils/Colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useLayoutEffect, memo, useState, useCallback } from "react";
 import PressableIcon from "../../../../components/PressableIcon";
 import ModalAdd from "../../../../components/FavoriteScreen/ModalAdd";
@@ -51,13 +52,12 @@ export default function FavoriteScreen({ navigation }) {
       <View style={styles.header}>
         <Text style={styles.heading}>Favorites</Text>
         <PressableIcon
-          name="add"
-          size={24}
-          color={colors.whiteColor}
           onPress={() => {
             setIsVisibleModal(true);
           }}
-        />
+        >
+          <Ionicons name="add" size={24} color={colors.whiteColor} />
+        </PressableIcon>
       </View>
       <ModalAdd
         isVisible={isVisibleModal}

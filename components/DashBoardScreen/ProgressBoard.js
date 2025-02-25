@@ -3,16 +3,72 @@ import * as Progress from "react-native-progress";
 import colors from "../../utils/Colors";
 import CaloriesContainer from "./CaloriesContainer";
 import { IngredientContainer } from "./IngredientContainer";
+import { calculateProgress } from "../../utils/Indicators";
+import { useMemo } from "react";
 const NEEDED_CALORIES_WIDTH = 140;
 const CALORIES_CONTAINER_HEIGHT_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH;
 const CALORIES_CONTAINER_WIDTH_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH * 0.6;
-export default function ProgressBoard() {
+export default function ProgressBoard({
+  consumedCalories = 1,
+  targetCalories = 1,
+  caloriesBurned = 1,
+  targetCarbs = 1,
+  targetProtein = 1,
+  targetFat = 1,
+  consumedCarbs = 1,
+  consumedProtein = 1,
+  consumedFat = 1,
+}) {
+  const progressCalories = calculateProgress(
+    consumedCalories,
+    targetCalories + caloriesBurned
+  );
+  const progressCarbs = calculateProgress(consumedCarbs, targetCarbs);
+  const progressProtein = calculateProgress(consumedProtein, targetProtein);
+  const progressFat = calculateProgress(consumedFat, targetFat);
+  const ingredientContainerList = useMemo(
+    () => [
+      {
+        ingredientLabel: "Carbs",
+        ingredientConsumedValue: consumedCarbs,
+        ingredientTotalValue: targetCarbs,
+        progress: progressCarbs,
+        extraStyle: styles.ingredientContainerExtraStyle,
+      },
+      {
+        ingredientLabel: "Protein",
+        ingredientConsumedValue: consumedProtein,
+        ingredientTotalValue: targetProtein,
+        progress: progressProtein,
+        extraStyle: styles.ingredientContainerExtraStyle,
+      },
+      {
+        ingredientLabel: "Fat",
+        ingredientConsumedValue: consumedFat,
+        ingredientTotalValue: targetFat,
+        progress: progressFat,
+        extraStyle: styles.ingredientContainerExtraStyle,
+      },
+    ],
+    [
+      styles,
+      consumedCarbs,
+      targetCarbs,
+      progressCarbs,
+      consumedProtein,
+      targetProtein,
+      progressProtein,
+      consumedFat,
+      targetFat,
+      progressFat,
+    ]
+  );
   return (
     <View style={styles.boardContainer}>
       <View style={styles.caloriesBoard}>
         <CaloriesContainer
           caloriesLabel="Consumed"
-          caloriesValue={0}
+          caloriesValue={consumedCalories}
           extraStyle={{ width: "25%" }}
         />
         <View style={styles.neededCalories}>
@@ -21,39 +77,31 @@ export default function ProgressBoard() {
             color={colors.usedProgressColor}
             unfilledColor={colors.remainingProgressColor}
             borderWidth={0}
-            progress={0.125}
+            progress={progressCalories}
           />
           <CaloriesContainer
             caloriesLabel="Needed"
-            caloriesValue={2000}
+            caloriesValue={targetCalories + caloriesBurned}
             extraStyle={styles.caloriesContainerInNeededContainer}
           />
         </View>
         <CaloriesContainer
           caloriesLabel="Burned"
-          caloriesValue={0}
+          caloriesValue={caloriesBurned}
           extraStyle={{ width: "25%" }}
         />
       </View>
       <View style={styles.otherIngredientBoard}>
-        <IngredientContainer
-          ingredientLabel="Carbs"
-          ingredientConsumedValue={0}
-          ingredientTotalValue={208}
-          extraStyle={styles.ingredientContainerExtraStyle}
-        />
-        <IngredientContainer
-          ingredientLabel="Protein"
-          ingredientConsumedValue={0}
-          ingredientTotalValue={208}
-          extraStyle={styles.ingredientContainerExtraStyle}
-        />
-        <IngredientContainer
-          ingredientLabel="Fat"
-          ingredientConsumedValue={0}
-          ingredientTotalValue={79}
-          extraStyle={styles.ingredientContainerExtraStyle}
-        />
+        {ingredientContainerList.map((item, index) => (
+          <IngredientContainer
+            key={index}
+            ingredientLabel={item.ingredientLabel}
+            ingredientConsumedValue={item.ingredientConsumedValue}
+            ingredientTotalValue={item.ingredientTotalValue}
+            progress={item.progress}
+            extraStyle={item.extraStyle}
+          />
+        ))}
       </View>
     </View>
   );

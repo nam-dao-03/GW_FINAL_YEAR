@@ -1,3 +1,4 @@
+import { CALORIES_PER_KILOGRAM, DAY_PER_WEEK } from "./constants";
 function calculatorBMI(weight, height) {
   const BMI = weight / (height / 100) ** 2;
   return BMI.toFixed(2);
@@ -73,7 +74,7 @@ function getTDEEFactor(minutesPerDay, daysPerWeek) {
 }
 
 function calculatorTDEE(BMR, TDEEFactor) {
-  return Math.floor(BMR * TDEEFactor);
+  return Math.ceil(BMR * TDEEFactor);
 }
 
 function calculateWaterIntake(weight, exerciseMinutes) {
@@ -86,6 +87,25 @@ function calculateWaterIntake(weight, exerciseMinutes) {
   return Math.floor(totalWaterIntake);
 }
 
+function calculateAdditionalCalories(kgToGainPerDay) {
+  const calories = (CALORIES_PER_KILOGRAM * kgToGainPerDay) / DAY_PER_WEEK;
+  return calories;
+}
+
+function targetDay(targetWeight, weight, weightPerWeek) {
+  const weightPerDay = weightPerWeek / DAY_PER_WEEK;
+  const numberOfDay = Math.ceil((targetWeight - weight) / weightPerDay);
+  return Math.abs(numberOfDay);
+}
+
+function calculateProgress(progress, target) {
+  return Number((progress / target).toFixed(3));
+}
+
+function calculateWaterVolumeConsumed(waterPerCup, cupDrunk) {
+  return waterPerCup * cupDrunk;
+}
+
 export {
   calculatorBMI,
   classifyBMI,
@@ -93,4 +113,8 @@ export {
   getTDEEFactor,
   calculatorTDEE,
   calculateWaterIntake,
+  calculateAdditionalCalories,
+  targetDay,
+  calculateProgress,
+  calculateWaterVolumeConsumed,
 };

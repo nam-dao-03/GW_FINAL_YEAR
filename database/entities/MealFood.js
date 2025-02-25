@@ -6,43 +6,39 @@ class MealFood {
 
   static CREATE_MEAL_FOOD_TABLE_QUERY = `
   CREATE TABLE IF NOT EXISTS ${MealFood.TABLE_NAME} (
-    ${MealFood.ID_COLUMN} INTEGER PRIMARY KEY AUTOINCREMENT,
-    ${Meal.ID_COLUMN} INTEGER,
-    ${Food.ID_COLUMN} INTEGER,
+    ${MealFood.ID_COLUMN} TEXT PRIMARY KEY,
+    ${Meal.ID_COLUMN} TEXT,
+    ${Food.ID_COLUMN} TEXT,
     FOREIGN KEY (${Meal.ID_COLUMN}) REFERENCES ${Meal.TABLE_NAME}(${Meal.ID_COLUMN}) ON DELETE CASCADE,
     FOREIGN KEY (${Food.ID_COLUMN}) REFERENCES ${Food.TABLE_NAME}(${Food.ID_COLUMN}) ON DELETE CASCADE
   );
 `;
 
-  #mealFoodId;
-  #mealId;
-  #foodId;
-
   constructor(mealFoodId, mealId, foodId) {
-    this.#mealFoodId = mealFoodId;
-    this.#mealId = mealId;
-    this.#foodId = foodId;
+    this.mealFoodId = mealFoodId;
+    this.mealId = mealId;
+    this.foodId = foodId;
   }
 
   getMealFoodId() {
-    return this.#mealFoodId;
+    return this.mealFoodId;
   }
   setMealFoodId(value) {
-    this.#mealFoodId = value;
+    this.mealFoodId = value;
   }
 
   getMealId() {
-    return this.#mealId;
+    return this.mealId;
   }
   setMealId(value) {
-    this.#mealId = value;
+    this.mealId = value;
   }
 
   getFoodId() {
-    return this.#foodId;
+    return this.foodId;
   }
   setFoodId(value) {
-    this.#foodId = value;
+    this.foodId = value;
   }
 }
 

@@ -6,7 +6,6 @@ const SET_HEIGHT_INPUT = "set_height_input";
 const SET_AGE_INPUT = "set_age_input";
 const SET_TARGET_INPUT = "set_target_input";
 const SET_TARGET_WEIGHT_INPUT = "set_target_weight_input";
-const SET_TRAINING_INTENSITY_INPUT = "set_training_intensity_input";
 
 export {
   SET_MINUTES_INPUT,
@@ -17,5 +16,4 @@ export {
   SET_AGE_INPUT,
   SET_TARGET_INPUT,
   SET_TARGET_WEIGHT_INPUT,
-  SET_TRAINING_INTENSITY_INPUT,
 };

@@ -16,8 +16,8 @@ class DailyNutrition {
   static DATE_COLUMN = "dateDailyNutrition";
   static CREATE_DAILY_NUTRITION_TABLE_QUERY = `
     CREATE TABLE IF NOT EXISTS ${DailyNutrition.TABLE_NAME} (
-    ${DailyNutrition.ID_COLUMN} INTEGER PRIMARY KEY AUTOINCREMENT,
-    ${User.ID_COLUMN} INTEGER,
+    ${DailyNutrition.ID_COLUMN} TEXT PRIMARY KEY,
+    ${User.ID_COLUMN} TEXT,
     ${DailyNutrition.WEIGHT_COLUMN} REAL,
     ${DailyNutrition.HEIGHT_COLUMN} REAL,
     ${DailyNutrition.BMI_COLUMN} REAL,
@@ -33,20 +33,6 @@ class DailyNutrition {
     FOREIGN KEY (${User.ID_COLUMN}) REFERENCES ${User.TABLE_NAME}(${User.ID_COLUMN})
     );
 `;
-  #dailyNutritionId;
-  #userId;
-  #weight;
-  #height;
-  #bmi;
-  #targetCalories;
-  #targetCarbs;
-  #targetFat;
-  #targetProtein;
-  #consumedCalories;
-  #consumedCarbs;
-  #consumedFat;
-  #consumedProtein;
-  #date;
   constructor(
     dailyNutritionId,
     userId,
@@ -55,126 +41,146 @@ class DailyNutrition {
     bmi,
     targetCalories,
     targetCarbs,
-    targetFat,
     targetProtein,
+    targetFat,
     consumedCalories,
     consumedCarbs,
-    consumedFat,
     consumedProtein,
-    date
+    consumedFat,
+    dateDailyNutrition
   ) {
-    this.#dailyNutritionId = dailyNutritionId;
-    this.#userId = userId;
-    this.#weight = weight;
-    this.#height = height;
-    this.#bmi = bmi;
-    this.#targetCalories = targetCalories;
-    this.#targetCarbs = targetCarbs;
-    this.#targetFat = targetFat;
-    this.#targetProtein = targetProtein;
-    this.#consumedCalories = consumedCalories;
-    this.#consumedCarbs = consumedCarbs;
-    this.#consumedFat = consumedFat;
-    this.#consumedProtein = consumedProtein;
-    this.#date = date;
+    this.dailyNutritionId = dailyNutritionId;
+    this.userId = userId;
+    this.weight = weight;
+    this.height = height;
+    this.bmi = bmi;
+    this.targetCalories = targetCalories;
+    this.targetCarbs = targetCarbs;
+    this.targetFat = targetFat;
+    this.targetProtein = targetProtein;
+    this.consumedCalories = consumedCalories;
+    this.consumedCarbs = consumedCarbs;
+    this.consumedFat = consumedFat;
+    this.consumedProtein = consumedProtein;
+    this.dateDailyNutrition = dateDailyNutrition;
   }
   // Getters và Setters
   getDailyNutritionId() {
-    return this.#dailyNutritionId;
+    return this.dailyNutritionId;
   }
   setDailyNutritionId(value) {
-    this.#dailyNutritionId = value;
+    this.dailyNutritionId = value;
   }
 
   getUserId() {
-    return this.#userId;
+    return this.userId;
   }
   setUserId(value) {
-    this.#userId = value;
+    this.userId = value;
   }
 
   getWeight() {
-    return this.#weight;
+    return this.weight;
   }
   setWeight(value) {
-    this.#weight = value;
+    this.weight = value;
   }
 
   getHeight() {
-    return this.#height;
+    return this.height;
   }
   setHeight(value) {
-    this.#height = value;
+    this.height = value;
   }
 
   getBmi() {
-    return this.#bmi;
+    return this.bmi;
   }
   setBmi(value) {
-    this.#bmi = value;
+    this.bmi = value;
   }
 
   getTargetCalories() {
-    return this.#targetCalories;
+    return this.targetCalories;
   }
   setTargetCalories(value) {
-    this.#targetCalories = value;
+    this.targetCalories = value;
   }
 
   getTargetCarbs() {
-    return this.#targetCarbs;
+    return this.targetCarbs;
   }
   setTargetCarbs(value) {
-    this.#targetCarbs = value;
+    this.targetCarbs = value;
   }
 
   getTargetFat() {
-    return this.#targetFat;
+    return this.targetFat;
   }
   setTargetFat(value) {
-    this.#targetFat = value;
+    this.targetFat = value;
   }
 
   getTargetProtein() {
-    return this.#targetProtein;
+    return this.targetProtein;
   }
   setTargetProtein(value) {
-    this.#targetProtein = value;
+    this.targetProtein = value;
   }
 
   getConsumedCalories() {
-    return this.#consumedCalories;
+    return this.consumedCalories;
   }
   setConsumedCalories(value) {
-    this.#consumedCalories = value;
+    this.consumedCalories = value;
   }
 
   getConsumedCarbs() {
-    return this.#consumedCarbs;
+    return this.consumedCarbs;
   }
   setConsumedCarbs(value) {
-    this.#consumedCarbs = value;
+    this.consumedCarbs = value;
   }
 
   getConsumedFat() {
-    return this.#consumedFat;
+    return this.consumedFat;
   }
   setConsumedFat(value) {
-    this.#consumedFat = value;
+    this.consumedFat = value;
   }
 
   getConsumedProtein() {
-    return this.#consumedProtein;
+    return this.consumedProtein;
   }
   setConsumedProtein(value) {
-    this.#consumedProtein = value;
+    this.consumedProtein = value;
   }
 
   getDate() {
-    return this.#date;
+    return this.dateDailyNutrition;
   }
-  setDate(value) {
-    this.#date = value;
+  setDate(dateDailyNutrition) {
+    this.dateDailyNutrition = dateDailyNutrition;
+  }
+  toString() {
+    return `
+      DailyNutrition {
+        dailyNutritionId: ${this.dailyNutritionId},
+        userId: ${this.userId},
+        weight: ${this.weight},
+        height: ${this.height},
+        bmi: ${this.bmi},
+        targetCalories: ${this.targetCalories},
+        targetCarbs: ${this.targetCarbs},
+        targetFat: ${this.targetFat},
+        targetProtein: ${this.targetProtein},
+        consumedCalories: ${this.consumedCalories},
+        consumedCarbs: ${this.consumedCarbs},
+        consumedFat: ${this.consumedFat},
+        consumedProtein: ${this.consumedProtein},
+        date: ${this.dateDailyNutrition}
+      }
+    `;
   }
 }
 

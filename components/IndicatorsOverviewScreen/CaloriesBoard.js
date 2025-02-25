@@ -1,13 +1,19 @@
 import { View, Text, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
-export default function CaloriesBoard({ TDEE, target, targetDay }) {
+export default function CaloriesBoard({
+  TDEE,
+  additionCaloriesNeed,
+  targetDay,
+}) {
   return (
     <View style={styles.caloriesBoard}>
       <View style={styles.caloriesTextContainer}>
-        <Text style={styles.calories}>{TDEE}</Text>
+        <Text style={styles.calories}>
+          {additionCaloriesNeed ? TDEE + additionCaloriesNeed : TDEE}
+        </Text>
         <Text style={styles.caloriesDesc}>Kcal/Day</Text>
       </View>
-      {target === "Maintain weight" ? (
+      {additionCaloriesNeed === 0 ? (
         <Text style={styles.targetDay}>To maintain your healthy weight.</Text>
       ) : (
         <Text style={styles.targetDay}>

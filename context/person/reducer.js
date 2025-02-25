@@ -7,11 +7,10 @@ import {
   SET_AGE_INPUT,
   SET_TARGET_INPUT,
   SET_TARGET_WEIGHT_INPUT,
-  SET_TRAINING_INTENSITY_INPUT,
 } from "./constants.js";
 
 const initialValue = {
-  minutes: "10",
+  minutes: "90",
   days: "7",
   gender: "male",
   height: "175",
@@ -19,7 +18,6 @@ const initialValue = {
   age: "17",
   target: "",
   targetWeight: "",
-  trainingIntensity: "",
 };
 
 function reducer(state, action) {
@@ -72,12 +70,7 @@ function reducer(state, action) {
         targetWeight: action.payload,
       };
     }
-    case SET_TRAINING_INTENSITY_INPUT: {
-      return {
-        ...state,
-        trainingIntensity: action.payload,
-      };
-    }
+
     default: {
       return state;
     }

@@ -7,15 +7,15 @@ export default function PersonalPhysicalForm() {
   const [state, dispatch] = usePersonContext();
   function changeHeightInput(value) {
     const validValue = value.trim();
-    personActions.changeHeightInput(validValue, dispatch);
+    dispatch(personActions.changeHeightInput(validValue));
   }
   function changeWeightInput(value) {
     const validValue = value.trim();
-    personActions.changeWeightInput(validValue, dispatch);
+    dispatch(personActions.changeWeightInput(validValue));
   }
   function changeAgeInput(value) {
     const validValue = value.trim();
-    personActions.changeAgeInput(validValue, dispatch);
+    dispatch(personActions.changeAgeInput(validValue));
   }
   return (
     <View style={styles.formContainer}>

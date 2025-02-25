@@ -10,6 +10,9 @@ export default function ModalAdd({ isVisible, onBackdropPress }) {
       isVisible={isVisible}
       animationIn="slideInUp"
       animationOut="slideOutDown"
+      useNativeDriver={true} // Tăng hiệu suất animation
+      hideModalContentWhileAnimating={true} // Ẩn nội dung khi animation
+      backdropTransitionOutTiming={0}
       onBackdropPress={onBackdropPress}
       style={styles.modalStyle}
     >

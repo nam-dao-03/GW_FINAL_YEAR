@@ -8,8 +8,12 @@ import MainScreens from "./screens/MainScreens/MainScreens";
 import { AppProvider } from "./context/app";
 import { PersonProvider } from "./context/person";
 import colors from "./utils/Colors";
-import TrainingIntensityScreen from "./screens/TrainingIntensityScreen";
+import { getAllDataFormTable, openDatabase } from "./database/databaseHelper";
+import { User } from "./database/entities/User";
 const Stack = createNativeStackNavigator();
+const db = openDatabase();
+const userList = getAllDataFormTable(db, User.TABLE_NAME);
+const initialRouteName = userList.length ? "MainScreens" : "BMRInfoScreen";
 export default function App() {
   return (
     <>
@@ -18,7 +22,7 @@ export default function App() {
         <PersonProvider>
           <NavigationContainer>
             {/* chú ý initialRouteName */}
-            <Stack.Navigator initialRouteName="BMRInfoScreen">
+            <Stack.Navigator initialRouteName={initialRouteName}>
               <Stack.Screen name="BMRInfoScreen" component={BMRInfoScreen} />
               <Stack.Screen
                 name="SetTargetScreen"
@@ -39,12 +43,8 @@ export default function App() {
               <Stack.Screen
                 name="IndicatorsOverviewScreen"
                 component={IndicatorsOverviewScreen}
-              />
-              <Stack.Screen
-                name="TrainingIntensityScreen"
-                component={TrainingIntensityScreen}
                 options={{
-                  title: "Target",
+                  title: "Indicators Overview",
                   headerStyle: {
                     backgroundColor: colors.primaryColor,
                   },
@@ -56,8 +56,16 @@ export default function App() {
                   },
                 }}
               />
+
               {/* Main Screens */}
-              <Stack.Screen name="MainScreens" component={MainScreens} />
+              <Stack.Screen
+                name="MainScreens"
+                component={MainScreens}
+                options={{
+                  headerShown: false,
+                  gestureEnabled: false,
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </PersonProvider>

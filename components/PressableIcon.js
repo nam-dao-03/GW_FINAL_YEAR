@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-export default function PressableIcon({ onPress, size, color, name, style }) {
+export default function PressableIcon({ onPress, children, style }) {
   return (
     <Pressable
       onPress={onPress}
@@ -8,14 +7,13 @@ export default function PressableIcon({ onPress, size, color, name, style }) {
         pressed ? [style, { opacity: 0.5 }, styles.icon] : [style, styles.icon]
       }
     >
-      <Ionicons size={size} color={color} name={name} />
+      {children}
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   icon: {
-    paddingHorizontal: 12,
-    paddingVertical: 5,
+    padding: 5,
   },
 });

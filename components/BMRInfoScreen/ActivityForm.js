@@ -6,12 +6,12 @@ import { personActions } from "../../context/person";
 export default function ActivityForm() {
   const [state, dispatch] = usePersonContext();
   function changeMinutesInput(value) {
-    const invalidValue = value.trim();
-    personActions.changeMinutesInput(invalidValue, dispatch);
+    const validValue = value.trim();
+    dispatch(personActions.changeMinutesInput(validValue));
   }
   function changeDaysInput(value) {
-    const invalidValue = value.trim();
-    personActions.changeDaysInput(invalidValue, dispatch);
+    const validValue = value.trim();
+    dispatch(personActions.changeDaysInput(validValue));
   }
   return (
     <View style={styles.formContainer}>

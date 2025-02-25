@@ -11,8 +11,8 @@ class Dish {
 
   static CREATE_DISH_TABLE_QUERY = `
     CREATE TABLE IF NOT EXISTS ${Dish.TABLE_NAME} (
-    ${Dish.ID_COLUMN} INTEGER PRIMARY KEY AUTOINCREMENT,
-    ${Meal.ID_COLUMN} INTEGER,
+    ${Dish.ID_COLUMN} TEXT PRIMARY KEY,
+    ${Meal.ID_COLUMN} TEXT,
     ${Dish.NAME_COLUMN} TEXT,
     ${Dish.CALORIES_COLUMN} REAL,
     ${Dish.CARBS_COLUMN} REAL,
@@ -21,14 +21,6 @@ class Dish {
     ${Dish.DESCRIPTION_COLUMN} TEXT
     );
 `;
-  #dishId;
-  #mealId;
-  #name;
-  #calories;
-  #carbs;
-  #fat;
-  #protein;
-  #description;
   constructor(
     dishId,
     mealId,
@@ -39,70 +31,70 @@ class Dish {
     protein,
     description
   ) {
-    this.#dishId = dishId;
-    this.#mealId = mealId;
-    this.#name = name;
-    this.#calories = calories;
-    this.#carbs = carbs;
-    this.#fat = fat;
-    this.#protein = protein;
-    this.#description = description;
+    this.dishId = dishId;
+    this.mealId = mealId;
+    this.name = name;
+    this.calories = calories;
+    this.carbs = carbs;
+    this.fat = fat;
+    this.protein = protein;
+    this.description = description;
   }
   // Getters và Setters
   getDishId() {
-    return this.#dishId;
+    return this.dishId;
   }
   setDishId(value) {
-    this.#dishId = value;
+    this.dishId = value;
   }
 
   getMealId() {
-    return this.#mealId;
+    return this.mealId;
   }
   setMealId(value) {
-    this.#mealId = value;
+    this.mealId = value;
   }
 
   getName() {
-    return this.#name;
+    return this.name;
   }
   setName(value) {
-    this.#name = value;
+    this.name = value;
   }
 
   getCalories() {
-    return this.#calories;
+    return this.calories;
   }
   setCalories(value) {
-    this.#calories = value;
+    this.calories = value;
   }
 
   getCarbs() {
-    return this.#carbs;
+    return this.carbs;
   }
   setCarbs(value) {
-    this.#carbs = value;
+    this.carbs = value;
   }
 
   getFat() {
-    return this.#fat;
+    return this.fat;
   }
   setFat(value) {
-    this.#fat = value;
+    this.fat = value;
   }
 
   getProtein() {
-    return this.#protein;
+    return this.protein;
   }
   setProtein(value) {
-    this.#protein = value;
+    this.protein = value;
   }
 
   getDescription() {
-    return this.#description;
+    return this.description;
   }
   setDescription(value) {
-    this.#description = value;
+    this.description = value;
   }
 }
 

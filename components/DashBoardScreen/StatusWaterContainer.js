@@ -1,12 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
 import colors from "../../utils/Colors";
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
+import { useEffect, useState } from "react";
+import PressableIcon from "../PressableIcon";
 
-export default function StatusWaterContainer() {
+export default function StatusWaterContainer({
+  waterPerCup,
+  cupDrunk,
+  waterIntakeVolume,
+  onCupClick,
+}) {
+  console.log("cupDrunk", cupDrunk);
+  const totalCups = Math.ceil(waterIntakeVolume / waterPerCup);
+  const cupArray = Array.from({ length: totalCups }, (_, i) => i + 1);
+
   return (
     <View style={styles.statusWaterContainer}>
-      <MCIcons name="cup-outline" size={40} color="	#A9A9A9" />
-      <MCIcons name="cup" size={40} color={colors.waterColor} />
+      {cupArray.map((index) => (
+        <PressableIcon key={index} onPress={() => onCupClick(index)}>
+          <MCIcons
+            name={index <= cupDrunk ? "cup" : "cup-outline"}
+            size={40}
+            color={index <= cupDrunk ? colors.waterColor : "#A9A9A9"}
+          />
+        </PressableIcon>
+      ))}
     </View>
   );
 }
@@ -15,7 +33,7 @@ const styles = StyleSheet.create({
   statusWaterContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 5,
+    gap: 6,
     width: "100%",
     backgroundColor: "#fff",
     marginTop: 20,

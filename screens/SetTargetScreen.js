@@ -34,20 +34,20 @@ export default function SetTargetScreen({ navigation }) {
   const [state, dispatch] = usePersonContext();
   useFocusEffect(
     useCallback(() => {
-      personActions.changeTargetInput("", dispatch);
-      personActions.changeTargetWeightInput("", dispatch);
+      dispatch(personActions.changeTargetInput(""));
+      dispatch(personActions.changeTargetWeightInput(""));
     }, [dispatch])
   );
   const changeTargetInput = useCallback(
     (value) => {
-      personActions.changeTargetInput(value, dispatch);
+      dispatch(personActions.changeTargetInput(value));
     },
     [dispatch]
   );
 
   const changeTargetWeightInput = useCallback(
     (value) => {
-      personActions.changeTargetWeightInput(value, dispatch);
+      dispatch(personActions.changeTargetWeightInput(value));
     },
     [dispatch]
   );
@@ -125,19 +125,19 @@ export default function SetTargetScreen({ navigation }) {
         message: "Don't leave Target weight input field empty.",
       },
       {
-        condition: !isValidNumber(targetWeight),
+        condition: !isValidNumber(targetWeight) && target !== MAINTAIN_WEIGHT,
         message: "Try again with other number.",
       },
       {
         condition:
           (target === LOSE_MORE_WEIGHT || target === LOSE_WEIGHT) &&
-          convertToNumber(weight) < convertToNumber(targetWeight),
+          convertToNumber(weight) <= convertToNumber(targetWeight),
         message: `Target weight must be less than the current weight (${weight}kg).`,
       },
       {
         condition:
           (target === GAIN_MORE_WEIGHT || target === GAIN_WEIGHT) &&
-          convertToNumber(weight) > convertToNumber(targetWeight),
+          convertToNumber(weight) >= convertToNumber(targetWeight),
         message: `Target weight must be greater than the current weight (${weight}kg).`,
       },
       {
@@ -159,6 +159,7 @@ export default function SetTargetScreen({ navigation }) {
 
     navigation.navigate("IndicatorsOverviewScreen");
   }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
