@@ -8,12 +8,14 @@ import { MealDish } from "./entities/MealDish";
 import { MealFood } from "./entities/MealFood";
 import { Food } from "./entities/Food";
 import { Dish } from "./entities/Dish";
+import { CupDrunk } from "./entities/CupDrunk";
 const DATABASE_NAME = "nutrition-app";
 const TABLE_CREATION_QUERIES = [
   User.CREATE_USER_TABLE_QUERY,
   DailyNutrition.CREATE_DAILY_NUTRITION_TABLE_QUERY,
   Workout.CREATE_WORKOUT_TABLE_QUERY,
   WaterIntake.CREATE_WATER_INTAKE_TABLE_QUERY,
+  CupDrunk.CREATE_CUP_DRUNK_TABLE_QUERY,
   Meal.CREATE_MEAL_TABLE_QUERY,
   Dish.CREATE_DISH_TABLE_QUERY,
   Food.CREATE_FOOD_TABLE_QUERY,
@@ -51,6 +53,21 @@ function updateData(db, tableName, columns, values, whereClause, whereArgs) {
   const setClause = columns.map((col) => `${col} = ?`).join(", ");
   const query = `UPDATE ${tableName} SET ${setClause} WHERE ${whereClause}`;
   db.runSync(query, ...values, ...whereArgs);
+}
+
+function deleteData(db, tableName, conditions) {
+  const conditionString = Object.keys(conditions)
+    .map((key) => `${key} = $${key}`)
+    .join(" AND ");
+
+  const query = `DELETE FROM ${tableName} WHERE ${conditionString}`;
+
+  // Tạo object với key có prefix "$" cho đúng định dạng
+  const parameters = Object.fromEntries(
+    Object.entries(conditions).map(([key, value]) => [`$${key}`, value])
+  );
+  const result = db.runSync(query, parameters);
+  return result;
 }
 
 function createUser(db, user) {
@@ -93,7 +110,7 @@ function createWorkout(db, workout) {
     [
       workout.getWorkoutId(),
       workout.getUserId(),
-      workout.getDateWorkout(),
+      workout.getDate(),
       workout.getExerciseName(),
       workout.getDuration(),
       workout.getCalories(),
@@ -109,19 +126,51 @@ function createWaterIntake(db, waterIntake) {
       WaterIntake.ID_COLUMN,
       User.ID_COLUMN,
       WaterIntake.DATE_COLUMN,
-      WaterIntake.CUP_DRUNK_COLUMN,
-      WaterIntake.WATER_PER_CUP,
+      WaterIntake.WATER_PER_CUP_COLUMN,
       WaterIntake.WATER_INTAKE_VOLUME_COLUMN,
     ],
     [
       waterIntake.getWaterIntakeId(),
       waterIntake.getUserId(),
-      waterIntake.getDateWaterIntake(),
-      waterIntake.getCupDrunk(),
+      waterIntake.getDate(),
       waterIntake.getWaterPerCup(),
       waterIntake.getWaterIntakeVolume(),
     ]
   );
+}
+
+function createCupDrunk(db, cupDrunk) {
+  return insertData(
+    db,
+    CupDrunk.TABLE_NAME,
+    [
+      CupDrunk.ID_COLUMN,
+      WaterIntake.ID_COLUMN,
+      CupDrunk.WATER_PER_CUP_COLUMN,
+      CupDrunk.DATE_COLUMN,
+    ],
+    [
+      cupDrunk.getCupDrunkId(),
+      cupDrunk.getWaterIntakeId(),
+      cupDrunk.getWaterPerCup(),
+      cupDrunk.getDate(),
+    ]
+  );
+}
+
+function updateCupDrunk(db, columns, values, whereClause, whereArgs) {
+  return updateData(
+    db,
+    CupDrunk.TABLE_NAME,
+    columns,
+    values,
+    whereClause,
+    whereArgs
+  );
+}
+
+function deleteCupDrunkById(db, id) {
+  return deleteData(db, CupDrunk.TABLE_NAME, { [CupDrunk.ID_COLUMN]: id });
 }
 
 function updateWaterIntake(db, columns, values, whereClause, whereArgs) {
@@ -277,168 +326,6 @@ function createMealFood(db, mealFood) {
   );
 }
 
-// function createWorkout(db, workout) {
-//   const result = db.runSync(
-//     `INSERT INTO ${Workout.TABLE_NAME} (
-//     ${User.ID_COLUMN},
-//     ${Workout.DATE_COLUMN},
-//     ${Workout.EXERCISE_NAME_COLUMN},
-//     ${Workout.DURATION_COLUMN},
-//     ${Workout.CALORIES_COLUMN}
-//     ) VALUES (?, ?, ?, ?, ?)`,
-//     workout.getUserId(),
-//     workout.getDateWorkout(),
-//     workout.getExerciseName(),
-//     workout.getDuration(),
-//     workout.getCalories()
-//   );
-//   return result;
-// }
-// function createWaterIntake(db, waterIntake) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${WaterIntake.TABLE_NAME} (
-//     ${User.ID_COLUMN},
-//     ${WaterIntake.DATE_COLUMN},
-//     ${WaterIntake.CUP_DRUNK_COLUMN},
-//     ${WaterIntake.TOTAL_CUPS_COLUMN}
-//     ) VALUES (?, ?, ?, ?)`,
-//     waterIntake.getUserId(),
-//     waterIntake.getDateWaterIntake(),
-//     waterIntake.getCupDrunk(),
-//     waterIntake.getTotalCups()
-//   );
-//   return result;
-// }
-// function createDailyNutrition(db, dailyNutrition) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${DailyNutrition.TABLE_NAME} (
-//     ${User.ID_COLUMN},
-//     ${DailyNutrition.WEIGHT_COLUMN},
-//     ${DailyNutrition.HEIGHT_COLUMN},
-//     ${DailyNutrition.BMI_COLUMN},
-//     ${DailyNutrition.TARGET_CALORIES_COLUMN},
-//     ${DailyNutrition.TARGET_CARBS_COLUMN},
-//     ${DailyNutrition.TARGET_FAT_COLUMN},
-//     ${DailyNutrition.TARGET_PROTEIN_COLUMN},
-//     ${DailyNutrition.CONSUMED_CALORIES_COLUMN},
-//     ${DailyNutrition.CONSUMED_CARBS_COLUMN},
-//     ${DailyNutrition.CONSUMED_FAT_COLUMN},
-//     ${DailyNutrition.CONSUMED_PROTEIN_COLUMN},
-//     ${DailyNutrition.DATE_COLUMN}
-//     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-//     dailyNutrition.getUserId(),
-//     dailyNutrition.getWeight(),
-//     dailyNutrition.getHeight(),
-//     dailyNutrition.getBmi(),
-//     dailyNutrition.getTargetCalories(),
-//     dailyNutrition.getTargetCarbs(),
-//     dailyNutrition.getTargetFat(),
-//     dailyNutrition.getTargetProtein(),
-//     dailyNutrition.getConsumedCalories(),
-//     dailyNutrition.getConsumedCarbs(),
-//     dailyNutrition.getConsumedFat(),
-//     dailyNutrition.getConsumedProtein(),
-//     dailyNutrition.getDate()
-//   );
-//   return result;
-// }
-// function createMeal(db, meal) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${Meal.TABLE_NAME} (
-//     ${User.ID_COLUMN},
-//     ${Meal.NAME_COLUMN},
-//     ${Meal.DATE_COLUMN},
-//     ${Meal.CALORIES_COLUMN},
-//     ${Meal.CARBS_COLUMN},
-//     ${Meal.FAT_COLUMN},
-//     ${Meal.PROTEIN_COLUMN},
-//     ${Meal.DESCRIPTION_COLUMN}
-//     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-//     meal.getUserId(),
-//     meal.getName(),
-//     meal.getDateMeal(),
-//     meal.getCalories(),
-//     meal.getCarbs(),
-//     meal.getFat(),
-//     meal.getProtein(),
-//     meal.getDescription()
-//   );
-//   return result;
-// }
-// function createDish(db, dish) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${Dish.TABLE_NAME} (
-//     ${Meal.ID_COLUMN},
-//     ${Dish.NAME_COLUMN},
-//     ${Dish.CALORIES_COLUMN},
-//     ${Dish.CARBS_COLUMN},
-//     ${Dish.FAT_COLUMN},
-//     ${Dish.PROTEIN_COLUMN},
-//     ${Dish.DESCRIPTION_COLUMN}
-//     ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-//     dish.getMealId(),
-//     dish.getName(),
-//     dish.getCalories(),
-//     dish.getCarbs(),
-//     dish.getFat(),
-//     dish.getProtein(),
-//     dish.getDescription()
-//   );
-//   return result;
-// }
-// function createFood(db, food) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${Food.TABLE_NAME} (
-//     ${Meal.ID_COLUMN},
-//     ${Food.NAME_COLUMN},
-//     ${Food.BARCODE_COLUMN},
-//     ${Food.CALORIES_COLUMN},
-//     ${Food.CARBS_COLUMN},
-//     ${Food.FAT_COLUMN},
-//     ${Food.PROTEIN_COLUMN},
-//     ${Food.DESCRIPTION_COLUMN}
-//     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-//     food.getMealId(),
-//     food.getName(),
-//     food.getBarcode(),
-//     food.getCalories(),
-//     food.getCarbs(),
-//     food.getFat(),
-//     food.getProtein(),
-//     food.getDescription()
-//   );
-//   return result;
-// }
-// function createMealDish(db, mealDish) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${MealDish.TABLE_NAME} (
-//     ${Meal.ID_COLUMN},
-//     ${Dish.ID_COLUMN}
-//     ) VALUES (?, ?)`,
-//     mealDish.getMealId(),
-//     mealDish.getDishId()
-//   );
-//   return result;
-// }
-// function createMealFood(db, mealFood) {
-//   const result = db.runSync(
-//     `
-//     INSERT INTO ${MealFood.TABLE_NAME} (
-//     ${Meal.ID_COLUMN},
-//     ${Food.ID_COLUMN}
-//     ) VALUES (?, ?)`,
-//     mealFood.getMealId(),
-//     mealFood.getFoodId()
-//   );
-//   return result;
-// }
-
 export {
   setUpDatabase,
   openDatabase,
@@ -446,6 +333,7 @@ export {
   createUser,
   createWorkout,
   createWaterIntake,
+  createCupDrunk,
   createDailyNutrition,
   createMeal,
   createDish,
@@ -453,6 +341,6 @@ export {
   createMealDish,
   createMealFood,
   updateWaterIntake,
+  updateCupDrunk,
+  deleteCupDrunkById,
 };
-
-// ${MealDish.CREATE_MEAL_DISH_TABLE_QUERY}

@@ -10,11 +10,12 @@ import { PersonProvider } from "./context/person";
 import colors from "./utils/Colors";
 import { getAllDataFormTable, openDatabase } from "./database/databaseHelper";
 import { User } from "./database/entities/User";
+import { memo } from "react";
 const Stack = createNativeStackNavigator();
 const db = openDatabase();
 const userList = getAllDataFormTable(db, User.TABLE_NAME);
 const initialRouteName = userList.length ? "MainScreens" : "BMRInfoScreen";
-export default function App() {
+function App() {
   return (
     <>
       <StatusBar style="auto" />
@@ -73,3 +74,5 @@ export default function App() {
     </>
   );
 }
+
+export default memo(App);

@@ -4,6 +4,32 @@ function alertNotification(heading, textBody) {
     cancelable: false,
   });
 }
+
+function showConfirmationDialog(
+  title,
+  message,
+  onConfirm = () => {},
+  onCancel = () => {}
+) {
+  Alert.alert(
+    title,
+    message,
+    [
+      {
+        text: "No",
+        onPress: onCancel,
+        style: "cancel",
+      },
+      {
+        text: "Yes",
+        onPress: onConfirm,
+        style: "destructive",
+      },
+    ],
+    { cancelable: true }
+  );
+}
+
 function isValidNumber(text) {
   return /^-?\d+(,\d)?$|^-?\d+$/.test(text);
 }
@@ -15,7 +41,7 @@ function generateRandomString() {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 8; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
@@ -26,4 +52,5 @@ export {
   isValidNumber,
   convertToNumber,
   generateRandomString,
+  showConfirmationDialog,
 };

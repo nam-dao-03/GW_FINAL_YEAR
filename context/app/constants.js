@@ -9,6 +9,11 @@ const FETCH_ALL_DAILY_NUTRITION = "fetch_all_daily_nutrition";
 const CREATE_WATER_INTAKE = "create_water_intake";
 const UPDATE_WATER_INTAKE = "update_water_intake";
 
+const CREATE_CUP_DRUNK = "create_cup_drunk";
+const UPDATE_CUP_DRUNK = "update_cup_drunk";
+const CREATE_CUP_DRUNK_LIST = "create_cup_drunk_list";
+const DELETE_CUP_DRUNK = "delete_cup_drunk";
+
 const CREATE_MEAL = "create_meal";
 const FETCH_ALL_MEAL = "fetch_all_meal";
 const UPDATE_MEAL = "update_meal";
@@ -27,4 +32,8 @@ export {
   FETCH_ALL_DAILY_NUTRITION,
   CREATE_WATER_INTAKE,
   UPDATE_WATER_INTAKE,
+  CREATE_CUP_DRUNK,
+  UPDATE_CUP_DRUNK,
+  CREATE_CUP_DRUNK_LIST,
+  DELETE_CUP_DRUNK,
 };

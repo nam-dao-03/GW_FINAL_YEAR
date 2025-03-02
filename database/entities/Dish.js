@@ -98,4 +98,8 @@ class Dish {
   }
 }
 
-export { Dish };
+function createDishInstance(dish) {
+  return Object.assign(new Dish(), dish);
+}
+
+export { Dish, createDishInstance };

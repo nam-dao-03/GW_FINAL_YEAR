@@ -42,4 +42,8 @@ class MealDish {
   }
 }
 
-export { MealDish };
+function createMealDishInstance(mealDish) {
+  return Object.assign(new MealDish(), mealDish);
+}
+
+export { MealDish, createMealDishInstance };

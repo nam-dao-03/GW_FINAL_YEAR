@@ -109,4 +109,8 @@ class Food {
   }
 }
 
-export { Food };
+function createFoodInstance(food) {
+  return Object.assign(new Food(), food);
+}
+
+export { Food, createFoodInstance };

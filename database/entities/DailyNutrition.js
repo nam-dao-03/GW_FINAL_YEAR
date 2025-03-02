@@ -184,4 +184,8 @@ class DailyNutrition {
   }
 }
 
-export { DailyNutrition };
+function createDailyNutritionInstance(dailyNutrition) {
+  return Object.assign(new DailyNutrition(), dailyNutrition);
+}
+
+export { DailyNutrition, createDailyNutritionInstance };

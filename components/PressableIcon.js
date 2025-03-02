@@ -1,11 +1,17 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-export default function PressableIcon({ onPress, children, style }) {
+export default function PressableIcon({
+  onPress,
+  children,
+  style,
+  disabled = false,
+}) {
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) =>
-        pressed ? [style, { opacity: 0.5 }, styles.icon] : [style, styles.icon]
+        pressed ? [styles.icon, style, { opacity: 0.5 }] : [styles.icon, style]
       }
+      disabled={disabled}
     >
       {children}
     </Pressable>

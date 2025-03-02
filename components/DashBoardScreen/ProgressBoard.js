@@ -8,17 +8,17 @@ import { useMemo } from "react";
 const NEEDED_CALORIES_WIDTH = 140;
 const CALORIES_CONTAINER_HEIGHT_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH;
 const CALORIES_CONTAINER_WIDTH_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH * 0.6;
-export default function ProgressBoard({
-  consumedCalories = 1,
-  targetCalories = 1,
-  caloriesBurned = 1,
-  targetCarbs = 1,
-  targetProtein = 1,
-  targetFat = 1,
-  consumedCarbs = 1,
-  consumedProtein = 1,
-  consumedFat = 1,
-}) {
+export default function ProgressBoard({ dailyNutrition, caloriesBurned = 0 }) {
+  const {
+    consumedCalories,
+    targetCalories,
+    targetCarbs,
+    targetProtein,
+    targetFat,
+    consumedCarbs,
+    consumedProtein,
+    consumedFat,
+  } = dailyNutrition;
   const progressCalories = calculateProgress(
     consumedCalories,
     targetCalories + caloriesBurned
@@ -51,7 +51,6 @@ export default function ProgressBoard({
       },
     ],
     [
-      styles,
       consumedCarbs,
       targetCarbs,
       progressCarbs,
@@ -78,6 +77,7 @@ export default function ProgressBoard({
             unfilledColor={colors.remainingProgressColor}
             borderWidth={0}
             progress={progressCalories}
+            thickness={4}
           />
           <CaloriesContainer
             caloriesLabel="Needed"

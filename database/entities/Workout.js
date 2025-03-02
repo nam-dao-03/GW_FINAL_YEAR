@@ -2,7 +2,7 @@ import { User } from "./User";
 class Workout {
   static TABLE_NAME = "Workout";
   static ID_COLUMN = "workoutId";
-  static DATE_COLUMN = "dateWorkout";
+  static DATE_COLUMN = "workoutDate";
   static EXERCISE_NAME_COLUMN = "exerciseName";
   static DURATION_COLUMN = "duration";
   static CALORIES_COLUMN = "calories";
@@ -20,14 +20,14 @@ class Workout {
   constructor(
     workoutId,
     userId,
-    dateWorkout,
+    workoutDate,
     exerciseName,
     duration,
     calories
   ) {
     this.workoutId = workoutId;
     this.userId = userId;
-    this.dateWorkout = dateWorkout;
+    this.workoutDate = workoutDate;
     this.exerciseName = exerciseName;
     this.duration = duration;
     this.calories = calories;
@@ -53,13 +53,13 @@ class Workout {
   }
 
   // Phương thức để lấy date
-  getDateWorkout() {
-    return this.dateWorkout;
+  getDate() {
+    return this.workoutDate;
   }
 
   // Phương thức để thay đổi date
-  setDate(dateWorkout) {
-    this.dateWorkout = dateWorkout;
+  setDate(workoutDate) {
+    this.workoutDate = workoutDate;
   }
 
   // Phương thức để lấy exerciseName

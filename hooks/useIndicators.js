@@ -1,5 +1,5 @@
 import usePersonContext from "./usePersonContext";
-import { formatShortDate, localDate } from "../utils/Date";
+import { formatShortDate, getLocalDate } from "../utils/Date";
 import {
   calculateAdditionalCalories,
   calculateWaterIntake,
@@ -31,6 +31,7 @@ export default function useIndicators() {
   });
   const TDEEFactor = getTDEEFactor(Number(minutes), Number(days));
   const TDEE = calculatorTDEE(BMR, TDEEFactor);
+  const localDate = getLocalDate();
   const formattedShortDate = formatShortDate(localDate);
   const additionKilogramMap = {
     [LOSE_MORE_WEIGHT]: -0.5,

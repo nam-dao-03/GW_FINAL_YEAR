@@ -84,12 +84,10 @@ export default function IndicatorsOverviewScreen({ navigation }) {
     dispatch(appActions.createDailyNutrition(dailyNutrition));
     const waterIntakeId = generateRandomString();
     const waterPerCup = 200;
-    const cupDrunk = 0;
     const waterIntake = new WaterIntake(
       waterIntakeId,
       userId,
       localDate,
-      cupDrunk,
       waterPerCup,
       waterIntakeVolume
     );

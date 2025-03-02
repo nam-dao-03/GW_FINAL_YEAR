@@ -2,9 +2,8 @@ import { User } from "./User";
 class WaterIntake {
   static TABLE_NAME = "WaterIntake";
   static ID_COLUMN = "waterIntakeId";
-  static DATE_COLUMN = "dateWaterIntake";
-  static CUP_DRUNK_COLUMN = "cupDrunk";
-  static WATER_PER_CUP = "waterPerCup";
+  static DATE_COLUMN = "waterIntakeDate";
+  static WATER_PER_CUP_COLUMN = "waterPerCup";
   static WATER_INTAKE_VOLUME_COLUMN = "waterIntakeVolume";
 
   static CREATE_WATER_INTAKE_TABLE_QUERY = `
@@ -12,8 +11,7 @@ class WaterIntake {
     ${WaterIntake.ID_COLUMN} TEXT PRIMARY KEY,
     ${User.ID_COLUMN} TEXT,
     ${WaterIntake.DATE_COLUMN} TEXT,
-    ${WaterIntake.CUP_DRUNK_COLUMN} INTEGER,
-    ${WaterIntake.WATER_PER_CUP} INTEGER,
+    ${WaterIntake.WATER_PER_CUP_COLUMN} INTEGER,
     ${WaterIntake.WATER_INTAKE_VOLUME_COLUMN} INTEGER,
     FOREIGN KEY (${User.ID_COLUMN}) REFERENCES 
     ${User.TABLE_NAME}(${User.ID_COLUMN})
@@ -22,15 +20,13 @@ class WaterIntake {
   constructor(
     waterIntakeId,
     userId,
-    dateWaterIntake,
-    cupDrunk,
+    waterIntakeDate,
     waterPerCup,
     waterIntakeVolume
   ) {
     this.waterIntakeId = waterIntakeId;
     this.userId = userId;
-    this.dateWaterIntake = dateWaterIntake;
-    this.cupDrunk = cupDrunk;
+    this.waterIntakeDate = waterIntakeDate;
     this.waterPerCup = waterPerCup;
     this.waterIntakeVolume = waterIntakeVolume;
   }
@@ -54,24 +50,14 @@ class WaterIntake {
     this.userId = userId;
   }
 
-  // Phương thức lấy giá trị dateWaterIntake
-  getDateWaterIntake() {
-    return this.dateWaterIntake;
+  // Phương thức lấy giá trị waterIntakeDate
+  getDate() {
+    return this.waterIntakeDate;
   }
 
-  // Phương thức đặt giá trị dateWaterIntake
-  setDateWaterIntake(dateWaterIntake) {
-    this.dateWaterIntake = dateWaterIntake;
-  }
-
-  // Phương thức lấy giá trị cupDrunk
-  getCupDrunk() {
-    return this.cupDrunk;
-  }
-
-  // Phương thức đặt giá trị cupDrunk
-  setCupDrunk(cupDrunk) {
-    this.cupDrunk = cupDrunk;
+  // Phương thức đặt giá trị waterIntakeDate
+  setDate(waterIntakeDate) {
+    this.waterIntakeDate = waterIntakeDate;
   }
 
   getWaterPerCup() {

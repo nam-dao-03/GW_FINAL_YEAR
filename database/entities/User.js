@@ -66,4 +66,8 @@ class User {
     }`;
   }
 }
-export { User };
+
+function createUserInstance(user) {
+  return Object.assign(new User(), user);
+}
+export { User, createUserInstance };

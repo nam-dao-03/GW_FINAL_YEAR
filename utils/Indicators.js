@@ -99,7 +99,7 @@ function targetDay(targetWeight, weight, weightPerWeek) {
 }
 
 function calculateProgress(progress, target) {
-  return Number((progress / target).toFixed(3));
+  return Number((progress / target || 1).toFixed(3));
 }
 
 function calculateWaterVolumeConsumed(waterPerCup, cupDrunk) {

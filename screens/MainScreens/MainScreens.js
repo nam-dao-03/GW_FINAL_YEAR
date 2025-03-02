@@ -1,19 +1,18 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useLayoutEffect } from "react";
-import DashBoardScreen from "./DashBoardScreen";
 import UserScreen from "./UserScreen";
 import colors from "../../utils/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
 import ManageFavoritesScreen from "./ManageFavoritesScreen/ManageFavoritesScree";
+import DashboardScreenNavigator from "./DashboardScreenNavigator/DashboardScreenNavigator";
 const BottomTab = createBottomTabNavigator();
 
 export default function MainScreens({ navigation }) {
   return (
-    <BottomTab.Navigator initialRouteName="DashBoardScreen">
+    <BottomTab.Navigator initialRouteName="DashboardScreenNavigator">
       <BottomTab.Screen
-        name="DashBoardScreen"
-        component={DashBoardScreen}
+        name="DashboardScreenNavigator"
+        component={DashboardScreenNavigator}
         options={{
           headerShown: false,
           tabBarLabel: "DashBoard",
