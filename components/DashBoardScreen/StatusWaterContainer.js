@@ -2,7 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import colors from "../../utils/Colors";
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
 import PressableIcon from "../PressableIcon";
-
+import Sizes from "../../utils/Size";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 export default function StatusWaterContainer({
   onCupClick,
   waterIntakeVolume,
@@ -58,7 +60,11 @@ export default function StatusWaterContainer({
             disabled={disabled}
             style={styles.cup}
           >
-            <MCIcons name={cupIcon.name} size={40} color={cupIcon.color} />
+            <MCIcons
+              name={cupIcon.name}
+              size={Sizes.XL}
+              color={cupIcon.color}
+            />
             <Text style={styles.volumeWaterPerCup}>{cupIcon.volume}</Text>
           </PressableIcon>
         );
@@ -71,24 +77,24 @@ const styles = StyleSheet.create({
   statusWaterContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 6,
+    gap: Spacing.XS,
     width: "100%",
     backgroundColor: "#fff",
-    marginTop: 20,
-    borderRadius: 20,
-    padding: 20,
+    marginTop: Spacing.LG,
+    borderRadius: Spacing.LG,
+    padding: Spacing.LG,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
   },
   cup: {
     alignItems: "center",
     justifyContent: "center",
-    height: 60,
+    height: Sizes.XXXL,
   },
   volumeWaterPerCup: {
-    fontSize: 12,
+    fontSize: Typography.XS,
   },
 });

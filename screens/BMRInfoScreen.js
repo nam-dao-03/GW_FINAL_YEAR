@@ -27,6 +27,8 @@ import {
   MIN_AGE,
   MAX_AGE,
 } from "../utils/constants";
+import Spacing from "../utils/Spacing";
+import Typography from "../utils/Typography";
 
 export default function BMRInfoScreen({ navigation }) {
   // Styles for react navigation
@@ -129,18 +131,18 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.primaryColor,
-    paddingTop: 20,
+    paddingTop: Spacing.MD,
     paddingBottom: 100,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
   },
   heading: {
     color: colors.whiteColor,
-    fontSize: 24,
+    fontSize: Typography.LG,
     fontWeight: "bold",
     textAlign: "center",
   },
   continueButton: {
-    marginVertical: 20,
+    marginVertical: Spacing.LG,
   },
 });

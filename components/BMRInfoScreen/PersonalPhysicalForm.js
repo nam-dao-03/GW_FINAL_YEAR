@@ -3,6 +3,9 @@ import DropdownGender from "./DropdownGender";
 import colors from "../../utils/Colors";
 import usePersonContext from "../../hooks/usePersonContext";
 import { personActions } from "../../context/person";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
+import Sizes from "../../utils/Size";
 export default function PersonalPhysicalForm() {
   const [state, dispatch] = usePersonContext();
   function changeHeightInput(value) {
@@ -35,7 +38,7 @@ export default function PersonalPhysicalForm() {
           <Text style={styles.label}>Weight (kg)</Text>
           <TextInput
             style={styles.heightInput}
-            keyboardType="decimal-pad"
+            keyboardType="default"
             maxLength={5}
             placeholder="Weight (kg)"
             value={state.weight}
@@ -60,29 +63,29 @@ export default function PersonalPhysicalForm() {
 
 const styles = StyleSheet.create({
   formContainer: {
-    marginTop: 20,
+    marginTop: Spacing.XL,
     backgroundColor: colors.whiteColor,
-    marginHorizontal: 20,
-    padding: 16,
-    borderRadius: 20,
+    marginHorizontal: Spacing.XL,
+    padding: Spacing.MD,
+    borderRadius: Spacing.XL,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
   },
   label: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
-    marginBottom: 10,
+    marginBottom: Spacing.SM,
   },
   heightInput: {
-    height: 50,
+    height: Sizes.XL,
     borderColor: colors.textColor,
     borderWidth: 0.5,
-    borderRadius: 10,
-    fontSize: 20,
-    paddingHorizontal: 10,
+    borderRadius: Spacing.XS,
+    fontSize: Typography.MD,
+    paddingHorizontal: Spacing.SM,
   },
   inputGroup: {
     flex: 1,

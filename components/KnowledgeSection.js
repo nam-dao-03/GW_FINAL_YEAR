@@ -1,5 +1,8 @@
 import { View, Image, StyleSheet, Text } from "react-native";
 import colors from "../utils/Colors";
+import Spacing from "../utils/Spacing";
+import Typography from "../utils/Typography";
+import Sizes from "../utils/Size";
 export default function KnowledgeSection() {
   return (
     <View style={styles.sectionContainer}>
@@ -29,32 +32,37 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: colors.whiteColor,
-    padding: 20,
-    borderRadius: 10,
+    padding: Spacing.SM,
+    borderRadius: Spacing.SM,
+    shadowColor: colors.shadowColor,
+    shadowOffset: { width: 0, height: Spacing.XXS },
+    shadowOpacity: 0.3,
+    shadowRadius: Spacing.XXS,
+    elevation: 5,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: Sizes.MASSIVE,
+    height: Sizes.MASSIVE,
   },
   heading: {
     width: "90%",
-    marginTop: 20,
+    marginTop: Spacing.XL,
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
     textAlign: "center",
   },
   question: {
     width: "90%",
-    marginTop: 10,
-    fontSize: 16,
+    marginTop: Spacing.SM,
+    fontSize: Typography.SM,
     color: colors.descriptionTextColor,
     textAlign: "center",
   },
   description: {
     width: "90%",
-    marginTop: 10,
-    fontSize: 16,
+    marginTop: Spacing.SM,
+    fontSize: Typography.SM,
     color: colors.textColor,
   },
 });

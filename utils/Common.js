@@ -31,12 +31,17 @@ function showConfirmationDialog(
 }
 
 function isValidNumber(text) {
-  return /^-?\d+(,\d)?$|^-?\d+$/.test(text);
-}
-function convertToNumber(input) {
-  return parseFloat(input.replace(/,/g, "."));
+  return /^-?\d+([.,]\d+)?$/.test(text);
 }
 
+function convertToNumber(input) {
+  if (typeof input !== "string") return NaN;
+
+  // Thay tất cả dấu ',' và '.' thành '.'
+  const normalizedInput = input.replace(/[,\.]/g, ".");
+
+  return parseFloat(normalizedInput);
+}
 function generateRandomString() {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

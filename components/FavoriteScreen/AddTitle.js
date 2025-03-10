@@ -1,4 +1,6 @@
 import { Text, StyleSheet, Pressable } from "react-native";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 
 export default function AddTitle({ onPress, style, children }) {
   return (
@@ -17,9 +19,9 @@ export default function AddTitle({ onPress, style, children }) {
 
 const styles = StyleSheet.create({
   addTitleContainer: {
-    paddingVertical: 10,
+    paddingVertical: Spacing.SM,
   },
   title: {
-    fontSize: 16,
+    fontSize: Typography.SM,
   },
 });

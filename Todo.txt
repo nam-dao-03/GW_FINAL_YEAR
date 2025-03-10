@@ -1,0 +1,5 @@
+-sửa validate phần Nutrition Fact trong detailScreen, khi nhập linh tinh vào phần bên trái để tính số lượng, 
+
+-sửa phần cập nhật ngày mới đối tượng mới để chứa target
+
+sửa lỗi tính toán dailyTarget trong detailScreen

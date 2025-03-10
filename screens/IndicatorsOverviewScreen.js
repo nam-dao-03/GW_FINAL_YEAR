@@ -21,6 +21,7 @@ import useAppContext from "../hooks/useAppContext";
 import { appActions } from "../context/app";
 import { dailyNutritionListFakeData } from "../utils/FakeData";
 import { WaterIntake } from "../database/entities/WaterIntake";
+import Spacing from "../utils/Spacing";
 export default function IndicatorsOverviewScreen({ navigation }) {
   const [state, dispatch] = useAppContext();
   const {
@@ -151,6 +152,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.backgroundColorScreen,
   },
   continueButton: {
-    marginVertical: 20,
+    marginVertical: Spacing.LG,
   },
 });

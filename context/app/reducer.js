@@ -7,6 +7,9 @@ import {
   updateWaterIntake,
   createCupDrunk,
   deleteCupDrunkById,
+  createFood,
+  deleteFoodById,
+  updateFood,
 } from "../../database/databaseHelper";
 import { User } from "../../database/entities/User";
 import { WaterIntake } from "../../database/entities/WaterIntake";
@@ -18,13 +21,15 @@ import { DailyNutrition } from "../../database/entities/DailyNutrition";
 import { CupDrunk } from "../../database/entities/CupDrunk";
 import {
   CREATE_CUP_DRUNK,
-  CREATE_CUP_DRUNK_LIST,
   CREATE_DAILY_NUTRITION,
   CREATE_USER,
   CREATE_WATER_INTAKE,
   UPDATE_CUP_DRUNK,
   UPDATE_WATER_INTAKE,
   DELETE_CUP_DRUNK,
+  CREATE_FOOD,
+  DELETE_FOOD,
+  UPDATE_FOOD,
 } from "./constants";
 import * as SQLite from "expo-sqlite";
 // console.log(SQLite.deleteDatabaseSync("nutrition-app"));
@@ -72,6 +77,8 @@ const initialState = {
   workoutList,
   dailyNutritionList,
 };
+
+// console.log("user state in reducer", initialState);
 
 function reducer(state, action) {
   switch (action.type) {
@@ -126,16 +133,7 @@ function reducer(state, action) {
         cupDrunkList: [...state.cupDrunkList, action.payload],
       };
     }
-    case CREATE_CUP_DRUNK_LIST: {
-      //db
-      action.payload.forEach((item) => {
-        createCupDrunk(db, item);
-      });
-      return {
-        ...state,
-        cupDrunkList: [...state.cupDrunkList, ...action.payload],
-      };
-    }
+
     case UPDATE_CUP_DRUNK: {
       // updateCupDrunk(
       //   db,
@@ -150,6 +148,7 @@ function reducer(state, action) {
       //   }
       //   return item;
       // });
+
       return {
         ...state,
         cupDrunkList: updatedCupDrunkList,
@@ -167,7 +166,72 @@ function reducer(state, action) {
         cupDrunkList: updatedCupDrunkList,
       };
     }
-
+    //Food
+    case CREATE_FOOD: {
+      //db
+      createFood(db, action.payload);
+      return {
+        ...state,
+        foodList: [...state.foodList, action.payload],
+      };
+    }
+    case DELETE_FOOD: {
+      const foodId = action.payload;
+      //db
+      deleteFoodById(db, foodId);
+      const updatedFoodList = state.foodList.filter(
+        (item) => item.getFoodId() !== foodId
+      );
+      return {
+        ...state,
+        foodList: updatedFoodList,
+      };
+    }
+    case UPDATE_FOOD: {
+      const food = action.payload;
+      //db
+      updateFood(
+        db,
+        [
+          Food.NAME_COLUMN,
+          Food.BARCODE_COLUMN,
+          Food.CALORIES_COLUMN,
+          Food.CARBS_COLUMN,
+          Food.FAT_COLUMN,
+          Food.PROTEIN_COLUMN,
+          Food.AVERAGE_NUTRITIONAL,
+          Food.MEASUREMENT_COLUMN,
+          Food.SERVING_SIZE_COLUMN,
+          Food.UNIT_COLUMN,
+          Meal.ID_COLUMN,
+        ],
+        [
+          food.getNameFood(),
+          food.getBarcode(),
+          food.getCalories(),
+          food.getCarbs(),
+          food.getFat(),
+          food.getProtein(),
+          food.getAverageNutritional(),
+          food.getMeasurement(),
+          food.getServingSize(),
+          food.getUnit(),
+          food.getMealId(),
+        ],
+        `${Food.ID_COLUMN} = ?`,
+        [food.getFoodId()]
+      );
+      const updatedFoodList = state.foodList.map((item) => {
+        if (item.getFoodId() === food.getFoodId()) {
+          return food;
+        }
+        return item;
+      });
+      return {
+        ...state,
+        foodList: updatedFoodList,
+      };
+    }
     default: {
       return state;
     }

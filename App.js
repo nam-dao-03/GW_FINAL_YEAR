@@ -11,6 +11,11 @@ import colors from "./utils/Colors";
 import { getAllDataFormTable, openDatabase } from "./database/databaseHelper";
 import { User } from "./database/entities/User";
 import { memo } from "react";
+import { registerBackgroundFetchAsync } from "./utils/BackgroundFetch";
+//gọi chạy tác vụ dưới nền
+(async () => {
+  await registerBackgroundFetchAsync();
+})();
 const Stack = createNativeStackNavigator();
 const db = openDatabase();
 const userList = getAllDataFormTable(db, User.TABLE_NAME);

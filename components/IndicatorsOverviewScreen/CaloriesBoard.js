@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 export default function CaloriesBoard({
   TDEE,
   additionCaloriesNeed,
@@ -29,42 +31,42 @@ const styles = StyleSheet.create({
   caloriesBoard: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 40,
+    paddingHorizontal: Spacing.XL,
+    paddingVertical: Spacing.XXL,
     backgroundColor: colors.whiteColor,
-    borderTopRightRadius: 30,
-    borderRadius: 5,
+    borderTopRightRadius: Spacing.XL,
+    borderRadius: Spacing.XS,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
-    marginHorizontal: 20,
+    marginHorizontal: Spacing.LG,
     alignItems: "center",
   },
   caloriesTextContainer: {
     flexDirection: "column",
-    gap: 10,
+    gap: Spacing.SM,
     alignItems: "center",
   },
   calories: {
-    fontSize: 30,
+    fontSize: Typography.XL,
     color: colors.tertiaryColor,
   },
   caloriesDesc: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.tertiaryColor,
   },
   targetDay: {
-    fontSize: 18,
+    fontSize: Typography.MD,
     width: "60%",
     flexWrap: "wrap",
-    lineHeight: 30,
+    lineHeight: Spacing.XL,
     color: colors.textColor,
   },
   strongTargetDay: {
     color: colors.secondaryColor,
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: Typography.MD,
   },
 });

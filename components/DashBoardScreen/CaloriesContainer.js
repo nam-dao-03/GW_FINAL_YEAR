@@ -1,5 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
+import Sizes from "../../utils/Size";
 export default function CaloriesContainer({
   caloriesLabel,
   caloriesValue,
@@ -15,20 +18,20 @@ export default function CaloriesContainer({
 
 const styles = StyleSheet.create({
   caloriesContainer: {
-    gap: 5,
+    gap: Spacing.XS,
     alignItems: "center",
   },
   caloriesValue: {
-    fontSize: 20,
-    paddingBottom: 2,
+    fontSize: Typography.MD,
+    paddingBottom: Spacing.XXS,
     color: colors.whiteColor,
     width: "100%",
     textAlign: "center",
     borderBottomColor: colors.remainingProgressColor,
-    borderBottomWidth: 1,
+    borderBottomWidth: Sizes.XXXS,
   },
   caloriesLabel: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.whiteColor,
   },
 });

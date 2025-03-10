@@ -18,6 +18,11 @@ const CREATE_MEAL = "create_meal";
 const FETCH_ALL_MEAL = "fetch_all_meal";
 const UPDATE_MEAL = "update_meal";
 const DELETE_MEAL = "delete_meal";
+
+const CREATE_FOOD = "create_food";
+const UPDATE_FOOD = "update_food";
+const DELETE_FOOD = "delete_food";
+
 export {
   CREATE_USER,
   FETCH_ALL_USERS,
@@ -36,4 +41,7 @@ export {
   UPDATE_CUP_DRUNK,
   CREATE_CUP_DRUNK_LIST,
   DELETE_CUP_DRUNK,
+  CREATE_FOOD,
+  UPDATE_FOOD,
+  DELETE_FOOD,
 };

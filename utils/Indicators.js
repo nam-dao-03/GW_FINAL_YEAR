@@ -106,6 +106,81 @@ function calculateWaterVolumeConsumed(waterPerCup, cupDrunk) {
   return waterPerCup * cupDrunk;
 }
 
+function calculatePercentage(value, values) {
+  const total = values.reduce((acc, num) => acc + num, 0);
+  if (total === 0) return `${value} (0%)`; // Tránh chia cho 0
+  const percentage = ((value / total) * 100).toFixed(1); // Làm tròn 1 số thập phân
+  return `${percentage}%`;
+}
+
+function calculateNutrition(nutritionObj, quantityUnit) {
+  const quantity = Number(quantityUnit.quantity);
+  if (quantity === 0) {
+    return {
+      ...nutritionObj,
+    };
+  }
+
+  if (nutritionObj.measurement === quantityUnit.chooseUnit) {
+    const newNutritionObj = {
+      ...nutritionObj,
+      calories: formatFloatNumber(
+        quantity *
+          ((nutritionObj.calories / nutritionObj.averageNutritional) *
+            nutritionObj.servingSize)
+      ),
+      carbs: formatFloatNumber(
+        quantity *
+          ((nutritionObj.carbs / nutritionObj.averageNutritional) *
+            nutritionObj.servingSize)
+      ),
+      protein: formatFloatNumber(
+        quantity *
+          ((nutritionObj.protein / nutritionObj.averageNutritional) *
+            nutritionObj.servingSize)
+      ),
+      fat: formatFloatNumber(
+        quantity *
+          ((nutritionObj.fat / nutritionObj.averageNutritional) *
+            nutritionObj.servingSize)
+      ),
+    };
+    return newNutritionObj;
+  } else if (nutritionObj.unit === quantityUnit.chooseUnit) {
+    const newNutritionObj = {
+      ...nutritionObj,
+      calories: formatFloatNumber(
+        (quantity / nutritionObj.averageNutritional) * nutritionObj.calories
+      ),
+      carbs: formatFloatNumber(
+        (quantity / nutritionObj.averageNutritional) * nutritionObj.carbs
+      ),
+      protein: formatFloatNumber(
+        (quantity / nutritionObj.averageNutritional) * nutritionObj.protein
+      ),
+      fat: formatFloatNumber(
+        (quantity / nutritionObj.averageNutritional) * nutritionObj.fat
+      ),
+    };
+
+    return newNutritionObj;
+  }
+}
+function formatFloatNumber(num) {
+  if (Number.isInteger(num)) {
+    return num;
+  }
+
+  const decimalPlaces = num.toString().split(".")[1]?.length || 0;
+
+  if (decimalPlaces === 1) {
+    return parseFloat(num.toFixed(1));
+  } else if (decimalPlaces > 3) {
+    return parseFloat(num.toFixed(3));
+  }
+
+  return num;
+}
 export {
   calculatorBMI,
   classifyBMI,
@@ -117,4 +192,7 @@ export {
   targetDay,
   calculateProgress,
   calculateWaterVolumeConsumed,
+  calculatePercentage,
+  calculateNutrition,
+  formatFloatNumber,
 };

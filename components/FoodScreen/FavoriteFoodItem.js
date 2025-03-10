@@ -1,12 +1,28 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import colors from "../utils/Colors";
-export default function FavoriteItem() {
+import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
+import Sizes from "../../utils/Size";
+export default function FavoriteFoodItem({
+  food,
+  onDeleteFoodItem,
+  onNavigateScreen,
+}) {
   return (
-    <View style={styles.itemContainer}>
+    <Pressable
+      style={({ pressed }) =>
+        pressed
+          ? [styles.itemContainer, { opacity: 0.5 }]
+          : [styles.itemContainer]
+      }
+      onPress={() => onNavigateScreen(food.foodId)}
+    >
       <View style={styles.itemLeft}>
-        <Text style={styles.favoriteHeading}>Ga Luoc</Text>
-        <Text style={styles.favoriteDescription}>1 khau phan an - 1 calo</Text>
+        <Text style={styles.favoriteHeading}>{food.nameFood || ""}</Text>
+        <Text style={styles.favoriteDescription}>
+          1 {food.measurement || ""} - {food.calories || ""} calories
+        </Text>
       </View>
       <View style={styles.itemRight}>
         <Pressable
@@ -16,7 +32,7 @@ export default function FavoriteItem() {
               : [styles.favoriteIcon]
           }
         >
-          <Ionicons name="add" size={24} color="black" />
+          <Ionicons name="add" size={Sizes.MD} color="black" />
         </Pressable>
         <Pressable
           style={({ pressed }) =>
@@ -24,48 +40,50 @@ export default function FavoriteItem() {
               ? [styles.favoriteIcon, { opacity: 0.5 }]
               : [styles.favoriteIcon]
           }
+          onPress={() => onDeleteFoodItem(food.foodId || "12345678")}
         >
-          <Ionicons name="close-outline" size={24} color="black" />
+          <Ionicons name="close-outline" size={Sizes.MD} color="black" />
         </Pressable>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    marginVertical: Spacing.XS,
+    paddingVertical: Spacing.MD,
+    paddingHorizontal: Spacing.LG,
+    borderRadius: Spacing.SM,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: colors.whiteColor,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
   },
   itemLeft: {
     gap: 5,
   },
   favoriteHeading: {
-    fontSize: 18,
+    fontSize: Typography.MD,
     fontWeight: "bold",
     color: colors.textColor,
   },
   favoriteDescription: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.descriptionTextColor,
   },
   itemRight: {
     flexDirection: "row",
-    gap: 16,
+    gap: Spacing.MD,
   },
   favoriteIcon: {
     backgroundColor: colors.backgroundColorScreen,
-    padding: 5,
+    padding: Spacing.XXS * 2,
     borderRadius: "50%",
   },
 });

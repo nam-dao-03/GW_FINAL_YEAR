@@ -4,6 +4,9 @@ import { Dropdown } from "react-native-element-dropdown";
 import colors from "../../utils/Colors";
 import usePersonContext from "../../hooks/usePersonContext";
 import { personActions } from "../../context/person";
+import Sizes from "../../utils/Size";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 const data = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
@@ -38,6 +41,8 @@ const DropdownGender = () => {
           changeGenderInput(item.value);
           setIsFocus(false);
         }}
+        itemTextStyle={styles.itemTextStyle}
+        itemContainerStyle={styles.itemContainerStyle}
       />
     </View>
   );
@@ -50,20 +55,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   dropdown: {
-    height: 50,
+    height: Sizes.XL,
     borderColor: "gray",
     borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+    borderRadius: Spacing.XS,
+    paddingHorizontal: Spacing.XS,
   },
   placeholderStyle: {
-    fontSize: 20,
+    fontSize: Typography.MD,
   },
   selectedTextStyle: {
-    fontSize: 20,
+    fontSize: Typography.MD,
   },
   iconStyle: {
-    width: 20,
-    height: 20,
+    width: Sizes.SM,
+    height: Sizes.SM,
+  },
+  itemContainerStyle: {
+    paddingHorizontal: 0,
+  },
+  itemTextStyle: {
+    fontSize: Typography.SM,
   },
 });

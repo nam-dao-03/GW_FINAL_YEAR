@@ -292,19 +292,40 @@ function createFood(db, food) {
       Food.CARBS_COLUMN,
       Food.FAT_COLUMN,
       Food.PROTEIN_COLUMN,
-      Food.DESCRIPTION_COLUMN,
+      Food.AVERAGE_NUTRITIONAL,
+      Food.MEASUREMENT_COLUMN,
+      Food.SERVING_SIZE_COLUMN,
+      Food.UNIT_COLUMN,
     ],
     [
       food.getFoodId(),
       food.getMealId(),
-      food.getName(),
+      food.getNameFood(),
       food.getBarcode(),
       food.getCalories(),
       food.getCarbs(),
       food.getFat(),
       food.getProtein(),
-      food.getDescription(),
+      food.getAverageNutritional(),
+      food.getMeasurement(),
+      food.getServingSize(),
+      food.getUnit(),
     ]
+  );
+}
+
+function deleteFoodById(db, id) {
+  return deleteData(db, Food.TABLE_NAME, { [Food.ID_COLUMN]: id });
+}
+
+function updateFood(db, columns, values, whereClause, whereArgs) {
+  return updateData(
+    db,
+    Food.TABLE_NAME,
+    columns,
+    values,
+    whereClause,
+    whereArgs
   );
 }
 
@@ -338,9 +359,11 @@ export {
   createMeal,
   createDish,
   createFood,
+  deleteFoodById,
   createMealDish,
   createMealFood,
   updateWaterIntake,
   updateCupDrunk,
   deleteCupDrunkById,
+  updateFood,
 };

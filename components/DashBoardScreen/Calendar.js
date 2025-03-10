@@ -2,6 +2,9 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../../utils/Colors";
 import { formatShortDate } from "../../utils/Date";
+import Spacing from "../../utils/Spacing";
+import Sizes from "../../utils/Size";
+import Typography from "../../utils/Typography";
 export default function Calendar({
   date,
   onPressBtnLeft,
@@ -18,7 +21,11 @@ export default function Calendar({
         }
         onPress={onPressBtnLeft}
       >
-        <Ionicons name="chevron-back" size={24} color={colors.whiteColor} />
+        <Ionicons
+          name="chevron-back"
+          size={Typography.LG}
+          color={colors.whiteColor}
+        />
       </Pressable>
       <Pressable
         style={({ pressed }) =>
@@ -29,7 +36,11 @@ export default function Calendar({
         onPress={onPressCalender}
       >
         <View style={styles.iconDirection}>
-          <Ionicons name="calendar" size={20} color={colors.whiteColor} />
+          <Ionicons
+            name="calendar"
+            size={Typography.MD}
+            color={colors.whiteColor}
+          />
         </View>
         <Text style={styles.calenderValue}>{formatShortDate(date)}</Text>
       </Pressable>
@@ -41,7 +52,11 @@ export default function Calendar({
         }
         onPress={onPressBtnRight}
       >
-        <Ionicons name="chevron-forward" size={24} color={colors.whiteColor} />
+        <Ionicons
+          name="chevron-forward"
+          size={Typography.LG}
+          color={colors.whiteColor}
+        />
       </Pressable>
     </View>
   );
@@ -56,14 +71,14 @@ const styles = StyleSheet.create({
   calendarInner: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-    marginHorizontal: 20,
+    gap: Spacing.SM,
+    marginHorizontal: Spacing.SM,
   },
   iconDirection: {
-    padding: 2,
+    padding: Sizes.XXS,
   },
   calenderValue: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.whiteColor,
   },
 });

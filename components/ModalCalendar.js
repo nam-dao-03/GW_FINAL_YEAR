@@ -5,12 +5,23 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import colors from "../utils/Colors";
 import { useState } from "react";
 import { alertNotification } from "../utils/Common";
+import Sizes from "../utils/Size";
+import Spacing from "../utils/Spacing";
+import Typography from "../utils/Typography";
 const components = {
   IconPrev: (
-    <FontAwesome6 name="angle-left" size={16} color={colors.primaryColor} />
+    <FontAwesome6
+      name="angle-left"
+      size={Sizes.SM}
+      color={colors.primaryColor}
+    />
   ),
   IconNext: (
-    <FontAwesome6 name="angle-right" size={16} color={colors.primaryColor} />
+    <FontAwesome6
+      name="angle-right"
+      size={Sizes.SM}
+      color={colors.primaryColor}
+    />
   ),
 };
 export default function ModalCalendar({
@@ -50,7 +61,7 @@ export default function ModalCalendar({
             mode="single"
             showOutsideDays={true}
             styles={{ ...defaultStyles, ...styles.dateTimePicker }}
-            weekdaysHeight={50}
+            weekdaysHeight={Sizes.XXXL}
             navigationPosition="right"
             date={selectedDate}
             onChange={({ date }) => {
@@ -107,15 +118,15 @@ const styles = StyleSheet.create({
     alignItems: "center", // Căn giữa theo chiều ngang
   },
   dateTimePickerContainer: {
-    height: "68%",
-    padding: 20,
+    height: "90%",
+    padding: Spacing.XL,
     backgroundColor: colors.whiteColor,
-    borderRadius: 10,
+    borderRadius: Spacing.SM,
     elevation: 5, // Đổ bóng cho Android
     shadowColor: "#000", // Đổ bóng cho iOS
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: Sizes.XXS },
     shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowRadius: Spacing.XS,
   },
   dateTimePicker: {
     today: { borderColor: colors.primaryColor, borderWidth: 2 },
@@ -123,44 +134,53 @@ const styles = StyleSheet.create({
     selected_label: { color: "white" },
     header: {
       borderBottomWidth: 1,
-      paddingBottom: 10,
+      paddingBottom: Spacing.SM,
       borderColor: colors.shadowColor,
     },
     button_prev: {
       backgroundColor: "#FFF",
-      paddingHorizontal: 12,
-      paddingVertical: 9,
-      borderRadius: 8,
+      paddingHorizontal: Spacing.MD,
+      paddingVertical: Spacing.SM,
+      borderRadius: Spacing.XS,
       shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
+      shadowOffset: { width: 0, height: Sizes.XXS },
       shadowOpacity: 0.15,
-      shadowRadius: 6,
+      shadowRadius: Spacing.XS,
       elevation: 3,
     },
     button_next: {
       backgroundColor: "#FFF",
-      paddingHorizontal: 12,
-      paddingVertical: 9,
-      borderRadius: 8,
+      paddingHorizontal: Spacing.MD,
+      paddingVertical: Spacing.SM,
+      borderRadius: Spacing.XS,
       shadowColor: "#000",
-      shadowOffset: { width: 0, height: 2 },
+      shadowOffset: { width: 0, height: Sizes.XXS },
       shadowOpacity: 0.15,
-      shadowRadius: 6,
+      shadowRadius: Spacing.XS,
       elevation: 3,
     },
     month_selector_label: {
       fontWeight: "bold",
-      fontSize: 20,
+      fontSize: Typography.MD,
     },
     year_selector_label: {
       fontWeight: "bold",
-      fontSize: 20,
+      fontSize: Typography.MD,
     },
     selected_month: {
       backgroundColor: colors.primaryColor,
     },
     selected_year: {
       backgroundColor: colors.primaryColor,
+    },
+    day_cell: {
+      height: Sizes.LG,
+    },
+    day_label: {
+      fontSize: Typography.SM,
+    },
+    weekday_label: {
+      fontSize: Typography.SM,
     },
   },
   ctaContainer: {
@@ -170,17 +190,17 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: "40%",
-    paddingVertical: 14,
+    paddingVertical: Spacing.MD,
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: Spacing.SM,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: Sizes.XXL },
     shadowOpacity: 0.15,
-    shadowRadius: 6,
+    shadowRadius: Spacing.XS,
     elevation: 3,
   },
   btnContent: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.whiteColor,
     fontWeight: "bold",
   },

@@ -11,6 +11,9 @@ import {
   showConfirmationDialog,
 } from "../../utils/Common";
 import { generateLocalDateAndTime } from "../../utils/Date";
+import Sizes from "../../utils/Size";
+import Typography from "../../utils/Typography";
+import Spacing from "../../utils/Spacing";
 const volumeOptions = ["", 100, 200, 300, 400, 500, ""];
 export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
   const [_, dispatch] = useAppContext();
@@ -92,18 +95,18 @@ export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
     <View style={styles.progressBoard}>
       <View style={styles.waterTracker}>
         <Progress.Circle
-          size={300}
+          size={Sizes.MASSIVE * 3}
           color={colors.usedProgressColor}
           unfilledColor={colors.remainingProgressColor}
           borderWidth={0}
           progress={progressWater}
-          thickness={6}
+          thickness={Sizes.TINY * 4}
         />
         <View style={styles.waterTrackerInf}>
           <Text style={styles.waterTrackerTitle}>Target Today</Text>
           <Text style={styles.progressInf}>
             {consumedWater}/{waterIntake.waterIntakeVolume}{" "}
-            <Text style={{ fontSize: 20 }}>ml</Text>
+            <Text style={{ fontSize: Typography.MD }}>ml</Text>
           </Text>
         </View>
       </View>
@@ -121,7 +124,7 @@ export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
           style={styles.addWater}
           onPress={() => handleChangeVolumeWater(TYPE.MIDDLE)}
         >
-          <MCIIcon name="cup" size={24} color={colors.waterColor} />
+          <MCIIcon name="cup" size={Typography.LG} color={colors.waterColor} />
           <Text style={[styles.textVolume, { color: colors.primaryColor }]}>
             +{volumeOptions[volumeWater.middle]} ml
           </Text>
@@ -142,8 +145,8 @@ export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
 
 const styles = StyleSheet.create({
   progressBoard: {
-    marginTop: -10,
-    padding: 20,
+    marginTop: -Spacing.SM,
+    padding: Spacing.XL,
     backgroundColor: colors.primaryColor,
     alignItems: "center",
     justifyContent: "center",
@@ -161,40 +164,41 @@ const styles = StyleSheet.create({
   },
   waterTrackerTitle: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.usedProgressColor,
     fontWeight: "bold",
-    marginTop: 50,
+    marginTop: Spacing.BIG_50,
   },
   progressInf: {
-    fontSize: 36,
+    fontSize: Typography.XS * 3,
     color: colors.whiteColor,
     textAlign: "center",
-    marginTop: 30,
+    marginTop: Spacing.XL,
   },
   changeVolumeWater: {
-    marginTop: 10,
-    padding: 20,
+    marginTop: Spacing.SM,
+    padding: Spacing.XL,
     flexDirection: "row",
     alignItems: "center",
-    gap: 30,
+    gap: Spacing.XL,
   },
   addWater: {
     backgroundColor: colors.whiteColor,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: Spacing.XS,
+    paddingHorizontal: Spacing.MD,
     width: "40%",
-    borderRadius: 20,
+    borderRadius: Spacing.XL,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
+    gap: Spacing.XS,
+    justifyContent: "center",
   },
   textVolume: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.whiteColor,
   },
   changeVolumeBtn: {
-    paddingVertical: 8,
+    paddingVertical: Spacing.XS,
     justifyContent: "center",
     alignItems: "center",
     width: "25%",

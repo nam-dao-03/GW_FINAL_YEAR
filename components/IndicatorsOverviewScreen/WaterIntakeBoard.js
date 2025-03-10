@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 export default function WaterIntakeBoard({ waterIntake }) {
   return (
     <View style={styles.waterContainer}>
@@ -15,29 +17,29 @@ const styles = StyleSheet.create({
   waterContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 30,
-    paddingVertical: 40,
+    paddingHorizontal: Spacing.XL,
+    paddingVertical: Spacing.XXL,
     backgroundColor: colors.whiteColor,
-    borderTopRightRadius: 30,
-    borderRadius: 5,
+    borderTopRightRadius: Spacing.XL,
+    borderRadius: Spacing.XS,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
-    marginHorizontal: 20,
+    marginHorizontal: Spacing.LG,
     alignItems: "center",
   },
   waterDescription: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
-    width: "40%",
-    lineHeight: 30,
+    width: "60%",
+    lineHeight: Spacing.XXL,
     flexWrap: "wrap",
   },
   waterValue: {
     color: colors.tertiaryColor,
     fontWeight: "bold",
-    fontSize: 28,
+    fontSize: Typography.XL,
   },
 });

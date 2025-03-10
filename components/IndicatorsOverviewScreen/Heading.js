@@ -1,15 +1,17 @@
 import { StyleSheet, Text } from "react-native";
 import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 export default function Heading({ children }) {
   return <Text style={styles.heading}>{children}</Text>;
 }
 
 const styles = StyleSheet.create({
   heading: {
-    fontSize: 24,
+    fontSize: Typography.LG,
     color: colors.textColor,
-    marginHorizontal: 20,
-    marginVertical: 30,
-    lineHeight: 35,
+    marginHorizontal: Spacing.LG,
+    marginVertical: Spacing.XL,
+    lineHeight: Spacing.XXXL,
   },
 });

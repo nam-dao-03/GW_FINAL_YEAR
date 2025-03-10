@@ -1,5 +1,8 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
+import Sizes from "../../utils/Size";
 
 export default function InputGroup({
   styleExtra,
@@ -27,24 +30,24 @@ export default function InputGroup({
 const styles = StyleSheet.create({
   inputGroup: {
     flexDirection: "row",
-    padding: 10,
+    padding: Spacing.SM,
     alignItems: "center",
     width: "80%",
     justifyContent: "space-between",
   },
   input: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     width: "50%",
-    height: 50,
+    height: Sizes.XL,
     borderColor: colors.textColor,
     borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 10,
+    borderRadius: Spacing.XS,
+    paddingHorizontal: Spacing.SM,
     backgroundColor: "#fff",
-    marginRight: 10,
+    marginRight: Spacing.SM,
   },
   label: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
   },
 });

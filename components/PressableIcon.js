@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
+import Spacing from "../utils/Spacing";
 export default function PressableIcon({
   onPress,
   children,
@@ -20,6 +21,6 @@ export default function PressableIcon({
 
 const styles = StyleSheet.create({
   icon: {
-    padding: 5,
+    padding: Spacing.XS,
   },
 });

@@ -5,7 +5,9 @@ import CaloriesContainer from "./CaloriesContainer";
 import { IngredientContainer } from "./IngredientContainer";
 import { calculateProgress } from "../../utils/Indicators";
 import { useMemo } from "react";
-const NEEDED_CALORIES_WIDTH = 140;
+import Sizes from "../../utils/Size";
+import Spacing from "../../utils/Spacing";
+const NEEDED_CALORIES_WIDTH = Sizes.MASSIVE + Sizes.XXL;
 const CALORIES_CONTAINER_HEIGHT_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH;
 const CALORIES_CONTAINER_WIDTH_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH * 0.6;
 export default function ProgressBoard({ dailyNutrition, caloriesBurned = 0 }) {
@@ -77,7 +79,7 @@ export default function ProgressBoard({ dailyNutrition, caloriesBurned = 0 }) {
             unfilledColor={colors.remainingProgressColor}
             borderWidth={0}
             progress={progressCalories}
-            thickness={4}
+            thickness={Sizes.TINY * 2}
           />
           <CaloriesContainer
             caloriesLabel="Needed"
@@ -109,16 +111,16 @@ export default function ProgressBoard({ dailyNutrition, caloriesBurned = 0 }) {
 
 const styles = StyleSheet.create({
   boardContainer: {
-    marginTop: 20,
+    marginTop: Spacing.XL,
   },
   caloriesBoard: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: Spacing.LG,
   },
   otherIngredientBoard: {
-    marginTop: 20,
+    marginTop: Spacing.XL,
     flexDirection: "row",
     justifyContent: "space-between",
   },

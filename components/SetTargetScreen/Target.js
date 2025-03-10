@@ -2,6 +2,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import colors from "../../utils/Colors";
 import usePersonContext from "../../hooks/usePersonContext";
 import { personActions } from "../../context/person";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 export default function Target({
   heading,
   description,
@@ -44,15 +46,15 @@ export default function Target({
 const styles = StyleSheet.create({
   targetContainer: {
     width: "85%",
-    padding: 20,
-    borderRadius: 40,
+    padding: Spacing.LG,
+    borderRadius: Spacing.XXXL,
     alignItems: "center",
-    gap: 10,
+    gap: Spacing.SM,
     backgroundColor: colors.whiteColor,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
     marginHorizontal: "auto",
     borderWidth: 1,
@@ -60,12 +62,13 @@ const styles = StyleSheet.create({
   },
   targetHeading: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
   },
   targetDescription: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.descriptionTextColor,
+    lineHeight: Spacing.XL,
   },
 });

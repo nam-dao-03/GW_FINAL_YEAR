@@ -3,6 +3,7 @@ import Modal from "react-native-modal";
 import colors from "../../utils/Colors";
 import AddTitle from "./AddTitle";
 import { useNavigation } from "@react-navigation/native";
+import Spacing from "../../utils/Spacing";
 export default function ModalAdd({ isVisible, onBackdropPress }) {
   const navigation = useNavigation();
   return (
@@ -20,7 +21,7 @@ export default function ModalAdd({ isVisible, onBackdropPress }) {
         <AddTitle
           onPress={() => {
             onBackdropPress();
-            navigation.navigate("AddDishScreen");
+            navigation.navigate("AddDishScreenNavigator");
           }}
         >
           Add Dish
@@ -28,7 +29,7 @@ export default function ModalAdd({ isVisible, onBackdropPress }) {
         <AddTitle
           onPress={() => {
             onBackdropPress();
-            navigation.navigate("AddFoodScreen");
+            navigation.navigate("AddFoodScreenNavigator");
           }}
         >
           Add Food
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
     width: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 20,
+    padding: Spacing.SM,
   },
 });

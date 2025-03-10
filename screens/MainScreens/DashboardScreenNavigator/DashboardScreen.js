@@ -30,6 +30,8 @@ import useAppContext from "../../../hooks/useAppContext";
 import { DailyNutrition } from "../../../database/entities/DailyNutrition";
 import ModalCalendar from "../../../components/ModalCalendar";
 import { CupDrunk } from "../../../database/entities/CupDrunk";
+import Spacing from "../../../utils/Spacing";
+import Typography from "../../../utils/Typography";
 
 const SET_MODAL_VISIBLE_TRUE = "set_modal_visible_true";
 const SET_MODAL_VISIBLE_FALSE = "set_modal_visible_false";
@@ -276,10 +278,10 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: colors.primaryColor,
-    padding: 16,
-    paddingBottom: 32,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    padding: Spacing.MD,
+    paddingBottom: Spacing.XXL,
+    borderBottomLeftRadius: Spacing.XL,
+    borderBottomRightRadius: Spacing.XL,
   },
   dateContainer: {
     flexDirection: "row",
@@ -287,13 +289,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   day: {
-    fontSize: 24,
+    width: "45%",
+    fontSize: Typography.LG,
     color: colors.whiteColor,
     fontWeight: "bold",
   },
   bodyContainer: {
     backgroundColor: colors.backgroundColorScreen,
-    padding: 16,
+    padding: Spacing.MD,
   },
   headingContainer: {
     flexDirection: "row",
@@ -301,12 +304,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   heading: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     color: colors.textColor,
     width: "70%",
   },
   waterLabel: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.waterColor,
     borderBottomColor: colors.waterColor,
     borderBottomWidth: 1,

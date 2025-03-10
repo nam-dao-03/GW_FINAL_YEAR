@@ -2,13 +2,16 @@ import { Meal } from "./Meal";
 class Food {
   static TABLE_NAME = "Food";
   static ID_COLUMN = "foodId";
-  static NAME_COLUMN = "name";
+  static NAME_COLUMN = "nameFood";
   static BARCODE_COLUMN = "barcode";
   static CALORIES_COLUMN = "calories";
   static CARBS_COLUMN = "carbs";
   static FAT_COLUMN = "fat";
   static PROTEIN_COLUMN = "protein";
-  static DESCRIPTION_COLUMN = "description";
+  static AVERAGE_NUTRITIONAL = "averageNutritional";
+  static MEASUREMENT_COLUMN = "measurement";
+  static SERVING_SIZE_COLUMN = "servingSize";
+  static UNIT_COLUMN = "unit";
 
   static CREATE_FOOD_TABLE_QUERY = `
   CREATE TABLE IF NOT EXISTS ${Food.TABLE_NAME} (
@@ -20,29 +23,38 @@ class Food {
   ${Food.CARBS_COLUMN} REAL,
   ${Food.FAT_COLUMN} REAL,
   ${Food.PROTEIN_COLUMN} REAL,
-  ${Food.DESCRIPTION_COLUMN} TEXT
+  ${Food.AVERAGE_NUTRITIONAL} REAL,
+  ${Food.MEASUREMENT_COLUMN} TEXT,
+  ${Food.SERVING_SIZE_COLUMN} REAL,
+  ${Food.UNIT_COLUMN} TEXT
   );
 `;
   constructor(
     foodId,
     mealId,
-    name,
+    nameFood,
     barcode,
     calories,
     carbs,
     fat,
     protein,
-    description
+    averageNutritional,
+    measurement,
+    servingSize,
+    unit
   ) {
     this.foodId = foodId;
     this.mealId = mealId;
-    this.name = name;
+    this.nameFood = nameFood;
     this.barcode = barcode;
     this.calories = calories;
     this.carbs = carbs;
     this.fat = fat;
     this.protein = protein;
-    this.description = description;
+    this.averageNutritional = averageNutritional;
+    this.measurement = measurement;
+    this.servingSize = servingSize;
+    this.unit = unit;
   }
   // Getters và Setters
   getFoodId() {
@@ -59,11 +71,11 @@ class Food {
     this.mealId = value;
   }
 
-  getName() {
-    return this.name;
+  getNameFood() {
+    return this.nameFood;
   }
-  setName(value) {
-    this.name = value;
+  setNameFood(value) {
+    this.nameFood = value;
   }
 
   getBarcode() {
@@ -101,11 +113,33 @@ class Food {
     this.protein = value;
   }
 
-  getDescription() {
-    return this.description;
+  setAverageNutritional(averageNutritional) {
+    this.averageNutritional = averageNutritional;
   }
-  setDescription(value) {
-    this.description = value;
+
+  getAverageNutritional() {
+    return this.averageNutritional;
+  }
+
+  setMeasurement(measurement) {
+    this.measurement = measurement;
+  }
+
+  getMeasurement() {
+    return this.measurement;
+  }
+
+  setServingSize(servingSize) {
+    this.servingSize = servingSize;
+  }
+  getServingSize() {
+    return this.servingSize;
+  }
+  setUnit(unit) {
+    this.unit = unit;
+  }
+  getUnit() {
+    return this.unit;
   }
 }
 

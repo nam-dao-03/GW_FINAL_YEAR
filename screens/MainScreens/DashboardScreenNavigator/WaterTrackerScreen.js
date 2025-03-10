@@ -17,6 +17,9 @@ import { extractDate, getLocalDate } from "../../../utils/Date";
 import { useMemo } from "react";
 import { showConfirmationDialog } from "../../../utils/Common";
 import { appActions } from "../../../context/app";
+import Sizes from "../../../utils/Size";
+import Spacing from "../../../utils/Spacing";
+import Typography from "../../../utils/Typography";
 export default function WaterIntakeScreen({ navigation }) {
   const [state, dispatch] = useAppContext();
   const { waterIntakeList, cupDrunkList } = state;
@@ -72,14 +75,14 @@ export default function WaterIntakeScreen({ navigation }) {
               <PressableIcon onPress={handleGoBackNavigation}>
                 <Ionicons
                   name="arrow-back"
-                  size={30}
+                  size={Sizes.LG}
                   color={colors.whiteColor}
                 />
               </PressableIcon>
               <PressableIcon onPress={handleNavigateWaterReminderSettingScreen}>
                 <FA6
                   name="clock-rotate-left"
-                  size={24}
+                  size={Sizes.MD}
                   color={colors.whiteColor}
                 />
               </PressableIcon>
@@ -110,7 +113,7 @@ export default function WaterIntakeScreen({ navigation }) {
       style={styles.flatList}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 20 }}
+      contentContainerStyle={{ paddingBottom: Spacing.XL }}
       ListHeaderComponentStyle={{ zIndex: 10 }}
       keyboardShouldPersistTaps="handled"
       ListHeaderComponent={headerComponent}
@@ -126,17 +129,17 @@ export const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.primaryColor,
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+    paddingVertical: Spacing.XL,
+    paddingHorizontal: Spacing.SM,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
   title: {
-    fontSize: 24,
+    fontSize: Typography.LG,
     color: colors.textColor,
-    paddingHorizontal: 20,
-    marginTop: 20,
+    paddingHorizontal: Spacing.LG,
+    marginTop: Spacing.XL,
   },
   flatListContainer: {
     flex: 1,

@@ -29,6 +29,9 @@ import {
   isValidNumber,
 } from "../utils/Common";
 import { useFocusEffect } from "@react-navigation/native";
+import Spacing from "../utils/Spacing";
+import Typography from "../utils/Typography";
+import Sizes from "../utils/Size";
 
 export default function SetTargetScreen({ navigation }) {
   const [state, dispatch] = usePersonContext();
@@ -207,13 +210,13 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    gap: 20,
-    marginBottom: 40,
+    gap: Spacing.XL,
+    marginBottom: Spacing.BIG_70,
   },
   screenHeading: {
-    marginTop: 20,
+    marginTop: Spacing.XL,
     marginHorizontal: "auto",
-    fontSize: 20,
+    fontSize: Typography.MD,
     fontWeight: "bold",
     color: colors.primaryColor,
   },
@@ -222,13 +225,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   input: {
-    fontSize: 20,
+    fontSize: Typography.MD,
     width: "50%",
-    height: 50,
+    height: Sizes.XL,
     borderColor: colors.textColor,
     borderWidth: 0.5,
-    borderRadius: 20,
-    paddingHorizontal: 10,
+    borderRadius: Spacing.XL,
+    paddingHorizontal: Spacing.SM,
     backgroundColor: "#fff",
     marginHorizontal: "auto",
   },

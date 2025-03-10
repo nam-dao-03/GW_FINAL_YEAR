@@ -4,13 +4,16 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import colors from "../../utils/Colors";
 import PressableIcon from "../PressableIcon";
 import { extractDate, extractTime, getRelativeDate } from "../../utils/Date";
+import Typography from "../../utils/Typography";
+import Spacing from "../../utils/Spacing";
+import Sizes from "../../utils/Size";
 export default function WaterLogItem({ cupDrunk, onDeleteCupDrunkItem }) {
   const cupDrunkDate = extractDate(cupDrunk.getDate() || "2025-01-01 00:00:00");
   const cupDrunkTime = extractTime(cupDrunk.getDate() || "2025-01-01 00:00:00");
   const relativeDate = getRelativeDate(cupDrunkDate);
   return (
     <View style={styles.container}>
-      <MCIIcon name="cup" size={30} color={colors.waterColor} />
+      <MCIIcon name="cup" size={Sizes.LG} color={colors.waterColor} />
       <Text style={styles.waterVolumeText}>
         {cupDrunk.getWaterPerCup() || 0} ml
       </Text>
@@ -24,7 +27,11 @@ export default function WaterLogItem({ cupDrunk, onDeleteCupDrunkItem }) {
         }
       >
         <>
-          <AntDesign name="close" size={20} color={colors.secondaryTextColor} />
+          <AntDesign
+            name="close"
+            size={Typography.MD}
+            color={colors.secondaryTextColor}
+          />
         </>
       </PressableIcon>
     </View>
@@ -33,36 +40,36 @@ export default function WaterLogItem({ cupDrunk, onDeleteCupDrunkItem }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 12,
+    marginTop: Spacing.SM,
     flexDirection: "row",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 20,
+    paddingHorizontal: Spacing.LG,
+    paddingVertical: Spacing.SM,
+    borderRadius: Spacing.XL,
     alignItems: "center",
-    marginHorizontal: 20,
+    marginHorizontal: Spacing.LG,
     backgroundColor: colors.whiteColor,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Sizes.TINY * 4 },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
   },
   waterVolumeText: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.textColor,
-    marginLeft: 10,
+    marginLeft: Spacing.SM,
   },
   timeText: {
-    fontSize: 16,
+    fontSize: Typography.SM,
     color: colors.textColor,
     marginLeft: "auto",
   },
   closeBtn: {
     borderRadius: "50%",
     backgroundColor: colors.shadowColor,
-    marginLeft: "12",
+    marginLeft: Spacing.SM,
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Sizes.TINY * 4 },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
   },
 });

@@ -1,5 +1,7 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import colors from "../utils/Colors";
+import Spacing from "../utils/Spacing";
+import Typography from "../utils/Typography";
 
 export default function ContinueButton({ onPress, extraStyle = {} }) {
   return (
@@ -19,19 +21,19 @@ export default function ContinueButton({ onPress, extraStyle = {} }) {
 const styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: colors.secondaryColor,
-    padding: 16,
-    borderRadius: 20,
+    padding: Spacing.MD,
+    borderRadius: Spacing.XL,
     width: "40%",
     marginHorizontal: "auto",
     shadowColor: colors.shadowColor,
-    shadowOffset: { width: 0, height: 5 },
+    shadowOffset: { width: 0, height: Spacing.XS },
     shadowOpacity: 0.3,
-    shadowRadius: 10,
+    shadowRadius: Spacing.SM,
     elevation: 5,
   },
   content: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: Typography.SM,
     textAlign: "center",
   },
 });
