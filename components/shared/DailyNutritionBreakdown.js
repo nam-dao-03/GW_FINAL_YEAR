@@ -12,10 +12,6 @@ export default function DailyNutritionBreakdown({
     carbs: 1,
     protein: 1,
     fat: 1,
-    measurement: "",
-    averageNutritional: 1,
-    unit: "",
-    servingSize: 1,
   },
   nutritionTarget = {
     targetCalories: 1,
@@ -79,7 +75,6 @@ export default function DailyNutritionBreakdown({
       ),
     },
   ];
-
   return (
     <View style={[styles.container, style]}>
       <View style={styles.row}>

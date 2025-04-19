@@ -13,10 +13,6 @@ export default function NutritionFactsPie({
     carbs: 1,
     protein: 1,
     fat: 1,
-    measurement: "",
-    averageNutritional: 1,
-    unit: "",
-    servingSize: 1,
   },
   style,
 }) {
