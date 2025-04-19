@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import Sizes from "../../utils/Size";
 import Spacing from "../../utils/Spacing";
 import colors from "../../utils/Colors";
 import Typography from "../../utils/Typography";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const UnitDropdown = ({ data, onChangeUnitInput }) => {
   const [value, setValue] = useState(data[0].value);
@@ -33,6 +33,13 @@ const UnitDropdown = ({ data, onChangeUnitInput }) => {
         }}
         itemTextStyle={styles.itemTextStyle}
         itemContainerStyle={styles.itemContainerStyle}
+        renderRightIcon={() => (
+          <MaterialIcons
+            name="arrow-drop-down"
+            size={Sizes.LG} // Thay đổi kích thước icon ở đây
+            color={colors.blackColor}
+          />
+        )}
       />
     </View>
   );

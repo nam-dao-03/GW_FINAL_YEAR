@@ -1,13 +1,13 @@
 import { View, Image, StyleSheet, Text } from "react-native";
-import colors from "../utils/Colors";
-import Spacing from "../utils/Spacing";
-import Typography from "../utils/Typography";
-import Sizes from "../utils/Size";
+import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
+import Sizes from "../../utils/Size";
 export default function KnowledgeSection() {
   return (
     <View style={styles.sectionContainer}>
       <Image
-        source={require("../assets/imgs/light.png")}
+        source={require("../../assets/imgs/light.png")}
         style={styles.image}
       />
       <Text style={styles.question}>Co the ban chua biet</Text>

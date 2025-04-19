@@ -7,69 +7,116 @@ import { calculateProgress } from "../../utils/Indicators";
 import { useMemo } from "react";
 import Sizes from "../../utils/Size";
 import Spacing from "../../utils/Spacing";
+import useAppContext from "../../hooks/useAppContext";
+import { getLocalDate } from "../../utils/Date";
+import { DEFAULT_AVERAGE_NUTRITIONAL } from "../../utils/constants";
+import { convertToNumber } from "../../utils/Common";
 const NEEDED_CALORIES_WIDTH = Sizes.MASSIVE + Sizes.XXL;
 const CALORIES_CONTAINER_HEIGHT_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH;
 const CALORIES_CONTAINER_WIDTH_IN_NEEDED_CALORIES = NEEDED_CALORIES_WIDTH * 0.6;
-export default function ProgressBoard({ dailyNutrition, caloriesBurned = 0 }) {
+export default function ProgressBoard({ dailyNutrition }) {
+  const { targetCalories, targetCarbs, targetProtein, targetFat } =
+    dailyNutrition;
+
+  const [appState, appDispatch] = useAppContext();
   const {
-    consumedCalories,
-    targetCalories,
-    targetCarbs,
-    targetProtein,
-    targetFat,
-    consumedCarbs,
-    consumedProtein,
-    consumedFat,
-  } = dailyNutrition;
+    mealList,
+    foodList,
+    dishList,
+    mealFoodList,
+    mealDishList,
+    workoutList,
+  } = appState;
+  const mealListToday = mealList.filter(
+    (meal) => meal.getDate() === getLocalDate()
+  );
+  const workoutListToday = workoutList.filter(
+    (item) => item.workoutDate === getLocalDate()
+  );
+
+  const caloriesBurned = workoutListToday.reduce(
+    (sum, workout) => sum + workout.calories,
+    0
+  );
+
+  const mealIds = mealListToday.map((meal) => meal.mealId);
+  const allFoods = mealFoodList
+    .filter((item) => mealIds.includes(item.mealId))
+    .map((item) => foodList.find((food) => food.foodId === item.foodId))
+    .filter(Boolean);
+  const allDishes = mealDishList
+    .filter((item) => mealIds.includes(item.mealId))
+    .map((item) => dishList.find((dish) => dish.dishId === item.dishId))
+    .filter(Boolean);
+
+  const consumedNutrition = [...allFoods, ...allDishes].reduce(
+    (total, item) => {
+      total.calories +=
+        item.calories *
+          (item.averageNutritional
+            ? convertToNumber(item.servingSize / DEFAULT_AVERAGE_NUTRITIONAL)
+            : 1) || 0;
+      total.carbs +=
+        item.carbs *
+          (item.averageNutritional
+            ? convertToNumber(item.servingSize / DEFAULT_AVERAGE_NUTRITIONAL)
+            : 1) || 0;
+      total.protein +=
+        item.protein *
+          (item.averageNutritional
+            ? convertToNumber(item.servingSize / DEFAULT_AVERAGE_NUTRITIONAL)
+            : 1) || 0;
+      total.fat +=
+        item.fat *
+          (item.averageNutritional
+            ? convertToNumber(item.servingSize / DEFAULT_AVERAGE_NUTRITIONAL)
+            : 1) || 0;
+      return total;
+    },
+    { calories: 0, carbs: 0, protein: 0, fat: 0 }
+  );
   const progressCalories = calculateProgress(
-    consumedCalories,
+    consumedNutrition.calories,
     targetCalories + caloriesBurned
   );
-  const progressCarbs = calculateProgress(consumedCarbs, targetCarbs);
-  const progressProtein = calculateProgress(consumedProtein, targetProtein);
-  const progressFat = calculateProgress(consumedFat, targetFat);
+  const progressCarbs = calculateProgress(consumedNutrition.carbs, targetCarbs);
+  const progressProtein = calculateProgress(
+    consumedNutrition.protein,
+    targetProtein
+  );
+  const progressFat = calculateProgress(consumedNutrition.fat, targetFat);
   const ingredientContainerList = useMemo(
     () => [
       {
         ingredientLabel: "Carbs",
-        ingredientConsumedValue: consumedCarbs,
+        ingredientConsumedValue: Math.floor(consumedNutrition.carbs),
         ingredientTotalValue: targetCarbs,
         progress: progressCarbs,
         extraStyle: styles.ingredientContainerExtraStyle,
       },
       {
         ingredientLabel: "Protein",
-        ingredientConsumedValue: consumedProtein,
+        ingredientConsumedValue: Math.floor(consumedNutrition.protein),
         ingredientTotalValue: targetProtein,
         progress: progressProtein,
         extraStyle: styles.ingredientContainerExtraStyle,
       },
       {
         ingredientLabel: "Fat",
-        ingredientConsumedValue: consumedFat,
+        ingredientConsumedValue: Math.floor(consumedNutrition.fat),
         ingredientTotalValue: targetFat,
         progress: progressFat,
         extraStyle: styles.ingredientContainerExtraStyle,
       },
     ],
-    [
-      consumedCarbs,
-      targetCarbs,
-      progressCarbs,
-      consumedProtein,
-      targetProtein,
-      progressProtein,
-      consumedFat,
-      targetFat,
-      progressFat,
-    ]
+    [appState]
   );
   return (
     <View style={styles.boardContainer}>
       <View style={styles.caloriesBoard}>
         <CaloriesContainer
           caloriesLabel="Consumed"
-          caloriesValue={consumedCalories}
+          caloriesValue={Math.floor(consumedNutrition.calories)}
           extraStyle={{ width: "25%" }}
         />
         <View style={styles.neededCalories}>

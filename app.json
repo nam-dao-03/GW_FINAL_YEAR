@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "nutrition_app",
+    "name": "CalBuddy",
     "slug": "nutrition_app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -30,11 +30,61 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/mango_app_icon.png",
+          "color": "#ffffff",
+          "defaultChannel": "default",
+          "sounds": [
+            "./assets/happy_bells_notification.wav"
+          ],
+          "enableBackgroundRemoteNotifications": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/mango_app_icon.png",
+          "imageWidth": 200,
+          "dark": {
+            "image": "./assets/mango_app_icon.png",
+            "backgroundColor": "#ffffff"
+          }
+        }
+      ],
+      [
+        "@react-native-community/datetimepicker",
+        {
+          "android": {
+            "datePicker": {
+              "colorAccent": {
+                "light": "#3ccd8a"
+              },
+              "colorControlActivated": {
+                "light": "#3ccd8a",
+                "dark": "#3ccd8a"
+              }
+            },
+            "timePicker": {
+              "headerBackground": {
+                "light": "#3ccd8a",
+                "dark": "#3ccd8a"
+              },
+              "numbersSelectorColor": {
+                "light": "#3ccd8a",
+                "dark": "#3ccd8a"
+              }
+            }
+          }
+        }
+      ]
     ],
     "extra": {
       "eas": {
-        "projectId": "62d8e388-df60-411a-b83f-d5c833d6b3d9"
+        "projectId": "8a875662-a460-43bc-9ecc-e7ef8ba92a23"
       }
     },
     "owner": "nam-dao-994"

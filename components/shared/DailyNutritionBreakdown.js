@@ -1,10 +1,10 @@
 import { View, StyleSheet, Text } from "react-native";
-import Spacing from "../utils/Spacing";
-import colors from "../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import colors from "../../utils/Colors";
 import * as Progress from "react-native-progress";
-import Sizes from "../utils/Size";
-import Typography from "../utils/Typography";
-import { calculatePercentage, calculateProgress } from "../utils/Indicators";
+import Sizes from "../../utils/Size";
+import Typography from "../../utils/Typography";
+import { calculatePercentage, calculateProgress } from "../../utils/Indicators";
 
 export default function DailyNutritionBreakdown({
   calculatedNutritionObj = {

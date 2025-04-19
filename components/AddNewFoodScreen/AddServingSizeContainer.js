@@ -83,8 +83,6 @@ export default function AddServingSizeContainer({}) {
     const isCustom = data.some((item) => item.value === measurement);
     setIsCustom(!isCustom);
   }, [measurement]);
-  // console.log("isCustom", measurement);
-  // console.log(isCustom === data[0].value);
   function changeMeasurementDropdown(measurement) {
     const selectedItem = data.find((item) => item.value === measurement);
     if (measurement === data[0].value) {

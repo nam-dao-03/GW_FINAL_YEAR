@@ -2,43 +2,44 @@ import { Meal } from "./Meal";
 class Dish {
   static TABLE_NAME = "Dish";
   static ID_COLUMN = "dishId";
-  static NAME_COLUMN = "name";
+  static NAME_COLUMN = "nameDish";
   static CALORIES_COLUMN = "calories";
   static CARBS_COLUMN = "carbs";
   static FAT_COLUMN = "fat";
   static PROTEIN_COLUMN = "protein";
-  static DESCRIPTION_COLUMN = "description";
+  static IS_FAVORITE_COLUMN = "isFavorite";
+  static IS_CREATED_BY_USER = "isCreatedByUser";
 
   static CREATE_DISH_TABLE_QUERY = `
     CREATE TABLE IF NOT EXISTS ${Dish.TABLE_NAME} (
     ${Dish.ID_COLUMN} TEXT PRIMARY KEY,
-    ${Meal.ID_COLUMN} TEXT,
     ${Dish.NAME_COLUMN} TEXT,
     ${Dish.CALORIES_COLUMN} REAL,
     ${Dish.CARBS_COLUMN} REAL,
     ${Dish.FAT_COLUMN} REAL,
     ${Dish.PROTEIN_COLUMN} REAL,
-    ${Dish.DESCRIPTION_COLUMN} TEXT
+    ${Dish.IS_FAVORITE_COLUMN} INTEGER,
+    ${Dish.IS_CREATED_BY_USER} INTEGER
     );
 `;
   constructor(
     dishId,
-    mealId,
-    name,
+    nameDish,
     calories,
     carbs,
     fat,
     protein,
-    description
+    isFavorite,
+    isCreatedByUser
   ) {
     this.dishId = dishId;
-    this.mealId = mealId;
-    this.name = name;
+    this.nameDish = nameDish;
     this.calories = calories;
     this.carbs = carbs;
     this.fat = fat;
     this.protein = protein;
-    this.description = description;
+    this.isFavorite = isFavorite;
+    this.isCreatedByUser = isCreatedByUser;
   }
   // Getters và Setters
   getDishId() {
@@ -47,19 +48,11 @@ class Dish {
   setDishId(value) {
     this.dishId = value;
   }
-
-  getMealId() {
-    return this.mealId;
-  }
-  setMealId(value) {
-    this.mealId = value;
-  }
-
   getName() {
-    return this.name;
+    return this.nameDish;
   }
   setName(value) {
-    this.name = value;
+    this.nameDish = value;
   }
 
   getCalories() {
@@ -90,11 +83,18 @@ class Dish {
     this.protein = value;
   }
 
-  getDescription() {
-    return this.description;
+  getIsFavorite() {
+    return this.isFavorite;
   }
-  setDescription(value) {
-    this.description = value;
+  setIsFavorite(isFavorite) {
+    this.isFavorite = isFavorite;
+  }
+
+  getIsCreatedByUser() {
+    return this.isCreatedByUser;
+  }
+  setIsCreatedByUser(isCreatedByUser) {
+    this.isCreatedByUser = isCreatedByUser;
   }
 }
 

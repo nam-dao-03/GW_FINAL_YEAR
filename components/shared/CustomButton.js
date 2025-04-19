@@ -1,7 +1,7 @@
 import { Pressable, Text, StyleSheet } from "react-native";
-import colors from "../utils/Colors";
-import Spacing from "../utils/Spacing";
-import Typography from "../utils/Typography";
+import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 
 export default function CustomButton({ onPress, children, style = {} }) {
   return (

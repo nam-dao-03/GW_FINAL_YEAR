@@ -1,7 +1,8 @@
 import { appActions } from "../context/app";
 import { DailyNutrition } from "../database/entities/DailyNutrition";
+import { createFoodInstance } from "../database/entities/Food";
 import { User } from "../database/entities/User";
-import { generateRandomString } from "./Common";
+import { convertToNumber, generateRandomString } from "./Common";
 
 const dailyNutritionListFakeData = [
   {

@@ -1,21 +1,15 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import AddNameFoodContainer from "../../../../components/AddNewFoodScreen/AddNameFoodContainer";
 import Heading from "../../../../components/AddNewFoodScreen/Heading";
 import AddServingSizeContainer from "../../../../components/AddNewFoodScreen/AddServingSizeContainer";
-import ContinueButton from "../../../../components/ContinueButton";
+import ContinueButton from "../../../../components/shared/ContinueButton";
 import useFoodContext from "../../../../hooks/useFoodContext";
 import {
   alertNotification,
   convertToNumber,
   isValidNumber,
 } from "../../../../utils/Common";
+import KeyboardAvoidingWrapper from "../../../../components/shared/KeyboardAvoidingWrapper";
 
 export default function AddFoodScreen({ navigation }) {
   const [state, dispatch] = useFoodContext();
@@ -53,10 +47,7 @@ export default function AddFoodScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.flex}>
         <ScrollView style={styles.flex}>
           <Heading>Basic information</Heading>
@@ -66,7 +57,7 @@ export default function AddFoodScreen({ navigation }) {
           <ContinueButton onPress={handleNavigateScreen} />
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

@@ -7,14 +7,44 @@ import { showConfirmationDialog } from "../../../../utils/Common";
 import colors from "../../../../utils/Colors";
 import FavoriteFoodItem from "../../../../components/FoodScreen/FavoriteFoodItem";
 import useAppContext from "../../../../hooks/useAppContext";
+import { useToast } from "react-native-toast-notifications";
+import { useState } from "react";
+import AddFoodToMealModal from "../../../../components/shared/AddFoodToMealModal";
 
-export default function FoodScreen({ navigation }) {
+export default function FoodScreen({ navigation, route }) {
+  const toast = useToast();
   const [state, dispatch] = useAppContext();
-  const { foodList } = state;
+  const { foodList, dishFoodList, dishList, mealFoodList, mealList } = state;
+  const [food, setFood] = useState(null);
+  const [isAddFoodToMealModalVisible, setIsAddFoodToMealModalVisible] =
+    useState(false);
+  const favoriteFoodList = foodList.filter(
+    (food) => food.isFavorite || food.isCreatedByUser
+  );
 
-  function handleDeleteFoodItem(foodId) {
+  function handleDeleteFoodItem(food) {
+    const { foodId, nameFood } = food;
     function onConfirm() {
+      const dishFood = dishFoodList.find(
+        (dishFood) => dishFood.foodId === foodId
+      );
+      const foodMeal = mealFoodList.find((item) => item.foodId === foodId);
+      if (dishFood) {
+        const dish = dishList.find((dish) => dish.dishId === dishFood.dishId);
+        toast.show(`${nameFood} in ${dish?.nameDish || ""} Dish!`, {
+          type: "danger",
+        });
+        return;
+      }
+      if (foodMeal) {
+        const meal = mealList.find((meal) => meal.mealId === foodMeal.mealId);
+        toast.show(`${nameFood} in ${meal?.nameMeal || ""}!`, {
+          type: "danger",
+        });
+        return;
+      }
       dispatch(appActions.deleteFoodById(foodId));
+      toast.show(`Delete ${nameFood} successfully!`, { type: "success" });
     }
     showConfirmationDialog(
       "Delete Item?",
@@ -23,13 +53,18 @@ export default function FoodScreen({ navigation }) {
     );
   }
 
-  function handleNavigateScreen(foodId) {
+  function handleNavigateDetailScreen(foodId) {
     navigation
       .getParent("FavoriteScreenNavigator")
       .navigate("FoodScreenNavigator", {
         screen: "DetailFoodScreen",
-        params: { foodId },
+        params: { foodId, sourceScreen: route.name },
       });
+  }
+
+  function handleOpenAddFoodToMealModal(food) {
+    setIsAddFoodToMealModalVisible(true);
+    setFood(food);
   }
 
   function renderFoodItemList({ item }) {
@@ -37,22 +72,32 @@ export default function FoodScreen({ navigation }) {
       <FavoriteFoodItem
         food={item}
         onDeleteFoodItem={handleDeleteFoodItem}
-        onNavigateScreen={handleNavigateScreen}
+        onNavigateDetailScreen={handleNavigateDetailScreen}
+        onOpenAddFoodToMealModal={handleOpenAddFoodToMealModal}
       />
     );
   }
   return (
-    <FlatList
-      data={foodList}
-      keyExtractor={(item) => item.getFoodId()}
-      renderItem={renderFoodItemList}
-      style={styles.flatList}
-      initialScrollIndex={0}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: Spacing.XL }}
-      ListHeaderComponentStyle={{ zIndex: 10 }}
-      keyboardShouldPersistTaps="handled"
-    />
+    <>
+      <FlatList
+        data={favoriteFoodList}
+        keyExtractor={(item) => item.getFoodId()}
+        renderItem={renderFoodItemList}
+        style={styles.flatList}
+        initialScrollIndex={0}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: Spacing.XL }}
+        ListHeaderComponentStyle={{ zIndex: 10 }}
+        keyboardShouldPersistTaps="handled"
+      />
+      {food && (
+        <AddFoodToMealModal
+          isVisible={isAddFoodToMealModalVisible}
+          food={food}
+          onBackdropPress={setIsAddFoodToMealModalVisible}
+        />
+      )}
+    </>
   );
 }
 

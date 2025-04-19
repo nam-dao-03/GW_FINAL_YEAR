@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import Spacing from "../utils/Spacing";
+import Spacing from "../../utils/Spacing";
 export default function PressableIcon({
   onPress,
   children,

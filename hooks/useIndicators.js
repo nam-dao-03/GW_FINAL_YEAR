@@ -60,6 +60,8 @@ export default function useIndicators() {
     TDEE,
     height,
     weight,
+    minExerPerDay: Number(minutes),
+    dayExerPerWeek: Number(days),
     waterIntakeVolume,
     formattedShortDate,
     localDate,

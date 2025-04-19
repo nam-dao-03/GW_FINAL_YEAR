@@ -25,10 +25,6 @@ class DailyNutrition {
     ${DailyNutrition.TARGET_CARBS_COLUMN} REAL,
     ${DailyNutrition.TARGET_FAT_COLUMN} REAL,
     ${DailyNutrition.TARGET_PROTEIN_COLUMN} REAL,
-    ${DailyNutrition.CONSUMED_CALORIES_COLUMN} REAL,
-    ${DailyNutrition.CONSUMED_CARBS_COLUMN} REAL,
-    ${DailyNutrition.CONSUMED_FAT_COLUMN} REAL,
-    ${DailyNutrition.CONSUMED_PROTEIN_COLUMN} REAL,
     ${DailyNutrition.DATE_COLUMN} TEXT,
     FOREIGN KEY (${User.ID_COLUMN}) REFERENCES ${User.TABLE_NAME}(${User.ID_COLUMN})
     );
@@ -43,10 +39,6 @@ class DailyNutrition {
     targetCarbs,
     targetProtein,
     targetFat,
-    consumedCalories,
-    consumedCarbs,
-    consumedProtein,
-    consumedFat,
     dateDailyNutrition
   ) {
     this.dailyNutritionId = dailyNutritionId;
@@ -58,10 +50,6 @@ class DailyNutrition {
     this.targetCarbs = targetCarbs;
     this.targetFat = targetFat;
     this.targetProtein = targetProtein;
-    this.consumedCalories = consumedCalories;
-    this.consumedCarbs = consumedCarbs;
-    this.consumedFat = consumedFat;
-    this.consumedProtein = consumedProtein;
     this.dateDailyNutrition = dateDailyNutrition;
   }
   // Getters và Setters
@@ -127,35 +115,6 @@ class DailyNutrition {
   setTargetProtein(value) {
     this.targetProtein = value;
   }
-
-  getConsumedCalories() {
-    return this.consumedCalories;
-  }
-  setConsumedCalories(value) {
-    this.consumedCalories = value;
-  }
-
-  getConsumedCarbs() {
-    return this.consumedCarbs;
-  }
-  setConsumedCarbs(value) {
-    this.consumedCarbs = value;
-  }
-
-  getConsumedFat() {
-    return this.consumedFat;
-  }
-  setConsumedFat(value) {
-    this.consumedFat = value;
-  }
-
-  getConsumedProtein() {
-    return this.consumedProtein;
-  }
-  setConsumedProtein(value) {
-    this.consumedProtein = value;
-  }
-
   getDate() {
     return this.dateDailyNutrition;
   }
@@ -174,10 +133,6 @@ class DailyNutrition {
         targetCarbs: ${this.targetCarbs},
         targetFat: ${this.targetFat},
         targetProtein: ${this.targetProtein},
-        consumedCalories: ${this.consumedCalories},
-        consumedCarbs: ${this.consumedCarbs},
-        consumedFat: ${this.consumedFat},
-        consumedProtein: ${this.consumedProtein},
         date: ${this.dateDailyNutrition}
       }
     `;

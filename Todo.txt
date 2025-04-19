@@ -1,5 +1,42 @@
--sửa validate phần Nutrition Fact trong detailScreen, khi nhập linh tinh vào phần bên trái để tính số lượng, 
+-sửa validate phần Nutrition Fact trong detailScreen, khi nhập linh tinh vào phần bên trái để tính số lượng, ✅
 
 -sửa phần cập nhật ngày mới đối tượng mới để chứa target
 
-sửa lỗi tính toán dailyTarget trong detailScreen
+Khi vào phần thêm food hoặc dish thì ẩn thanh bar ở dưới đi ✅
+
+
+tìm hiểu về các thực phẩm đồ ăn tại Việt Nam và các thông số dinh dưỡng của chúng, sau đó thêm vào database của bạn. ✅
+
+ssau đó thêm các món mới từ các thực phẩm mới tạo ✅
+
+
+VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices 
+like PureComponent, shouldComponentUpdate, etc. {"contentLength": 16285, "dt": 635, "prevDt": 631}
+
+
+Thêm userIcon để thể hiện là người dùng tạo trong addFood and Dish to Meal
+
+tạo nước mới, các meal mới trong backgroundFetch để khi có ngày mới còn có dữ liệu nhé
+
+Cập nhật giờ nước
+
+chỉnh lại header của mấy cái đầu tiên
+
+xem lại phần select food để tạo dish
+
+tạo một cái context để chứa cả 4 meal và cái ở trên đầu tiên để hiển thị dữ liệu ✅ không cần làm điều đó
+
+
+
+Viết ra những gì cần sửa và hoàn thành nó 
+
+bây giờ là màn hình detailFoodScreen và detailDishScreen cần sửa lại
+
+
+MenuItem sẽ là tên gọi chung cho cả Food và Dish
+
+
+không được xóa Food và Dish khi còn đang trong Menu
+
+
+ (NOBRIDGE) ERROR  Warning: TypeError: Cannot read property 'waterPerCup' of undefined khi sang ngày mới

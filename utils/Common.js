@@ -1,4 +1,17 @@
 import { Alert } from "react-native";
+import Sizes from "./Size";
+import Typography from "./Typography";
+import { FontAwesome6, Ionicons, MaterialIcons } from "@expo/vector-icons";
+const bottomTabStyle = {
+  tabBarLabelPosition: "below-icon",
+  tabBarLabelStyle: { fontSize: Typography.XS },
+  tabBarIconStyle: { width: Sizes.MD, height: Sizes.MD },
+  tabBarStyle: {
+    height: Sizes.XXL, // Tăng chiều cao
+    display: "flex", // Hiển thị lại Bottom Tab
+  },
+};
+
 function alertNotification(heading, textBody) {
   Alert.alert(heading, textBody, [{ text: "Okay" }], {
     cancelable: false,
@@ -35,12 +48,18 @@ function isValidNumber(text) {
 }
 
 function convertToNumber(input) {
+  if (typeof input === "number" && !isNaN(input)) {
+    return parseFloat(input.toFixed(2)); // Giữ số, làm tròn về 2 chữ số thập phân
+  }
+
   if (typeof input !== "string") return NaN;
 
-  // Thay tất cả dấu ',' và '.' thành '.'
+  // Chuẩn hóa dấu phân tách
   const normalizedInput = input.replace(/[,\.]/g, ".");
 
-  return parseFloat(normalizedInput);
+  const numberValue = parseFloat(normalizedInput);
+
+  return isNaN(numberValue) ? NaN : parseFloat(numberValue.toFixed(2));
 }
 function generateRandomString() {
   const characters =
@@ -52,10 +71,52 @@ function generateRandomString() {
   return result;
 }
 
+function calTotalCupsArr(
+  waterIntakeVolume,
+  waterPerCupDefault,
+  cupDrunkListToday
+) {
+  // Lượng nước còn lại cần uống
+  const cupDrunkNum = cupDrunkListToday.length;
+  const waterIntakeRemaining =
+    waterIntakeVolume -
+    cupDrunkListToday.reduce(
+      (consumed, cupDrunk) => consumed + cupDrunk.getWaterPerCup(),
+      0
+    );
+
+  // Số cốc còn lại cần uống
+  const cupsNumRemaining = Math.max(
+    Math.ceil(waterIntakeRemaining / waterPerCupDefault),
+    0
+  );
+
+  // Tạo mảng tổng số cốc hiển thị
+  const totalCupsArr = Array(cupDrunkNum + cupsNumRemaining).fill(null);
+  return totalCupsArr;
+}
+
+export default function AppIcon({ type, name, size, color }) {
+  switch (type) {
+    case "FA6":
+      return <FontAwesome6 name={name} size={size} color={color} />;
+    case "Ionicons":
+      return <Ionicons name={name} size={size} color={color} />;
+    case "MaterialIcons":
+      return <MaterialIcons name={name} size={size} color={color} />;
+    // thêm các case khác nếu cần
+    default:
+      return null;
+  }
+}
+
 export {
+  bottomTabStyle,
   alertNotification,
   isValidNumber,
   convertToNumber,
   generateRandomString,
   showConfirmationDialog,
+  calTotalCupsArr,
+  AppIcon,
 };

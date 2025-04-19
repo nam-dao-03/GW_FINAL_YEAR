@@ -1,4 +1,14 @@
-import { CALORIES_PER_KILOGRAM, DAY_PER_WEEK } from "./constants";
+import { convertToNumber } from "./Common";
+import {
+  CALORIES_PER_KILOGRAM,
+  DAY_PER_WEEK,
+  GAIN_MORE_WEIGHT,
+  GAIN_WEIGHT,
+  LOSE_MORE_WEIGHT,
+  LOSE_WEIGHT,
+  MAINTAIN_WEIGHT,
+} from "./constants";
+import { calculateMacronutrientNeeded } from "./Nutrition";
 function calculatorBMI(weight, height) {
   const BMI = weight / (height / 100) ** 2;
   return BMI.toFixed(2);
@@ -99,7 +109,9 @@ function targetDay(targetWeight, weight, weightPerWeek) {
 }
 
 function calculateProgress(progress, target) {
-  return Number((progress / target || 1).toFixed(3));
+  return target === 0
+    ? 0
+    : Number((convertToNumber(progress) / target).toFixed(3));
 }
 
 function calculateWaterVolumeConsumed(waterPerCup, cupDrunk) {
@@ -181,6 +193,64 @@ function formatFloatNumber(num) {
 
   return num;
 }
+
+function calculationMeasure(user, dailyNutrition, waterIntake) {
+  console.warn("waterIntake", waterIntake);
+  const { age, gender, dayExerPerWeek, minExerPerDay, target, targetWeight } =
+    user;
+  const { weight, height } = dailyNutrition;
+  const BMI = calculatorBMI(Number(weight), Number(height));
+  const TDEEFactor = getTDEEFactor(
+    Number(minExerPerDay),
+    Number(dayExerPerWeek)
+  );
+  const BMR = calculatorBMR({
+    weight,
+    height,
+    gender,
+    age,
+  });
+  const TDEE = calculatorTDEE(BMR, TDEEFactor);
+  const additionKilogramMap = {
+    [LOSE_MORE_WEIGHT]: -0.5,
+    [LOSE_WEIGHT]: -0.25,
+    [MAINTAIN_WEIGHT]: 0,
+    [GAIN_WEIGHT]: 0.25,
+    [GAIN_MORE_WEIGHT]: 0.5,
+  };
+  const additionCaloriesNeed = calculateAdditionalCalories(
+    additionKilogramMap[target]
+  );
+  // const numberOfDay = targetDay(
+  //   targetWeight,
+  //   weight,
+  //   additionKilogramMap[target]
+  // );
+  const targetCalories = TDEE + additionCaloriesNeed;
+  const {
+    carbs: targetCarbs,
+    protein: targetProtein,
+    fat: targetFat,
+  } = calculateMacronutrientNeeded(targetCalories, target);
+  const waterIntakeVolume = calculateWaterIntake(
+    Number(weight),
+    Number(minExerPerDay)
+  );
+  const updatedDailyNutrition = {
+    ...dailyNutrition,
+    bmi: BMI,
+    targetCalories,
+    targetCarbs,
+    targetProtein,
+    targetFat,
+  };
+  const updatedWaterIntake = {
+    ...waterIntake,
+    waterIntakeVolume,
+  };
+  return { updatedDailyNutrition, updatedWaterIntake };
+}
+
 export {
   calculatorBMI,
   classifyBMI,
@@ -195,4 +265,5 @@ export {
   calculatePercentage,
   calculateNutrition,
   formatFloatNumber,
+  calculationMeasure,
 };

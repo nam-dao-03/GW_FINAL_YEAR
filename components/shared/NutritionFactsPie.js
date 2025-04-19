@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
-import Spacing from "../utils/Spacing";
-import colors from "../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import colors from "../../utils/Colors";
 import PieChart from "react-native-pie-chart";
-import Sizes from "../utils/Size";
-import Typography from "../utils/Typography";
-import { calculatePercentage } from "../utils/Indicators";
+import Sizes from "../../utils/Size";
+import Typography from "../../utils/Typography";
+import { calculatePercentage } from "../../utils/Indicators";
 // const DEFAULT_SERVING_SIZE = 100;
 
 export default function NutritionFactsPie({

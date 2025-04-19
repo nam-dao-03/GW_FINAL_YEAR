@@ -6,7 +6,7 @@ export default function BodyMassBoard({
   BMI,
   height,
   weight,
-  statusBMI,
+  statusBMI = "",
   date,
 }) {
   return (

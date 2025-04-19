@@ -1,17 +1,21 @@
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import colors from "../utils/Colors";
 import Heading from "../components/IndicatorsOverviewScreen/Heading";
-import ContinueButton from "../components/ContinueButton";
+import ContinueButton from "../components/shared/ContinueButton";
 import CaloriesBoard from "../components/IndicatorsOverviewScreen/CaloriesBoard";
 import BodyMassBoard from "../components/IndicatorsOverviewScreen/BodyMassBoard";
 import WaterIntakeBoard from "../components/IndicatorsOverviewScreen/WaterIntakeBoard";
 import useIndicators from "../hooks/useIndicators";
 import {
+  BREAKFAST,
+  DINNER,
   GAIN_MORE_WEIGHT,
   GAIN_WEIGHT,
   LOSE_MORE_WEIGHT,
   LOSE_WEIGHT,
+  LUNCH,
   MAINTAIN_WEIGHT,
+  SNACK,
 } from "../utils/constants";
 import { User } from "../database/entities/User";
 import { DailyNutrition } from "../database/entities/DailyNutrition";
@@ -19,9 +23,20 @@ import { calculateMacronutrientNeeded } from "../utils/Nutrition";
 import { alertNotification, generateRandomString } from "../utils/Common";
 import useAppContext from "../hooks/useAppContext";
 import { appActions } from "../context/app";
-import { dailyNutritionListFakeData } from "../utils/FakeData";
+import {
+  dailyNutritionListFakeData,
+  foodList,
+  foodListDefault,
+} from "../utils/FakeData";
 import { WaterIntake } from "../database/entities/WaterIntake";
 import Spacing from "../utils/Spacing";
+import { Meal } from "../database/entities/Meal";
+import { vietnameseIngredientsByRegion, workoutExercise } from "../data/Data";
+import { removeSeconds } from "../utils/Date";
+import {
+  calculateNotifications,
+  scheduleDailyNotification,
+} from "../utils/Notification";
 export default function IndicatorsOverviewScreen({ navigation }) {
   const [state, dispatch] = useAppContext();
   const {
@@ -31,6 +46,7 @@ export default function IndicatorsOverviewScreen({ navigation }) {
     TDEE,
     statusBMI,
     target,
+    targetWeight,
     height,
     weight,
     waterIntakeVolume,
@@ -38,8 +54,9 @@ export default function IndicatorsOverviewScreen({ navigation }) {
     formattedShortDate,
     additionCaloriesNeed,
     numberOfDay,
+    minExerPerDay,
+    dayExerPerWeek,
   } = useIndicators();
-
   const headingCaloriesMap = {
     [LOSE_MORE_WEIGHT]: `Caloric Needs for Losing Weight (TDEE - ${Math.abs(
       additionCaloriesNeed
@@ -55,9 +72,28 @@ export default function IndicatorsOverviewScreen({ navigation }) {
       additionCaloriesNeed
     )})`,
   };
-  function workWithDB() {
+  async function workWithDB() {
     const userId = generateRandomString();
-    const user = new User(userId, "", "", "", age, gender, target);
+    const bedTime = "23:00:00";
+    const wakeUpTime = "07:00:00";
+    const waterReminderInterval = 60;
+    const isActiveWaterNotification = 1;
+    const user = new User(
+      userId,
+      "",
+      "",
+      "",
+      age,
+      gender,
+      target,
+      String(targetWeight),
+      bedTime,
+      wakeUpTime,
+      waterReminderInterval,
+      isActiveWaterNotification,
+      minExerPerDay,
+      dayExerPerWeek
+    );
     dispatch(appActions.createUser(user));
     const dailyNutritionId = generateRandomString();
     const targetCalories = TDEE + additionCaloriesNeed;
@@ -76,10 +112,6 @@ export default function IndicatorsOverviewScreen({ navigation }) {
       targetCarbs,
       targetProtein,
       targetFat,
-      0,
-      0,
-      0,
-      0,
       localDate
     );
     dispatch(appActions.createDailyNutrition(dailyNutrition));
@@ -93,6 +125,64 @@ export default function IndicatorsOverviewScreen({ navigation }) {
       waterIntakeVolume
     );
     dispatch(appActions.createWaterIntake(waterIntake));
+    vietnameseIngredientsByRegion.forEach((item) => {
+      dispatch(appActions.createFood(item));
+    });
+    const mealName = [BREAKFAST, LUNCH, DINNER, SNACK];
+    mealName.forEach((nameMeal) => {
+      const idMeal = generateRandomString();
+      const meal = new Meal(idMeal, userId, nameMeal, localDate);
+      dispatch(appActions.createMeal(meal));
+    });
+    workoutExercise.forEach((item) => {
+      const newWorkout = {
+        ...item,
+        userId,
+      };
+      dispatch(appActions.createWorkout(newWorkout));
+    });
+    //Working with Notification
+    const notificationCount = calculateNotifications(
+      bedTime,
+      wakeUpTime,
+      waterReminderInterval
+    );
+    const times = [];
+    const [wakeHour, wakeMinute] = wakeUpTime.split(":").map(Number);
+    const now = new Date();
+    let start = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      wakeHour,
+      wakeMinute,
+      0
+    );
+    start = new Date(start.getTime() + 10 * 60000); // cộng thêm 10 phút
+    let current = start;
+
+    for (let i = 0; i < notificationCount; i++) {
+      const notificationTime = current.toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+      const waterReminderNotification = {
+        waterReminderNotificationId: generateRandomString(),
+        userId,
+        title: "💧 Drinking Water",
+        body: `Don't forget to drink some water, buddy! 🌿 (${removeSeconds(
+          notificationTime
+        )})`,
+        notificationTime,
+      };
+      times.push(waterReminderNotification);
+      current = new Date(current.getTime() + waterReminderInterval * 60000);
+    }
+    dispatch(appActions.createWaterReminderNotificationList(times));
+    //Nạp thông báo vào máy
+    await scheduleDailyNotification(times);
   }
 
   // function workWithDBFakeData() {

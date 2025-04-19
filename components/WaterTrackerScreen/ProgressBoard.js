@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text } from "react-native";
 import * as Progress from "react-native-progress";
 import colors from "../../utils/Colors";
-import PressableIcon from "../PressableIcon";
+import PressableIcon from "../shared/PressableIcon";
 import { MaterialCommunityIcons as MCIIcon } from "@expo/vector-icons";
 import { useState } from "react";
 import useAppContext from "../../hooks/useAppContext";

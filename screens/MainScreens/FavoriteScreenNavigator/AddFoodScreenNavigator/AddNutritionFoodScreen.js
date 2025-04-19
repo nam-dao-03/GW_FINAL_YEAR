@@ -1,17 +1,9 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
 import Typography from "../../../../utils/Typography";
 import colors from "../../../../utils/Colors";
 import Spacing from "../../../../utils/Spacing";
-import TextInputContainer from "../../../../components/AddNutritionFoodScreen/TextInputContainer";
-import ContinueButton from "../../../../components/ContinueButton";
+import TextInputContainer from "../../../../components/shared/TextInputContainer";
+import ContinueButton from "../../../../components/shared/ContinueButton";
 import useFoodContext from "../../../../hooks/useFoodContext";
 import { foodActions } from "../../../../context/food";
 import {
@@ -23,8 +15,12 @@ import {
 import useAppContext from "../../../../hooks/useAppContext";
 import { appActions } from "../../../../context/app";
 import { Food } from "../../../../database/entities/Food";
-
+import { CommonActions } from "@react-navigation/native";
+import { useToast } from "react-native-toast-notifications";
+import { DEFAULT_AVERAGE_NUTRITIONAL } from "../../../../utils/constants";
+import KeyboardAvoidingWrapper from "../../../../components/shared/KeyboardAvoidingWrapper";
 export default function AddNutritionFoodScreen({ navigation }) {
+  const toast = useToast();
   const [state, dispatch] = useFoodContext();
   const [_, appDispatch] = useAppContext();
   const {
@@ -98,7 +94,7 @@ export default function AddNutritionFoodScreen({ navigation }) {
     },
   ];
 
-  function handleNavigateScreen() {
+  function handleCreateFood() {
     const validationRules = [
       {
         condition:
@@ -142,29 +138,35 @@ export default function AddNutritionFoodScreen({ navigation }) {
         return;
       }
     }
-    const foodId = generateRandomString();
+    const scaleFactor = Math.floor(
+      convertToNumber(averageNutritional) / DEFAULT_AVERAGE_NUTRITIONAL
+    );
     const food = new Food(
-      foodId,
-      null,
+      generateRandomString(), // foodId
       nameFood,
-      null,
-      convertToNumber(calories),
-      convertToNumber(carbs),
-      convertToNumber(fat),
-      convertToNumber(protein),
-      convertToNumber(averageNutritional),
+      null, // barcode
+      convertToNumber(calories / scaleFactor),
+      convertToNumber(carbs / scaleFactor),
+      convertToNumber(fat / scaleFactor),
+      convertToNumber(protein / scaleFactor),
+      DEFAULT_AVERAGE_NUTRITIONAL,
       measurement,
       convertToNumber(servingSize),
-      unit
+      unit,
+      1, // isFavorite,
+      1 // isCreatedByUser
     );
     appDispatch(appActions.createFood(food));
-    navigation.getParent().navigate("FavoriteScreen");
+    toast.show("Create Food successful", { type: "success" });
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "FavoriteScreen" }],
+      })
+    );
   }
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.flex}>
         <ScrollView style={styles.flex}>
           <Text style={styles.title}>Nutrition information</Text>
@@ -182,11 +184,11 @@ export default function AddNutritionFoodScreen({ navigation }) {
           </View>
           <ContinueButton
             extraStyle={{ marginTop: Spacing.SM }}
-            onPress={handleNavigateScreen}
+            onPress={handleCreateFood}
           />
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

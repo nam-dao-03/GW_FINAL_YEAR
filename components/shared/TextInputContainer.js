@@ -10,13 +10,14 @@ export default function TextInputContainer({
   placeholder,
   value,
   onChangeText,
+  maxLength = 5,
 }) {
   return (
     <View style={[styles.container, style]}>
       <Text style={styles.title}>{title}</Text>
       <TextInput
         placeholder={placeholder}
-        maxLength={5}
+        maxLength={maxLength}
         value={value}
         onChangeText={onChangeText}
         style={styles.textInput}

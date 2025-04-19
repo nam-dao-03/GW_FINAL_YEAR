@@ -6,6 +6,7 @@ class Workout {
   static EXERCISE_NAME_COLUMN = "exerciseName";
   static DURATION_COLUMN = "duration";
   static CALORIES_COLUMN = "calories";
+  static IS_CREATED_BY_USER_COLUMN = "isCreatedByUser";
   static CREATE_WORKOUT_TABLE_QUERY = `
   CREATE TABLE IF NOT EXISTS ${Workout.TABLE_NAME} (
   ${Workout.ID_COLUMN} TEXT PRIMARY KEY,
@@ -14,6 +15,7 @@ class Workout {
   ${Workout.EXERCISE_NAME_COLUMN} TEXT,
   ${Workout.DURATION_COLUMN} INTEGER,
   ${Workout.CALORIES_COLUMN} REAL,
+  ${Workout.IS_CREATED_BY_USER_COLUMN} REAL,
   FOREIGN KEY (${User.ID_COLUMN}) REFERENCES ${User.TABLE_NAME}(${User.ID_COLUMN})
   );
 `;
@@ -23,7 +25,8 @@ class Workout {
     workoutDate,
     exerciseName,
     duration,
-    calories
+    calories,
+    isCreatedByUser
   ) {
     this.workoutId = workoutId;
     this.userId = userId;
@@ -31,6 +34,7 @@ class Workout {
     this.exerciseName = exerciseName;
     this.duration = duration;
     this.calories = calories;
+    this.isCreatedByUser = isCreatedByUser;
   }
   // Phương thức để lấy workoutId
   getWorkoutId() {
@@ -91,6 +95,18 @@ class Workout {
   setCalories(calories) {
     this.calories = calories;
   }
+
+  getIsCreatedByUser() {
+    return this.isCreatedByUser;
+  }
+
+  setIsCreatedByUser(isCreatedByUser) {
+    this.isCreatedByUser = isCreatedByUser;
+  }
 }
 
-export { Workout };
+function createWorkoutInstance(workout) {
+  return Object.assign(new Workout(), workout);
+}
+
+export { Workout, createWorkoutInstance };

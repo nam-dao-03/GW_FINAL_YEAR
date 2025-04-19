@@ -3,29 +3,36 @@ import FavoriteScreen from "./FavoriteScreen";
 import AddDishScreenNavigator from "./AddDishScreenNavigator/AddDishScreenNavigator";
 import AddFoodScreenNavigator from "./AddFoodScreenNavigator/AddFoodScreenNavigator";
 import FoodScreenNavigator from "./FoodScreenNavigator/FoodScreenNavigator";
+import { DishProvider } from "../../../context/dish";
+import DishScreenNavigator from "./DishScreenNavigator/DishScreenNavigator";
 
 const Stack = createNativeStackNavigator();
 
 export default function FavoriteScreenNavigator() {
   return (
-    <Stack.Navigator
-      initialRouteName="FavoriteScreen"
-      screenOptions={{ headerShown: false }}
-      id="FavoriteScreenNavigator"
-    >
-      <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
-      <Stack.Screen
-        name="AddDishScreenNavigator"
-        component={AddDishScreenNavigator}
-      />
-      <Stack.Screen
-        name="AddFoodScreenNavigator"
-        component={AddFoodScreenNavigator}
-      />
-      <Stack.Screen
-        name="FoodScreenNavigator"
-        component={FoodScreenNavigator}
-      />
-    </Stack.Navigator>
+    <DishProvider>
+      <Stack.Navigator
+        initialRouteName="FavoriteScreen"
+        id="FavoriteScreenNavigator"
+      >
+        <Stack.Screen name="FavoriteScreen" component={FavoriteScreen} />
+        <Stack.Screen
+          name="AddDishScreenNavigator"
+          component={AddDishScreenNavigator}
+        />
+        <Stack.Screen
+          name="AddFoodScreenNavigator"
+          component={AddFoodScreenNavigator}
+        />
+        <Stack.Screen
+          name="FoodScreenNavigator"
+          component={FoodScreenNavigator}
+        />
+        <Stack.Screen
+          name="DishScreenNavigator"
+          component={DishScreenNavigator}
+        />
+      </Stack.Navigator>
+    </DishProvider>
   );
 }

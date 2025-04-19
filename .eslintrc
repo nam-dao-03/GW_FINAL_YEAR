@@ -1,0 +1,14 @@
+{
+  "plugins": ["react", "react-native"],
+  "parserOptions": {
+    "ecmaVersion": "latest", // Hỗ trợ cú pháp hiện đại nhất (ES Modules)
+        "sourceType": "module" ,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+        "react": {
+            "version": "detect"  
+        }}
+}

@@ -3,6 +3,7 @@ import UnitDropdown from "./UnitDropdown";
 import Spacing from "../../utils/Spacing";
 import colors from "../../utils/Colors";
 import Sizes from "../../utils/Size";
+import Typography from "../../utils/Typography";
 const DEFAULT_SERVING_SIZE = "100";
 const DEFAULT_QUANTITY_MEASUREMENT = "1";
 export default function QuantityDisplay({
@@ -13,7 +14,6 @@ export default function QuantityDisplay({
   unit,
 }) {
   const { chooseUnit, quantity } = quantityUnit;
-  //   console.log(">>>>", quantityUnit);
   const data = [
     { label: `${measurement} (${servingSize} ${unit})`, value: measurement },
     { label: unit, value: unit },
@@ -46,6 +46,7 @@ export default function QuantityDisplay({
         placeholder={quantity}
         value={quantity}
         onChangeText={onChangeQuantityInput}
+        keyboardType="numeric"
       />
       <UnitDropdown data={data} onChangeUnitInput={onChangeUnitInput} />
     </View>
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: Spacing.SM,
     elevation: 5,
+    fontSize: Typography.SM,
     borderRadius: Spacing.SM,
     paddingHorizontal: Spacing.XS,
   },

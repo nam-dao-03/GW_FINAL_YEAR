@@ -10,29 +10,29 @@ import {
   SET_FAT,
   UPDATE_FOOD_STATE,
 } from "./constants";
-const initialState = {
-  nameFood: "",
-  measurement: "",
-  servingSize: "",
-  unit: "",
-  averageNutritional: "",
-  calories: "",
-  carbs: "",
-  protein: "",
-  fat: "",
-};
-
 // const initialState = {
-//   nameFood: "Kirin Latte",
-//   measurement: "Bottle",
-//   servingSize: "100",
-//   unit: "ml",
-//   averageNutritional: "100",
-//   calories: "32",
-//   carbs: "5.65",
-//   protein: "0.76",
-//   fat: "0.66",
+//   nameFood: "",
+//   measurement: "",
+//   servingSize: "",
+//   unit: "g",
+//   averageNutritional: "",
+//   calories: "",
+//   carbs: "",
+//   protein: "",
+//   fat: "",
 // };
+
+const initialState = {
+  nameFood: "Kirin Latte",
+  measurement: "Bottle",
+  servingSize: "400",
+  unit: "ml",
+  averageNutritional: "100",
+  calories: "32",
+  carbs: "5.65",
+  protein: "0.76",
+  fat: "0.66",
+};
 
 function reducer(state, action) {
   switch (action.type) {

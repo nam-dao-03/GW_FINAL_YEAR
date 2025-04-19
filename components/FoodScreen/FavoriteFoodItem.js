@@ -4,11 +4,17 @@ import colors from "../../utils/Colors";
 import Spacing from "../../utils/Spacing";
 import Typography from "../../utils/Typography";
 import Sizes from "../../utils/Size";
+import { DEFAULT_AVERAGE_NUTRITIONAL } from "../../utils/constants";
+import { convertToNumber } from "../../utils/Common";
 export default function FavoriteFoodItem({
   food,
   onDeleteFoodItem,
-  onNavigateScreen,
+  onNavigateDetailScreen,
+  onOpenAddFoodToMealModal,
 }) {
+  const scaleFactor = food
+    ? convertToNumber(food.servingSize / DEFAULT_AVERAGE_NUTRITIONAL)
+    : 1;
   return (
     <Pressable
       style={({ pressed }) =>
@@ -16,34 +22,46 @@ export default function FavoriteFoodItem({
           ? [styles.itemContainer, { opacity: 0.5 }]
           : [styles.itemContainer]
       }
-      onPress={() => onNavigateScreen(food.foodId)}
+      onPress={() => onNavigateDetailScreen(food?.foodId)}
     >
       <View style={styles.itemLeft}>
         <Text style={styles.favoriteHeading}>{food.nameFood || ""}</Text>
         <Text style={styles.favoriteDescription}>
-          1 {food.measurement || ""} - {food.calories || ""} calories
+          1 {food.measurement || ""} -{" "}
+          {convertToNumber(food.calories * scaleFactor) || ""} kcal
         </Text>
       </View>
       <View style={styles.itemRight}>
+        {!!food.isFavorite && (
+          <Ionicons
+            name="heart"
+            size={Sizes.SM * 1.2}
+            color={colors.fieryRed}
+            style={styles.favoriteIcon}
+          />
+        )}
         <Pressable
           style={({ pressed }) =>
             pressed
-              ? [styles.favoriteIcon, { opacity: 0.5 }]
-              : [styles.favoriteIcon]
+              ? [styles.pressableIcon, { opacity: 0.5 }]
+              : [styles.pressableIcon]
           }
+          onPress={() => onOpenAddFoodToMealModal(food)}
         >
           <Ionicons name="add" size={Sizes.MD} color="black" />
         </Pressable>
-        <Pressable
-          style={({ pressed }) =>
-            pressed
-              ? [styles.favoriteIcon, { opacity: 0.5 }]
-              : [styles.favoriteIcon]
-          }
-          onPress={() => onDeleteFoodItem(food.foodId || "12345678")}
-        >
-          <Ionicons name="close-outline" size={Sizes.MD} color="black" />
-        </Pressable>
+        {!!food.isCreatedByUser && (
+          <Pressable
+            style={({ pressed }) =>
+              pressed
+                ? [styles.pressableIcon, { opacity: 0.5 }]
+                : [styles.pressableIcon]
+            }
+            onPress={() => onDeleteFoodItem(food)}
+          >
+            <Ionicons name="close-outline" size={Sizes.MD} color="black" />
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );
@@ -66,6 +84,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   itemLeft: {
+    width: "60%",
     gap: 5,
   },
   favoriteHeading: {
@@ -81,9 +100,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: Spacing.MD,
   },
-  favoriteIcon: {
+  pressableIcon: {
     backgroundColor: colors.backgroundColorScreen,
     padding: Spacing.XXS * 2,
     borderRadius: "50%",
+  },
+  favoriteIcon: {
+    alignSelf: "flex-end",
   },
 });

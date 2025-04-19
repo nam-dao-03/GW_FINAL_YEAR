@@ -7,20 +7,54 @@ import {
   View,
 } from "react-native";
 import colors from "../../../utils/Colors";
-import PressableIcon from "../../../components/PressableIcon";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { FontAwesome6 as FA6 } from "@expo/vector-icons";
 import ProgressBoard from "../../../components/WaterTrackerScreen/ProgressBoard";
 import WaterLogItem from "../../../components/WaterTrackerScreen/WaterLogItem";
 import useAppContext from "../../../hooks/useAppContext";
-import { extractDate, getLocalDate } from "../../../utils/Date";
-import { useMemo } from "react";
+import {
+  extractDate,
+  formatDateToLocalVN,
+  getLocalDate,
+} from "../../../utils/Date";
+import { useMemo, useCallback, useState } from "react";
 import { showConfirmationDialog } from "../../../utils/Common";
 import { appActions } from "../../../context/app";
 import Sizes from "../../../utils/Size";
 import Spacing from "../../../utils/Spacing";
 import Typography from "../../../utils/Typography";
-export default function WaterIntakeScreen({ navigation }) {
+import { useFocusEffect } from "@react-navigation/native";
+import HeaderNavigation from "../../../components/shared/HeaderNavigation";
+import { useToast } from "react-native-toast-notifications";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+export default function WaterTrackerScreen({ navigation }) {
+  const bottomTabNavigation = navigation.getParent("MainScreensBottomTab");
+  useFocusEffect(
+    useCallback(() => {
+      bottomTabNavigation.setOptions({
+        tabBarStyle: { display: "none" },
+      });
+      navigation.setOptions({
+        header: () => (
+          <HeaderNavigation
+            title={""}
+            iconRight={
+              <FA6
+                name="clock-rotate-left"
+                size={Sizes.SM}
+                color={colors.whiteColor}
+              />
+            }
+            actionRight={handleNavigateWaterReminderSettingScreen}
+          />
+        ),
+      });
+      dispatch(appActions.setFalseShowFAB());
+    }, [navigation])
+  );
+  const [isOpenModalUpdateCupDrunkTime, setIsOpenModalUpdateCupDrunkTime] =
+    useState(false);
+  const toast = useToast();
+  const [cupDrunk, setCupDrunk] = useState({});
   const [state, dispatch] = useAppContext();
   const { waterIntakeList, cupDrunkList } = state;
   const today = getLocalDate();
@@ -42,11 +76,31 @@ export default function WaterIntakeScreen({ navigation }) {
     navigation.navigate("WaterReminderSettingScreen");
   }
 
+  function handleOpenModalUpdateCupDrunkTime(cupDrunk) {
+    setCupDrunk(cupDrunk);
+    setIsOpenModalUpdateCupDrunkTime(true);
+  }
+
+  function handleConfirmModalUpdateCupDrunkTime(event, date) {
+    if (event.type === "dismissed") {
+      setIsOpenModalUpdateCupDrunkTime(false);
+      return;
+    }
+    const updatedCupDrunk = {
+      ...cupDrunk,
+      cupDrunkDate: formatDateToLocalVN(date),
+    };
+    dispatch(appActions.updateCupDrunk(updatedCupDrunk));
+    toast.show(`Updated cup`, { type: "success" });
+    setIsOpenModalUpdateCupDrunkTime(false);
+  }
+
   function renderCupDrunkItemList({ item }) {
     return (
       <WaterLogItem
         cupDrunk={item}
         onDeleteCupDrunkItem={handledDeleteCupDrunkItem}
+        onOpenModalUpdateCupDrunkTime={handleOpenModalUpdateCupDrunkTime}
       />
     );
   }
@@ -62,31 +116,29 @@ export default function WaterIntakeScreen({ navigation }) {
     );
   }
 
-  const cupDrunkListTodayReverse = useMemo(
-    () => [...cupDrunkListToday].reverse(),
+  const sortedCupDrunkListToday = useMemo(
+    () =>
+      [...cupDrunkListToday].sort(
+        (a, b) => new Date(b.cupDrunkDate) - new Date(a.cupDrunkDate)
+      ),
     [cupDrunkListToday]
   );
+
+  if (isOpenModalUpdateCupDrunkTime) {
+    DateTimePickerAndroid.open({
+      value: new Date(),
+      mode: "time",
+      is24Hour: true,
+      display: "clock",
+      onChange: handleConfirmModalUpdateCupDrunkTime,
+    });
+  }
+
   const headerComponent = useMemo(
     () => (
       <SafeAreaView style={styles.screenContainer}>
         <View style={styles.flatListContainer}>
           <ScrollView style={styles.screenContainer}>
-            <View style={styles.header}>
-              <PressableIcon onPress={handleGoBackNavigation}>
-                <Ionicons
-                  name="arrow-back"
-                  size={Sizes.LG}
-                  color={colors.whiteColor}
-                />
-              </PressableIcon>
-              <PressableIcon onPress={handleNavigateWaterReminderSettingScreen}>
-                <FA6
-                  name="clock-rotate-left"
-                  size={Sizes.MD}
-                  color={colors.whiteColor}
-                />
-              </PressableIcon>
-            </View>
             <ProgressBoard
               consumedWater={consumedWater}
               waterIntake={waterIntake}
@@ -104,16 +156,15 @@ export default function WaterIntakeScreen({ navigation }) {
     ]
   );
 
-  console.log("cupDrunkListToday.length", cupDrunkListToday.length);
   return (
     <FlatList
-      data={cupDrunkListTodayReverse}
+      data={sortedCupDrunkListToday}
       keyExtractor={(item) => item.getCupDrunkId()}
       renderItem={renderCupDrunkItemList}
       style={styles.flatList}
       initialScrollIndex={0}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: Spacing.XL }}
+      contentContainerStyle={{ paddingBottom: Spacing.BIG_70 * 3 }}
       ListHeaderComponentStyle={{ zIndex: 10 }}
       keyboardShouldPersistTaps="handled"
       ListHeaderComponent={headerComponent}
@@ -127,14 +178,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColorScreen,
   },
-  header: {
-    backgroundColor: colors.primaryColor,
-    paddingVertical: Spacing.XL,
-    paddingHorizontal: Spacing.SM,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+
   title: {
     fontSize: Typography.LG,
     color: colors.textColor,

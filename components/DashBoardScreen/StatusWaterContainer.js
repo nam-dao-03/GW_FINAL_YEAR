@@ -1,34 +1,31 @@
 import { StyleSheet, Text, View } from "react-native";
 import colors from "../../utils/Colors";
 import { MaterialCommunityIcons as MCIcons } from "@expo/vector-icons";
-import PressableIcon from "../PressableIcon";
+import PressableIcon from "../shared/PressableIcon";
 import Sizes from "../../utils/Size";
 import Spacing from "../../utils/Spacing";
 import Typography from "../../utils/Typography";
+import { useMemo } from "react";
+import { calTotalCupsArr } from "../../utils/Common";
 export default function StatusWaterContainer({
   onCupClick,
   waterIntakeVolume,
   waterPerCupDefault,
   cupDrunkListToday,
 }) {
-  const cupDrunkNum = cupDrunkListToday.length;
-
-  // Lượng nước còn lại cần uống
-  const waterIntakeRemaining =
-    waterIntakeVolume -
-    cupDrunkListToday.reduce(
-      (consumed, cupDrunk) => consumed + cupDrunk.getWaterPerCup(),
-      0
-    );
-
-  // Số cốc còn lại cần uống
-  const cupsNumRemaining = Math.max(
-    Math.ceil(waterIntakeRemaining / waterPerCupDefault),
-    0
+  const sortedCupDrunkListToday = useMemo(
+    () =>
+      [...cupDrunkListToday].sort(
+        (a, b) => new Date(a.cupDrunkDate) - new Date(b.cupDrunkDate)
+      ),
+    [cupDrunkListToday]
   );
-
-  // Tạo mảng tổng số cốc hiển thị
-  const totalCupsArr = Array(cupDrunkNum + cupsNumRemaining).fill(null);
+  const cupDrunkNum = sortedCupDrunkListToday.length;
+  const totalCupsArr = calTotalCupsArr(
+    waterIntakeVolume,
+    waterPerCupDefault,
+    sortedCupDrunkListToday
+  );
 
   // Xử lý sự kiện khi click vào cốc
   function handleCupClick(cupDrunk, isDrunk) {
@@ -39,7 +36,7 @@ export default function StatusWaterContainer({
     <View style={styles.statusWaterContainer}>
       {totalCupsArr.map((_, index) => {
         const isDrunk = index < cupDrunkNum;
-        const cupDrunk = cupDrunkListToday[index];
+        const cupDrunk = sortedCupDrunkListToday[index];
         const disabled = index > cupDrunkNum;
 
         // Xác định icon cốc dựa vào trạng thái
@@ -47,7 +44,7 @@ export default function StatusWaterContainer({
           ? {
               name: "cup",
               color: colors.waterColor,
-              volume: `${cupDrunkListToday[index].waterPerCup} ml`,
+              volume: `${cupDrunk.waterPerCup} ml`,
             }
           : disabled
           ? { name: "cup-outline", color: "#A9A9A9" }

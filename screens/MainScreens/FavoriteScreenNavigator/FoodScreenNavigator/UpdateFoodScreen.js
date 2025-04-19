@@ -1,15 +1,8 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { SafeAreaView, ScrollView, Text, StyleSheet } from "react-native";
 import AddNameFoodContainer from "../../../../components/AddNewFoodScreen/AddNameFoodContainer";
 import Heading from "../../../../components/AddNewFoodScreen/Heading";
 import AddServingSizeContainer from "../../../../components/AddNewFoodScreen/AddServingSizeContainer";
-import ContinueButton from "../../../../components/ContinueButton";
+import ContinueButton from "../../../../components/shared/ContinueButton";
 import useFoodContext from "../../../../hooks/useFoodContext";
 import {
   alertNotification,
@@ -18,9 +11,10 @@ import {
 } from "../../../../utils/Common";
 import { useEffect } from "react";
 import { foodActions } from "../../../../context/food";
+import KeyboardAvoidingWrapper from "../../../../components/shared/KeyboardAvoidingWrapper";
 
 export default function UpdateFoodScreen({ navigation, route }) {
-  const { food } = route.params;
+  const { food, sourceScreen } = route.params;
   const [state, dispatch] = useFoodContext();
   useEffect(() => {
     if (!food) return;
@@ -36,7 +30,6 @@ export default function UpdateFoodScreen({ navigation, route }) {
     dispatch(foodActions.setFoodState(foodState));
   }, [food, dispatch]);
   const { nameFood, servingSize, measurement } = state;
-  // console.log("state>>>>", state);
   function handleNavigateScreen() {
     const validationRules = [
       {
@@ -65,15 +58,14 @@ export default function UpdateFoodScreen({ navigation, route }) {
         return;
       }
     }
-
-    navigation.navigate("UpdateNutritionFoodScreen", { food });
+    navigation.navigate("UpdateNutritionFoodScreen", {
+      food,
+      sourceScreen,
+    });
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.flex}>
         <ScrollView style={styles.flex}>
           <Heading>Basic information</Heading>
@@ -83,7 +75,7 @@ export default function UpdateFoodScreen({ navigation, route }) {
           <ContinueButton onPress={handleNavigateScreen} />
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

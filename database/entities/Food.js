@@ -12,11 +12,12 @@ class Food {
   static MEASUREMENT_COLUMN = "measurement";
   static SERVING_SIZE_COLUMN = "servingSize";
   static UNIT_COLUMN = "unit";
+  static IS_FAVORITE_COLUMN = "isFavorite";
+  static IS_CREATED_BY_USER_COLUMN = "isCreatedByUser";
 
   static CREATE_FOOD_TABLE_QUERY = `
   CREATE TABLE IF NOT EXISTS ${Food.TABLE_NAME} (
   ${Food.ID_COLUMN} TEXT PRIMARY KEY,
-  ${Meal.ID_COLUMN} TEXT,
   ${Food.NAME_COLUMN} TEXT,
   ${Food.BARCODE_COLUMN} TEXT,
   ${Food.CALORIES_COLUMN} REAL,
@@ -26,12 +27,13 @@ class Food {
   ${Food.AVERAGE_NUTRITIONAL} REAL,
   ${Food.MEASUREMENT_COLUMN} TEXT,
   ${Food.SERVING_SIZE_COLUMN} REAL,
-  ${Food.UNIT_COLUMN} TEXT
+  ${Food.UNIT_COLUMN} TEXT,
+  ${Food.IS_FAVORITE_COLUMN} INTEGER,
+  ${Food.IS_CREATED_BY_USER_COLUMN} INTEGER
   );
 `;
   constructor(
     foodId,
-    mealId,
     nameFood,
     barcode,
     calories,
@@ -41,10 +43,11 @@ class Food {
     averageNutritional,
     measurement,
     servingSize,
-    unit
+    unit,
+    isFavorite,
+    isCreatedByUser
   ) {
     this.foodId = foodId;
-    this.mealId = mealId;
     this.nameFood = nameFood;
     this.barcode = barcode;
     this.calories = calories;
@@ -55,6 +58,8 @@ class Food {
     this.measurement = measurement;
     this.servingSize = servingSize;
     this.unit = unit;
+    this.isFavorite = isFavorite;
+    this.isCreatedByUser = isCreatedByUser;
   }
   // Getters và Setters
   getFoodId() {
@@ -63,14 +68,6 @@ class Food {
   setFoodId(value) {
     this.foodId = value;
   }
-
-  getMealId() {
-    return this.mealId;
-  }
-  setMealId(value) {
-    this.mealId = value;
-  }
-
   getNameFood() {
     return this.nameFood;
   }
@@ -140,6 +137,20 @@ class Food {
   }
   getUnit() {
     return this.unit;
+  }
+
+  setIsFavorite(isFavorite) {
+    this.isFavorite = isFavorite;
+  }
+  getIsFavorite() {
+    return this.isFavorite;
+  }
+
+  setIsCreatedByUser(isCreatedByUser) {
+    this.isCreatedByUser = isCreatedByUser;
+  }
+  getIsCreatedByUser() {
+    return this.isCreatedByUser;
   }
 }
 

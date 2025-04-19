@@ -1,7 +1,7 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
-import colors from "../utils/Colors";
-import Spacing from "../utils/Spacing";
-import Typography from "../utils/Typography";
+import colors from "../../utils/Colors";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 
 export default function ContinueButton({ onPress, extraStyle = {} }) {
   return (

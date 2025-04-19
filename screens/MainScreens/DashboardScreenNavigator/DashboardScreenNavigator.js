@@ -1,25 +1,29 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import WaterIntakeScreen from "./WaterTrackerScreen";
 import DashboardScreen from "./DashboardScreen";
-import { memo } from "react";
-import WaterReminderSettingScreen from "./WaterReminderSettingsScreen";
+import DetailDishScreen from "../../../shared/DetailDishScreen";
+import DetailFoodScreen from "../../../shared/DetailFoodScreen";
+import WaterTrackerScreen from "./WaterTrackerScreen";
+import DetailMealScreen from "./DetailMealScreen";
+import WaterReminderSettingScreen from "../../../shared/WaterReminderSettingScreen";
 const Stack = createNativeStackNavigator();
 function DashboardScreenNavigator() {
   return (
-    <Stack.Navigator
-      initialRouteName="DashboardScreen"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
-      <Stack.Screen name="WaterTrackerScreen" component={WaterIntakeScreen} />
+    <Stack.Navigator initialRouteName="DashboardScreen">
+      <Stack.Screen
+        name="DashboardScreen"
+        component={DashboardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="WaterTrackerScreen" component={WaterTrackerScreen} />
       <Stack.Screen
         name="WaterReminderSettingScreen"
         component={WaterReminderSettingScreen}
       />
+      <Stack.Screen name="DetailDishScreen" component={DetailDishScreen} />
+      <Stack.Screen name="DetailFoodScreen" component={DetailFoodScreen} />
+      <Stack.Screen name="DetailMealScreen" component={DetailMealScreen} />
     </Stack.Navigator>
   );
 }
 
-export default memo(DashboardScreenNavigator);
+export default DashboardScreenNavigator;

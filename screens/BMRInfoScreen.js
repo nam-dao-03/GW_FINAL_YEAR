@@ -1,17 +1,9 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
-import { useLayoutEffect } from "react";
+import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
+import { useCallback } from "react";
 import colors from "../utils/Colors";
 import ActivityForm from "../components/BMRInfoScreen/ActivityForm";
 import PersonalPhysicalForm from "../components/BMRInfoScreen/PersonalPhysicalForm";
-import ContinueButton from "../components/ContinueButton";
+import ContinueButton from "../components/shared/ContinueButton";
 import usePersonContext from "../hooks/usePersonContext";
 import {
   alertNotification,
@@ -29,14 +21,18 @@ import {
 } from "../utils/constants";
 import Spacing from "../utils/Spacing";
 import Typography from "../utils/Typography";
+import KeyboardAvoidingWrapper from "../components/shared/KeyboardAvoidingWrapper";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function BMRInfoScreen({ navigation }) {
   // Styles for react navigation
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, [navigation]);
+  useFocusEffect(
+    useCallback(() => {
+      navigation.setOptions({
+        headerShown: false,
+      });
+    }, [navigation])
+  );
 
   const [state] = usePersonContext();
   const { minutes, days, gender, height, weight, age } = state;
@@ -102,10 +98,7 @@ export default function BMRInfoScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={styles.screenContainer} nestedScrollEnabled={true}>
           <View style={styles.header}>
@@ -119,7 +112,7 @@ export default function BMRInfoScreen({ navigation }) {
           />
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

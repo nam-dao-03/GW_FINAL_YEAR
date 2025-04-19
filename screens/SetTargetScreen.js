@@ -6,12 +6,10 @@ import {
   View,
   Text,
   TextInput,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
 import colors from "../utils/Colors";
 import Target from "../components/SetTargetScreen/Target";
-import ContinueButton from "../components/ContinueButton";
+import ContinueButton from "../components/shared/ContinueButton";
 import usePersonContext from "../hooks/usePersonContext";
 import { personActions } from "../context/person";
 import {
@@ -32,6 +30,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import Spacing from "../utils/Spacing";
 import Typography from "../utils/Typography";
 import Sizes from "../utils/Size";
+import KeyboardAvoidingWrapper from "../components/shared/KeyboardAvoidingWrapper";
 
 export default function SetTargetScreen({ navigation }) {
   const [state, dispatch] = usePersonContext();
@@ -164,10 +163,7 @@ export default function SetTargetScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.screenContainer}>
         <ScrollView style={styles.screenContainer}>
           <View style={styles.innerContainer}>
@@ -199,7 +195,7 @@ export default function SetTargetScreen({ navigation }) {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

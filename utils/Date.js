@@ -26,16 +26,63 @@ function generateLocalDateAndTime() {
   return localDateAndTime;
 }
 
+function formatDateToLocalVN(date) {
+  // Lấy phần ngày (định dạng dd/mm/yyyy và chuyển thành yyyy-mm-dd)
+  const datePart = date
+    .toLocaleDateString("vi-VN", {
+      timeZone: "Asia/Ho_Chi_Minh",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/(\d+)\/(\d+)\/(\d+)/, "$3-$2-$1");
+
+  // Lấy phần giờ (định dạng HH:MM:SS 24h)
+  const timePart = date.toLocaleTimeString("vi-VN", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
+  // Kết hợp lại thành chuỗi yyyy-mm-dd HH:MM:SS
+  return `${datePart} ${timePart}`;
+}
+
+function formatTimeToLocalVN(date) {
+  // Lấy phần giờ (định dạng HH:MM:SS 24h)
+  const timePart = date.toLocaleTimeString("vi-VN", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
+  return timePart;
+}
+
 function formattedISODate(date) {
   return date.toISOString().split("T")[0];
 }
 
 function extractDate(dateTime) {
-  return dateTime.split(" ")[0]; // Tách chuỗi theo khoảng trắng và lấy phần ngày
+  return dateTime.split(" ")[0];
 }
 
 function extractTime(dateTime) {
-  return dateTime.split(" ")[1]; // Tách chuỗi theo khoảng trắng và lấy phần ngày
+  const timePart = dateTime.split(" ")[1];
+
+  const timeWithoutSeconds = timePart.split(":").slice(0, 2).join(":");
+
+  return timeWithoutSeconds;
+}
+
+function removeSeconds(timeString) {
+  // timeString có định dạng "HH:mm:ss"
+  const [hours, minutes] = timeString.split(":");
+  return `${hours}:${minutes}`;
 }
 
 function formatShortDate(dateString) {
@@ -81,6 +128,48 @@ function getRelativeDate(dateInput) {
   if (diffDays > 1) return `${diffDays} days after`;
   return `${Math.abs(diffDays)} days before`;
 }
+
+const getHour = (time) => {
+  const [hourStr] = time.split(":");
+  return Number(hourStr); // => 20
+};
+
+const getMinute = (time) => {
+  const [, minuteStr] = time.split(":");
+  return Number(minuteStr); // => 12
+};
+function getWeekdayFromDate(dateStr) {
+  // Chuyển "2020:12:12" thành "2020-12-12"
+  const formattedStr = dateStr.replace(/:/g, "-");
+  const date = new Date(formattedStr);
+
+  // Lấy tên thứ (Monday, Tuesday, ...)
+  return date.toLocaleDateString("en-US", { weekday: "short" });
+}
+
+function getWeekRange(date) {
+  const today = new Date(date);
+
+  // Lấy ngày đầu tuần (Chủ Nhật)
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - today.getDay());
+
+  // Lấy ngày cuối tuần (Thứ Bảy)
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+  return { startOfWeek, endOfWeek };
+}
+function formatToMonthDay(date) {
+  const options = { month: "short", day: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
+function formatToMonthDayYear(date) {
+  const options = { month: "short", day: "numeric", year: "numeric" };
+  return date.toLocaleDateString("en-US", options);
+}
+
 export {
   formattedISODate,
   formatShortDate,
@@ -90,5 +179,14 @@ export {
   getLocalDate,
   getLocalTime,
   generateLocalDateAndTime,
+  formatDateToLocalVN,
   extractTime,
+  formatTimeToLocalVN,
+  removeSeconds,
+  getHour,
+  getMinute,
+  getWeekdayFromDate,
+  getWeekRange,
+  formatToMonthDay,
+  formatToMonthDayYear,
 };

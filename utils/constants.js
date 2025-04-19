@@ -36,7 +36,50 @@ const FAT_LOSE_WEIGHT_PERCENT = 0.2;
 
 const CALORIES_PER_KILOGRAM = 7700;
 
+const DEFAULT_AVERAGE_NUTRITIONAL = 100;
+
 const BACKGROUND_FETCH_TASK = "background-fetch";
+
+const BREAKFAST = "Breakfast";
+const LUNCH = "Lunch";
+const DINNER = "Dinner";
+const SNACK = "Snack";
+const WORKOUT = "Workout";
+
+const MEASURE_TYPE = {
+  WEIGHT: "Weight",
+  HEIGHT: "Height",
+};
+
+const FITNESS_PARAMETERS = {
+  TARGET: "Target",
+  TARGET_WEIGHT: "Target Weight",
+  TARGET_CALORIES: "Target Calories",
+  WEIGHT: "Weight",
+  HEIGHT: "Height",
+  AGE: "Age",
+  MINS_EXER_PER_DAY: "Minutes",
+  DAY_EXER_PER_WEEK: "Days",
+  GENDER: "Gender",
+};
+
+function getGoalTitle(goalType) {
+  switch (goalType) {
+    case LOSE_WEIGHT:
+      return "Lose Weight";
+    case LOSE_MORE_WEIGHT:
+      return "Lose Weight Faster";
+    case MAINTAIN_WEIGHT:
+      return "Maintain Weight";
+    case GAIN_WEIGHT:
+      return "Gain Weight";
+    case GAIN_MORE_WEIGHT:
+      return "Gain Weight Fast";
+    default:
+      return "unknown Goal";
+  }
+}
+
 export {
   LOSE_MORE_WEIGHT,
   LOSE_WEIGHT,
@@ -69,4 +112,13 @@ export {
   PROTEIN_LOSE_WEIGHT_PERCENT,
   FAT_LOSE_WEIGHT_PERCENT,
   BACKGROUND_FETCH_TASK,
+  DEFAULT_AVERAGE_NUTRITIONAL,
+  BREAKFAST,
+  LUNCH,
+  DINNER,
+  SNACK,
+  WORKOUT,
+  MEASURE_TYPE,
+  FITNESS_PARAMETERS,
+  getGoalTitle,
 };

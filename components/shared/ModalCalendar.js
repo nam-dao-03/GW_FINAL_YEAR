@@ -2,12 +2,12 @@ import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import Modal from "react-native-modal";
 import DateTimePicker, { getDefaultStyles } from "react-native-ui-datepicker";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import colors from "../utils/Colors";
+import colors from "../../utils/Colors";
 import { useState } from "react";
-import { alertNotification } from "../utils/Common";
-import Sizes from "../utils/Size";
-import Spacing from "../utils/Spacing";
-import Typography from "../utils/Typography";
+import { alertNotification } from "../../utils/Common";
+import Sizes from "../../utils/Size";
+import Spacing from "../../utils/Spacing";
+import Typography from "../../utils/Typography";
 const components = {
   IconPrev: (
     <FontAwesome6

@@ -1,32 +1,24 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View, Text } from "react-native";
 import Typography from "../../../../utils/Typography";
 import colors from "../../../../utils/Colors";
 import Spacing from "../../../../utils/Spacing";
-import TextInputContainer from "../../../../components/AddNutritionFoodScreen/TextInputContainer";
-import ContinueButton from "../../../../components/ContinueButton";
+import TextInputContainer from "../../../../components/shared/TextInputContainer";
+import ContinueButton from "../../../../components/shared/ContinueButton";
 import useFoodContext from "../../../../hooks/useFoodContext";
 import { foodActions } from "../../../../context/food";
 import {
   alertNotification,
   convertToNumber,
-  generateRandomString,
   isValidNumber,
 } from "../../../../utils/Common";
 import useAppContext from "../../../../hooks/useAppContext";
 import { appActions } from "../../../../context/app";
 import { Food } from "../../../../database/entities/Food";
+import { DEFAULT_AVERAGE_NUTRITIONAL } from "../../../../utils/constants";
+import KeyboardAvoidingWrapper from "../../../../components/shared/KeyboardAvoidingWrapper";
 
 export default function UpdateNutritionFoodScreen({ navigation, route }) {
-  const { food } = route.params;
-  // console.log(food);
+  const { food, sourceScreen } = route.params;
   const [state, dispatch] = useFoodContext();
   const [_, appDispatch] = useAppContext();
   const {
@@ -144,26 +136,30 @@ export default function UpdateNutritionFoodScreen({ navigation, route }) {
         return;
       }
     }
+    const scaleFactor = Math.floor(
+      convertToNumber(averageNutritional) / DEFAULT_AVERAGE_NUTRITIONAL
+    );
     const updatedFood = {
       ...food,
       nameFood,
-      calories: convertToNumber(calories),
-      carbs: convertToNumber(carbs),
-      fat: convertToNumber(fat),
-      protein: convertToNumber(protein),
-      averageNutritional: convertToNumber(averageNutritional),
+      calories: convertToNumber(calories / scaleFactor),
+      carbs: convertToNumber(carbs / scaleFactor),
+      fat: convertToNumber(fat / scaleFactor),
+      protein: convertToNumber(protein / scaleFactor),
+      averageNutritional: convertToNumber(DEFAULT_AVERAGE_NUTRITIONAL),
       measurement,
       servingSize: convertToNumber(servingSize),
       unit,
     };
     appDispatch(appActions.updateFood(updatedFood));
+    if (!(sourceScreen === "FoodScreen")) {
+      navigation.popToTop();
+      return;
+    }
     navigation.getParent("FavoriteScreenNavigator").navigate("FavoriteScreen");
   }
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.flex}>
         <ScrollView style={styles.flex}>
           <Text style={styles.title}>Nutrition information</Text>
@@ -185,7 +181,7 @@ export default function UpdateNutritionFoodScreen({ navigation, route }) {
           />
         </ScrollView>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+    </KeyboardAvoidingWrapper>
   );
 }
 

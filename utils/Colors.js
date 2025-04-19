@@ -6,7 +6,7 @@ const colors = {
   secondaryTextColor: "#828e93",
   descriptionTextColor: "#697581",
   shadowColor: "#CCCCCC",
-  backgroundColorScreen: "#f9f9f9",
+  backgroundColorScreen: "#f2f2f2",
   whiteColor: "#fff",
   remainingProgressColor: "#66d7a3",
   usedProgressColor: "#fefefe",
@@ -21,6 +21,7 @@ const colors = {
   lavenderMist: "#e8defb", // Tím oải hương nhạt
   softPeach: "#FDC3BD",
   fieryRed: "#D93C2D",
+  danger: "#FFD700",
 };
 
 export default colors;
