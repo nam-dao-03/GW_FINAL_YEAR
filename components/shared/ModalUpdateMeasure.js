@@ -27,6 +27,7 @@ export default function ModalUpdateMeasure({
     (item) => item.getDate() === getLocalDate()
   );
   const toast = useToast();
+  console.log(dailyNutrition);
   useEffect(() => {
     if (!dailyNutrition) return;
     if (measureType === MEASURE_TYPE.HEIGHT) {
@@ -34,7 +35,7 @@ export default function ModalUpdateMeasure({
     } else if (measureType === MEASURE_TYPE.WEIGHT) {
       setMeasure(Number(dailyNutrition.weight));
     }
-  }, [measureType]);
+  }, [measureType, dailyNutrition]);
   function handleReduceMeasure(value) {
     setMeasure(value);
   }
@@ -44,7 +45,6 @@ export default function ModalUpdateMeasure({
   function handleChangeMeasure(value) {
     setMeasure(value);
   }
-  console.log(dailyNutrition);
   function handleSubmit() {
     if (measureType === MEASURE_TYPE.HEIGHT) {
       const newDailyNutrition = {

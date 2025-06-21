@@ -1,4 +1,3 @@
-import { Meal } from "./Meal";
 class Food {
   static TABLE_NAME = "Food";
   static ID_COLUMN = "foodId";
@@ -65,90 +64,51 @@ class Food {
   getFoodId() {
     return this.foodId;
   }
-  setFoodId(value) {
-    this.foodId = value;
-  }
+
   getNameFood() {
     return this.nameFood;
-  }
-  setNameFood(value) {
-    this.nameFood = value;
   }
 
   getBarcode() {
     return this.barcode;
   }
-  setBarcode(value) {
-    this.barcode = value;
-  }
 
   getCalories() {
     return this.calories;
-  }
-  setCalories(value) {
-    this.calories = value;
   }
 
   getCarbs() {
     return this.carbs;
   }
-  setCarbs(value) {
-    this.carbs = value;
-  }
 
   getFat() {
     return this.fat;
   }
-  setFat(value) {
-    this.fat = value;
-  }
 
   getProtein() {
     return this.protein;
-  }
-  setProtein(value) {
-    this.protein = value;
-  }
-
-  setAverageNutritional(averageNutritional) {
-    this.averageNutritional = averageNutritional;
   }
 
   getAverageNutritional() {
     return this.averageNutritional;
   }
 
-  setMeasurement(measurement) {
-    this.measurement = measurement;
-  }
-
   getMeasurement() {
     return this.measurement;
   }
 
-  setServingSize(servingSize) {
-    this.servingSize = servingSize;
-  }
   getServingSize() {
     return this.servingSize;
   }
-  setUnit(unit) {
-    this.unit = unit;
-  }
+
   getUnit() {
     return this.unit;
   }
 
-  setIsFavorite(isFavorite) {
-    this.isFavorite = isFavorite;
-  }
   getIsFavorite() {
     return this.isFavorite;
   }
 
-  setIsCreatedByUser(isCreatedByUser) {
-    this.isCreatedByUser = isCreatedByUser;
-  }
   getIsCreatedByUser() {
     return this.isCreatedByUser;
   }

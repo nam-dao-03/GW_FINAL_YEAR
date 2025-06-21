@@ -248,6 +248,7 @@ function calculationMeasure(user, dailyNutrition, waterIntake) {
     ...waterIntake,
     waterIntakeVolume,
   };
+  console.log("updatedWaterIntake", updatedWaterIntake);
   return { updatedDailyNutrition, updatedWaterIntake };
 }
 

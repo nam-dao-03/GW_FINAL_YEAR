@@ -1,44 +1,38 @@
 {
   "expo": {
-    "name": "CalBuddy",
+    "name": "NutriHeart",
     "slug": "nutrition_app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/imgs/app-icon.png",
+      "imageWidth": 200,
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "y",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+      "backgroundColor": "#F8F0E3"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/imgs/app-icon.png",
+        "backgroundColor": "#F8F0E3"
       },
-      "package": "com.namdao994.nutrition_app"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "package": "com.namdao994.nutrition_app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "plugins": [
       "expo-sqlite",
       [
         "expo-notifications",
         {
-          "icon": "./assets/mango_app_icon.png",
-          "color": "#ffffff",
+          "icon": "./assets/imgs/app-icon.png",
+          "color": "#F8F0E3",
           "defaultChannel": "default",
           "sounds": [
-            "./assets/happy_bells_notification.wav"
+            "./assets/sounds/happy_bells_notification.wav"
           ],
           "enableBackgroundRemoteNotifications": false
         }
@@ -46,12 +40,11 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#ffffff",
-          "image": "./assets/mango_app_icon.png",
-          "imageWidth": 200,
+          "backgroundColor": "#F8F0E3",
+          "image": "./assets/imgs/app-icon.png",
           "dark": {
-            "image": "./assets/mango_app_icon.png",
-            "backgroundColor": "#ffffff"
+            "image": "./assets/imgs/app-icon.png",
+            "backgroundColor": "#F8F0E3"
           }
         }
       ],
@@ -80,13 +73,27 @@
             }
           }
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow CalBuddy to access your camera",
+          "microphonePermission": "Allow CalBuddy to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "8a875662-a460-43bc-9ecc-e7ef8ba92a23"
+        "projectId": "3d04202f-52a0-4c38-9a16-d3f693d004af"
       }
     },
-    "owner": "nam-dao-994"
+    "owner": "namdnstudent"
   }
 }

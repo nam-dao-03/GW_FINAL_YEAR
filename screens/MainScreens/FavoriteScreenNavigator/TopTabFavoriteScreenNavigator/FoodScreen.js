@@ -10,6 +10,8 @@ import useAppContext from "../../../../hooks/useAppContext";
 import { useToast } from "react-native-toast-notifications";
 import { useState } from "react";
 import AddFoodToMealModal from "../../../../components/shared/AddFoodToMealModal";
+import KnowledgeSection from "../../../../components/shared/KnowledgeSection";
+import BottomExtraPaddingScreen from "../../../../components/shared/BottomExtraPaddingScreen";
 
 export default function FoodScreen({ navigation, route }) {
   const toast = useToast();
@@ -79,29 +81,45 @@ export default function FoodScreen({ navigation, route }) {
   }
   return (
     <>
-      <FlatList
-        data={favoriteFoodList}
-        keyExtractor={(item) => item.getFoodId()}
-        renderItem={renderFoodItemList}
-        style={styles.flatList}
-        initialScrollIndex={0}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: Spacing.XL }}
-        ListHeaderComponentStyle={{ zIndex: 10 }}
-        keyboardShouldPersistTaps="handled"
-      />
-      {food && (
-        <AddFoodToMealModal
-          isVisible={isAddFoodToMealModalVisible}
-          food={food}
-          onBackdropPress={setIsAddFoodToMealModalVisible}
-        />
+      {favoriteFoodList.length === 0 ? (
+        <ScrollView style={styles.screenContainer}>
+          <KnowledgeSection />
+          <BottomExtraPaddingScreen />
+        </ScrollView>
+      ) : (
+        <>
+          <FlatList
+            data={favoriteFoodList}
+            keyExtractor={(item) => item.getFoodId()}
+            renderItem={renderFoodItemList}
+            style={styles.flatList}
+            initialScrollIndex={0}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: Spacing.BIG_70 * 1.5 }}
+            ListHeaderComponentStyle={{ zIndex: 10 }}
+            keyboardShouldPersistTaps="handled"
+          />
+          {food && (
+            <AddFoodToMealModal
+              isVisible={isAddFoodToMealModalVisible}
+              food={food}
+              onBackdropPress={setIsAddFoodToMealModalVisible}
+            />
+          )}
+        </>
       )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    paddingHorizontal: Spacing.SM,
+    paddingVertical: Spacing.XL,
+    backgroundColor: colors.backgroundColorScreen,
+    paddingBottom: Spacing.BIG_40,
+  },
   flatList: {
     flex: 1,
     paddingHorizontal: Spacing.SM,

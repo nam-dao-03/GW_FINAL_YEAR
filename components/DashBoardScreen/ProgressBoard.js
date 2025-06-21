@@ -26,12 +26,13 @@ export default function ProgressBoard({ dailyNutrition }) {
     mealFoodList,
     mealDishList,
     workoutList,
+    selectedDay,
   } = appState;
   const mealListToday = mealList.filter(
-    (meal) => meal.getDate() === getLocalDate()
+    (meal) => meal.getDate() === selectedDay
   );
   const workoutListToday = workoutList.filter(
-    (item) => item.workoutDate === getLocalDate()
+    (item) => item.workoutDate === selectedDay
   );
 
   const caloriesBurned = workoutListToday.reduce(

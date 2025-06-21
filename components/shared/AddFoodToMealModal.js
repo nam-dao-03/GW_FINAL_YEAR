@@ -20,7 +20,7 @@ import colors from "../../utils/Colors";
 import Spacing from "../../utils/Spacing";
 import Sizes from "../../utils/Size";
 import Typography from "../../utils/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function AddFoodToMealModal({
   isVisible,
   onBackdropPress,
@@ -28,9 +28,9 @@ export default function AddFoodToMealModal({
   mealName,
 }) {
   const [appState, appDispatch] = useAppContext();
-  const { mealList } = appState;
+  const { mealList, selectedDay } = appState;
   const mealListToday = mealList.filter(
-    (meal) => meal.getDate() === getLocalDate()
+    (meal) => meal.getDate() === selectedDay
   );
   const toast = useToast();
   const scaleFactor = food
@@ -97,8 +97,6 @@ export default function AddFoodToMealModal({
           </View>
         </View>
         <DropdownActions
-          defaultValueMeal={mealName}
-          defaultQuantity={1}
           onChangeMeal={changeDropdownMeal}
           onChangeQuantityOptions={changeDropdownQuantityOptions}
         />
@@ -125,15 +123,14 @@ const numberOptions = Array.from({ length: 10 }, (_, i) => ({
   value: i + 1,
 }));
 
-function DropdownActions({
-  defaultValueMeal = BREAKFAST,
-  defaultQuantity = numberOptions[0].value,
-  onChangeMeal,
-  onChangeQuantityOptions,
-}) {
-  const [valueMeal, setValueMeal] = useState(defaultValueMeal);
-  const [valueFoodDish, setValueFoodDish] = useState(defaultQuantity);
+function DropdownActions({ onChangeMeal, onChangeQuantityOptions }) {
+  const [valueMeal, setValueMeal] = useState(BREAKFAST);
+  const [valueFoodDish, setValueFoodDish] = useState(numberOptions[0]);
   const [isFocus, setIsFocus] = useState(false);
+  useEffect(() => {
+    onChangeMeal(BREAKFAST);
+    onChangeQuantityOptions(1);
+  }, []);
   return (
     <View style={styles.container}>
       <Dropdown

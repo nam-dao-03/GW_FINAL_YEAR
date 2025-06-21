@@ -23,22 +23,13 @@ class MealDish {
   getMealDishId() {
     return this.mealDishId;
   }
-  setMealDishId(value) {
-    this.mealDishId = value;
-  }
 
   getMealId() {
     return this.mealId;
   }
-  setMealId(value) {
-    this.mealId = value;
-  }
 
   getDishId() {
     return this.dishId;
-  }
-  setDishId(value) {
-    this.dishId = value;
   }
 }
 

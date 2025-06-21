@@ -13,13 +13,14 @@ import {
   extractTime,
   generateLocalDateAndTime,
   getLocalDate,
+  getLocalTime,
 } from "../../utils/Date";
 import { generateRandomString } from "../../utils/Common";
 export default function WaterIntakeBoard({ waterIntake }) {
   const [appState, appDispatch] = useAppContext();
-  const { userList, waterIntakeList, cupDrunkList } = appState;
+  const { userList, waterIntakeList, cupDrunkList, selectedDay } = appState;
   const waterIntakeToday = waterIntakeList.find(
-    (item) => item.getDate() === getLocalDate()
+    (item) => item.getDate() === selectedDay
   );
   const cupDrunkListToday = cupDrunkList.filter(
     (item) => item.getWaterIntakeId() === waterIntakeToday.getWaterIntakeId()
@@ -38,7 +39,7 @@ export default function WaterIntakeBoard({ waterIntake }) {
       appDispatch(appActions.deleteCupDrunkById(lastCupDrunk.getCupDrunkId()));
     } else if (type === "increase") {
       const cupDrunkId = generateRandomString();
-      const cupDrunkDate = generateLocalDateAndTime();
+      const cupDrunkDate = `${selectedDay} ${getLocalTime()}`;
       const cupDrunk = {
         cupDrunkId,
         waterIntakeId: waterIntakeToday.getWaterIntakeId(),
@@ -69,9 +70,6 @@ export default function WaterIntakeBoard({ waterIntake }) {
       toast.show("Turn on notification", { type: "success" });
     }
   }
-
-  console.log("waterIntakeToday", waterIntakeToday);
-  console.log("cupDrunkListToday", cupDrunkListToday);
 
   return (
     <View style={styles.waterContainer}>

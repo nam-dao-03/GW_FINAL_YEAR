@@ -38,7 +38,21 @@ export default function DetailFoodScreen({ navigation, route }) {
   const { foodList, dailyNutritionList } = appState;
   const { foodId, sourceScreen, mealName, isDisableEditFoodFromDish } =
     route.params;
-  const food = foodList.find((item) => item.getFoodId() === foodId);
+  const food = foodList.find((item) => item.getFoodId() === foodId) || {
+    foodId: "VI001",
+    nameFood: "rice",
+    barcode: null,
+    calories: 130,
+    carbs: 28,
+    fat: 0.3,
+    protein: 2.7,
+    averageNutritional: 100,
+    measurement: "Cup",
+    servingSize: 100,
+    unit: "g",
+    isFavorite: 0,
+    isCreatedByUser: 0,
+  };
   useFocusEffect(
     useCallback(() => {
       // bottomTabNavigation.setOptions({
@@ -57,7 +71,6 @@ export default function DetailFoodScreen({ navigation, route }) {
     }, [navigation, route])
   );
   const { isDisableEdit, titleButton } = useFoodActions(sourceScreen) || {};
-
   function handleOpenAddFoodToMealModal() {
     setIsAddFoodToMealModalVisible(true);
   }
@@ -71,35 +84,39 @@ export default function DetailFoodScreen({ navigation, route }) {
 
   const [quantityUnit, setQuantityUnit] = useState({
     quantity: "1",
-    chooseUnit: food.measurement,
+    chooseUnit: food?.measurement || "Cup",
   });
 
   function handleChangeQuantityUnit(quantityUnit) {
     setQuantityUnit(quantityUnit);
   }
 
+  function handleNavigateEditScreen() {
+    navigation.navigate("UpdateFoodScreen", { food, sourceScreen });
+  }
+
   const nutritionObj = {
-    calories: food.calories,
-    carbs: food.carbs,
-    protein: food.protein,
-    fat: food.fat,
-    measurement: food.measurement,
-    averageNutritional: food.averageNutritional,
-    unit: food.unit,
-    servingSize: food.servingSize,
+    calories: food?.calories || 10,
+    carbs: food?.carbs || 10,
+    protein: food?.protein || 10,
+    fat: food?.fat || 10,
+    measurement: food?.measurement || "Cup",
+    averageNutritional: food?.averageNutritional || 100,
+    unit: food?.unit || "g",
+    servingSize: food?.servingSize || 100,
   };
 
   const nutritionTarget = {
-    targetCalories: dailyNutrition.targetCalories,
-    targetCarbs: dailyNutrition.targetCarbs,
-    targetProtein: dailyNutrition.targetProtein,
-    targetFat: dailyNutrition.targetFat,
+    targetCalories: dailyNutrition?.targetCalories || 1000,
+    targetCarbs: dailyNutrition?.targetCarbs || 100,
+    targetProtein: dailyNutrition?.targetProtein || 100,
+    targetFat: dailyNutrition?.targetFat || 100,
   };
 
   const quantityDisplayProps = {
-    measurement: food.measurement,
-    unit: food.unit,
-    servingSize: food.servingSize,
+    measurement: food?.measurement || "Cup",
+    unit: food?.unit || "g",
+    servingSize: food?.servingSize || 100,
   };
 
   const calculatedNutritionObj = calculateNutrition(nutritionObj, quantityUnit);
@@ -108,7 +125,7 @@ export default function DetailFoodScreen({ navigation, route }) {
       <MoreDetailFoodModal
         isModalVisible={isMoreModalVisible}
         setModalVisible={setIsMoreModalVisible}
-        onNavigateEditScreen={() => {}}
+        onNavigateEditScreen={handleNavigateEditScreen}
         food={food}
         isDisableEdit={isDisableEdit || isDisableEditFoodFromDish}
       />

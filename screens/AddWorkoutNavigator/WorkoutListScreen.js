@@ -18,6 +18,7 @@ import { getLocalDate } from "../../utils/Date";
 import { useToast } from "react-native-toast-notifications";
 import ModalAddWorkout from "../../components/WorkoutListScreen/ModalAddWorkout";
 import KeyboardAvoidingWrapper from "../../components/shared/KeyboardAvoidingWrapper";
+import EmptySection from "../../components/shared/EmptySection";
 export default function WorkoutListScreen({ navigation }) {
   useFocusEffect(
     useCallback(() => {
@@ -38,7 +39,7 @@ export default function WorkoutListScreen({ navigation }) {
     useState(false);
   const toast = useToast();
   const [workout, setWorkout] = useState({});
-  const { workoutList } = appState;
+  const { workoutList, selectedDay } = appState;
 
   const filteredWorkoutList = workoutList
     .filter((item) => item.workoutDate === null)
@@ -74,7 +75,7 @@ export default function WorkoutListScreen({ navigation }) {
   }
   function handleAddItem(workout) {
     const workoutId = generateRandomString();
-    const workoutDate = getLocalDate();
+    const workoutDate = selectedDay;
     const newWorkout = {
       ...workout,
       isCreatedByUser: 0,
@@ -108,17 +109,21 @@ export default function WorkoutListScreen({ navigation }) {
           placeholder="Search Workout"
           onSearch={handlerSearchValue}
         />
-        <FlatList
-          data={filteredWorkoutList}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={renderWorkoutItem}
-          style={styles.flatList}
-          initialScrollIndex={0}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: Spacing.BIG_70 * 3 }}
-          ListHeaderComponentStyle={{ zIndex: 10 }}
-          keyboardShouldPersistTaps="handled"
-        />
+        {filteredWorkoutList.length === 0 ? (
+          <EmptySection description="No Workout found" />
+        ) : (
+          <FlatList
+            data={filteredWorkoutList}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={renderWorkoutItem}
+            style={styles.flatList}
+            initialScrollIndex={0}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: Spacing.BIG_70 * 3 }}
+            ListHeaderComponentStyle={{ zIndex: 10 }}
+            keyboardShouldPersistTaps="handled"
+          />
+        )}
         <ModalAddWorkout
           isVisible={isModalAddWorkoutVisible}
           onBackdropPress={setIsModalAddWorkoutVisible}

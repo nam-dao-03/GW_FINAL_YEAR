@@ -27,40 +27,20 @@ class CupDrunk {
     this.cupDrunkDate = cupDrunkDate;
   }
 
-  // Getter và Setter cho cupDrunkId
   getCupDrunkId() {
     return this.cupDrunkId;
   }
 
-  setCupDrunkId(cupDrunkId) {
-    this.cupDrunkId = cupDrunkId;
-  }
-
-  // Getter và Setter cho waterIntakeId
   getWaterIntakeId() {
     return this.waterIntakeId;
   }
 
-  setWaterIntakeId(waterIntakeId) {
-    this.waterIntakeId = waterIntakeId;
-  }
-
-  // Getter và Setter cho waterPerCup
   getWaterPerCup() {
     return this.waterPerCup;
   }
 
-  setWaterPerCup(waterPerCup) {
-    this.waterPerCup = waterPerCup;
-  }
-
-  // Getter và Setter cho cupDrunkDate
   getDate() {
     return this.cupDrunkDate;
-  }
-
-  setDate(cupDrunkDate) {
-    this.cupDrunkDate = cupDrunkDate;
   }
 }
 

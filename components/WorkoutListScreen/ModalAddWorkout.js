@@ -56,7 +56,7 @@ export default function ModalAddWorkout({
       return;
     }
     const workoutId = generateRandomString();
-    const workoutDate = getLocalDate();
+    const workoutDate = appState.selectedDay;
     const newWorkout = new Workout(
       workoutId,
       workout.userId,

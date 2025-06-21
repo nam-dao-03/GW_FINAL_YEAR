@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -18,6 +18,7 @@ import colors from "../../../utils/Colors";
 import { FontAwesome6 as FA6 } from "@expo/vector-icons";
 import Sizes from "../../../utils/Size";
 import AppIcon from "../../../utils/Common";
+import ModalSettingAccount from "../../../components/SettingScreen/ModalSettingAccount";
 export default function SettingScreen({ navigation }) {
   const bottomTabNavigation = navigation.getParent("MainScreensBottomTab");
   useFocusEffect(
@@ -32,6 +33,8 @@ export default function SettingScreen({ navigation }) {
     }, [navigation])
   );
   const [_, dispatch] = useAppContext();
+  const [isVisibleModalSettingAccount, setIsVisibleModalSettingAccount] =
+    useState(false);
   const settingItemList = [
     {
       title: "Update Basal Metabolic Rate (BMR)",
@@ -46,7 +49,7 @@ export default function SettingScreen({ navigation }) {
     {
       title: "Setting Account",
       icon: { type: "Ionicons", name: "settings-outline" },
-      onPress: () => {},
+      onPress: handleVisibleModalSettingAccount,
     },
   ];
 
@@ -56,6 +59,10 @@ export default function SettingScreen({ navigation }) {
 
   function handleNavigateToUpdateBMRScreen() {
     navigation.navigate("UpdateBMRScreen");
+  }
+
+  function handleVisibleModalSettingAccount() {
+    setIsVisibleModalSettingAccount(true);
   }
 
   return (
@@ -72,6 +79,10 @@ export default function SettingScreen({ navigation }) {
             />
           ))}
         </ScrollView>
+        <ModalSettingAccount
+          isVisible={isVisibleModalSettingAccount}
+          onBackdropPress={() => setIsVisibleModalSettingAccount(false)}
+        />
       </SafeAreaView>
     </KeyboardAvoidingWrapper>
   );

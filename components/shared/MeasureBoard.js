@@ -36,9 +36,12 @@ export default function MeasureBoard({ style = {} }) {
   const [currentStartDate, setCurrentStartDate] = useState(getLocalDate());
   const [currentEndDate, setCurrentEndDate] = useState(getLocalDate());
   const [appState, appDispatch] = useAppContext();
-  const { dailyNutritionList } = appState;
+  const { dailyNutritionList, selectedDay } = appState;
   const dailyNutrition = dailyNutritionList.find(
     (item) => item.getDate() === getLocalDate()
+  );
+  const dailyNutritionSelected = dailyNutritionList.find(
+    (item) => item.getDate() === selectedDay
   );
   const minValue =
     chartData.length === 0
@@ -54,9 +57,8 @@ export default function MeasureBoard({ style = {} }) {
       measureType,
       dailyNutritionList
     );
-    console.log("chartData", chartData);
     setChartData(chartData);
-  }, [currentDate, measureType, dailyNutrition]);
+  }, [currentDate, measureType, dailyNutrition, dailyNutritionList]);
 
   function getChartData(startDate, endDate, measureType, data) {
     const filteredData = data
@@ -183,7 +185,7 @@ export default function MeasureBoard({ style = {} }) {
           endOpacity={0.2}
           color={colorAreaChart}
           height={Sizes.MASSIVE * 1.5}
-          initialSpacing={5}
+          initialSpacing={Sizes.SM}
           endSpacing={0}
           yAxisLabelContainerStyle={{ marginLeft: Spacing.XXS }}
           xAxisThickness={0}
@@ -197,7 +199,9 @@ export default function MeasureBoard({ style = {} }) {
           xAxisLabelTextStyle={{
             fontSize: Typography.XS,
             color: colors.textColor,
+            // marginTop: -Spacing.SM,
           }}
+          xAxisLabelsHeight={Sizes.XS * 1.7}
           // spacing={35}
           width={Sizes.MASSIVE * 3.1}
           adjustToWidth={true}
@@ -208,7 +212,7 @@ export default function MeasureBoard({ style = {} }) {
           disableScroll={true}
           focusEnabled={true}
           pointerConfig={{
-            pointerStripHeight: 100,
+            pointerStripHeight: Sizes.MASSIVE,
             pointerStripColor: colorAreaChart,
             pointerStripWidth: 2,
             pointerColor: "transparent",
@@ -309,7 +313,7 @@ export default function MeasureBoard({ style = {} }) {
       <ModalUpdateMeasure
         isVisible={isModalUpdateMeasure}
         onBackdropPress={setIsModalUpdateMeasure}
-        dailyNutrition={dailyNutrition}
+        dailyNutrition={dailyNutritionSelected}
         measureType={measureType}
       />
     </View>
@@ -388,223 +392,3 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
 });
-
-const dummyData = [
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-22",
-    height: "164.7", // Thấp hơn
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60.4", // Gầy hơn
-  },
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-21",
-    height: "164.5", // Thấp hơn
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60.2", // Gầy hơn
-  },
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-20",
-    height: "164.5",
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60", // Gầy hơn
-  },
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-19",
-    height: "164.3", // Thấp hơn
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60", // Gầy hơn
-  },
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-18",
-    height: "164.8", // Thấp hơn
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60", // Gầy hơn
-  },
-  {
-    bmi: "22.86",
-    dailyNutritionId: "CCyey3GP",
-    dateDailyNutrition: "2025-04-17",
-    height: "166.8", // Thấp hơn
-    targetCalories: 3362,
-    targetCarbs: 421,
-    targetFat: 113,
-    targetProtein: 169,
-    userId: "8rzbtCzN",
-    weight: "60", // Gầy hơn
-  },
-  {
-    bmi: "23.45",
-    dailyNutritionId: "dNxaP3AZ",
-    dateDailyNutrition: "2025-04-16",
-    height: "162", // Thấp hơn
-    targetCalories: 3200,
-    targetCarbs: 400,
-    targetFat: 110,
-    targetProtein: 160,
-    userId: "8rzbtCzN",
-    weight: "59.5", // Gầy hơn
-  },
-  {
-    bmi: "22.70",
-    dailyNutritionId: "jkz78GsL",
-    dateDailyNutrition: "2025-04-15",
-    height: "164", // Thấp hơn
-    targetCalories: 3300,
-    targetCarbs: 410,
-    targetFat: 112,
-    targetProtein: 165,
-    userId: "8rzbtCzN",
-    weight: "59", // Gầy hơn
-  },
-  {
-    bmi: "23.10",
-    dailyNutritionId: "WX9sKd8Q",
-    dateDailyNutrition: "2025-04-14",
-    height: "163", // Thấp hơn
-    targetCalories: 3250,
-    targetCarbs: 405,
-    targetFat: 111,
-    targetProtein: 163,
-    userId: "8rzbtCzN",
-    weight: "59.8", // Gầy hơn
-  },
-  {
-    bmi: "23.65",
-    dailyNutritionId: "zYi3t7Xp",
-    dateDailyNutrition: "2025-04-13",
-    height: "161", // Thấp hơn
-    targetCalories: 3150,
-    targetCarbs: 395,
-    targetFat: 108,
-    targetProtein: 158,
-    userId: "8rzbtCzN",
-    weight: "60.2", // Gầy hơn
-  },
-  {
-    bmi: "22.50",
-    dailyNutritionId: "pOe2kq7T",
-    dateDailyNutrition: "2025-04-12",
-    height: "164", // Thấp hơn
-    targetCalories: 3350,
-    targetCarbs: 418,
-    targetFat: 114,
-    targetProtein: 168,
-    userId: "8rzbtCzN",
-    weight: "58.5", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-11",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "59.1", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-10",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "58.5", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-09",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "58.3", // Gầy hơn
-  },
-
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-08",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "58.2", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-07",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "58", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-06",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "57.9", // Gầy hơn
-  },
-  {
-    bmi: "22.95",
-    dailyNutritionId: "uRk7aVcE",
-    dateDailyNutrition: "2025-04-05",
-    height: "165",
-    targetCalories: 3370,
-    targetCarbs: 423,
-    targetFat: 115,
-    targetProtein: 170,
-    userId: "8rzbtCzN",
-    weight: "57.9", // Gầy hơn
-  },
-];

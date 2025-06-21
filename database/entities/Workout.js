@@ -41,19 +41,9 @@ class Workout {
     return this.workoutId;
   }
 
-  // Phương thức để thay đổi workoutId
-  setWorkoutId(workoutId) {
-    this.workoutId = workoutId;
-  }
-
   // Phương thức để lấy userId
   getUserId() {
     return this.userId;
-  }
-
-  // Phương thức để thay đổi userId
-  setUserId(userId) {
-    this.userId = userId;
   }
 
   // Phương thức để lấy date
@@ -61,19 +51,9 @@ class Workout {
     return this.workoutDate;
   }
 
-  // Phương thức để thay đổi date
-  setDate(workoutDate) {
-    this.workoutDate = workoutDate;
-  }
-
   // Phương thức để lấy exerciseName
   getExerciseName() {
     return this.exerciseName;
-  }
-
-  // Phương thức để thay đổi exerciseName
-  setExerciseName(exerciseName) {
-    this.exerciseName = exerciseName;
   }
 
   // Phương thức để lấy duration
@@ -81,27 +61,13 @@ class Workout {
     return this.duration;
   }
 
-  // Phương thức để thay đổi duration
-  setDuration(duration) {
-    this.duration = duration;
-  }
-
   // Phương thức để lấy calories
   getCalories() {
     return this.calories;
   }
 
-  // Phương thức để thay đổi calories
-  setCalories(calories) {
-    this.calories = calories;
-  }
-
   getIsCreatedByUser() {
     return this.isCreatedByUser;
-  }
-
-  setIsCreatedByUser(isCreatedByUser) {
-    this.isCreatedByUser = isCreatedByUser;
   }
 }
 

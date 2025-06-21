@@ -12,7 +12,7 @@ export default function useFoodActions(sourceScreen) {
     }
     case "AddDishScreen": {
       const titleButton = null;
-      const isDisableEdit = false;
+      const isDisableEdit = true;
       return { titleButton, isDisableEdit };
     }
     case "DetailDishScreen": {
@@ -30,6 +30,7 @@ export default function useFoodActions(sourceScreen) {
       const isDisableEdit = true;
       return { titleButton, isDisableEdit };
     }
+
     default: {
       const titleButton = null;
       const isDisableEdit = true;

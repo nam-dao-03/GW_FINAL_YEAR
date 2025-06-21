@@ -5,8 +5,7 @@ import Spacing from "../../utils/Spacing";
 import colors from "../../utils/Colors";
 import { useToast } from "react-native-toast-notifications";
 import useAppContext from "../../hooks/useAppContext";
-import { useEffect, useState } from "react";
-import { alertNotification, generateRandomString } from "../../utils/Common";
+import { alertNotification } from "../../utils/Common";
 import {
   formatTimeToLocalVN,
   getLocalDate,
@@ -68,7 +67,6 @@ export default function WaterReminderContainer({
       toast.show(`Change Success!`, { type: "success" });
     }
   }
-
   return (
     <View style={styles.waterReminderContainer}>
       {notificationList.map((item) => (
@@ -107,18 +105,18 @@ const styles = StyleSheet.create({
 function isTimeOutsideSleepRange(bedTime, wakeUpTime, checkTime) {
   const toSeconds = (timeStr) => {
     const [hours, minutes, seconds] = timeStr.split(":").map(Number);
-    return hours * 3600 + minutes * 60 + seconds;
+    return hours * 3600 + minutes * 60 + (seconds || 0);
   };
 
   const bedTimeSec = toSeconds(bedTime);
   const wakeUpTimeSec = toSeconds(wakeUpTime);
   const checkTimeSec = toSeconds(checkTime);
 
-  // Trường hợp khoảng thời gian qua nửa đêm (ví dụ: bedTime = 22:00, wakeUpTime = 06:00)
   if (bedTimeSec > wakeUpTimeSec) {
-    return checkTimeSec < bedTimeSec && checkTimeSec >= wakeUpTimeSec;
+    // Thời gian ngủ qua nửa đêm (ví dụ 22:00 → 06:00)
+    return !(checkTimeSec >= bedTimeSec || checkTimeSec < wakeUpTimeSec);
   }
 
-  // Trường hợp khoảng thời gian trong cùng 1 ngày
+  // Ngủ và thức trong cùng ngày
   return checkTimeSec < bedTimeSec || checkTimeSec >= wakeUpTimeSec;
 }

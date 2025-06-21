@@ -39,6 +39,7 @@ export default function UpdateBMRScreen({ navigation }) {
   const [appState, appDispatch] = useAppContext();
   const { userList, dailyNutritionList, waterIntakeList } = appState;
   const [isModalUpdateBMRMeasure, setIsModalUpdateBMRMeasure] = useState(false);
+  const [keyboardType, setKeyboardType] = useState("number-pad");
   const [fitnessParameter, setFitnessParameter] = useState("");
   const [defaultValue, setDefaultValue] = useState();
   const user = userList[0];
@@ -48,48 +49,47 @@ export default function UpdateBMRScreen({ navigation }) {
   const waterIntake = waterIntakeList.find(
     (item) => item.getDate() === getLocalDate()
   );
-  console.log("user", user);
-  console.log("dailyNutrition", dailyNutrition);
 
   const measureItemList = useMemo(
     () => [
       {
         title: "Kcal/Day",
         value: `${dailyNutrition.targetCalories || 1} kcal`,
-        // onPress: () =>
-        //   handleOpenModalBMRMeasure(
-        //     FITNESS_PARAMETERS.TARGET_CALORIES,
-        //     Number(dailyNutrition.targetCalories || 1)
-        //   ),
         onPress: () => {},
       },
       {
         title: "Height",
         value: `${dailyNutrition.height || 1} cm`,
 
-        onPress: () =>
+        onPress: () => {
           handleOpenModalBMRMeasure(
             FITNESS_PARAMETERS.HEIGHT,
             Number(dailyNutrition.height || 1)
-          ),
+          );
+          setKeyboardType("number-pad");
+        },
       },
       {
         title: "Weight",
         value: `${dailyNutrition.weight || 1} kg`,
-        onPress: () =>
+        onPress: () => {
           handleOpenModalBMRMeasure(
             FITNESS_PARAMETERS.WEIGHT,
             Number(dailyNutrition.weight || 1)
-          ),
+          );
+          setKeyboardType("default");
+        },
       },
       {
         title: "Age",
         value: `${user.age || 1} years`,
-        onPress: () =>
+        onPress: () => {
           handleOpenModalBMRMeasure(
             FITNESS_PARAMETERS.AGE,
             Number(user.age || 1)
-          ),
+          );
+          setKeyboardType("number-pad");
+        },
       },
       {
         title: "Gender",
@@ -100,20 +100,24 @@ export default function UpdateBMRScreen({ navigation }) {
       {
         title: "Minutes Exercise Per Day",
         value: `${user.minExerPerDay || 1} mins`,
-        onPress: () =>
+        onPress: () => {
           handleOpenModalBMRMeasure(
             FITNESS_PARAMETERS.MINS_EXER_PER_DAY,
             Number(user.minExerPerDay || 1)
-          ),
+          );
+          setKeyboardType("number-pad");
+        },
       },
       {
         title: "Day Exercise Per Week",
         value: `${user.dayExerPerWeek || 1} days`,
-        onPress: () =>
+        onPress: () => {
           handleOpenModalBMRMeasure(
             FITNESS_PARAMETERS.DAY_EXER_PER_WEEK,
             Number(user.dayExerPerWeek || 1)
-          ),
+          );
+          setKeyboardType("number-pad");
+        },
       },
     ],
     [dailyNutrition, user]
@@ -123,6 +127,7 @@ export default function UpdateBMRScreen({ navigation }) {
     setDefaultValue(defaultValue);
     setFitnessParameter(fitnessParameter);
     setIsModalUpdateBMRMeasure(true);
+    setKeyboardType("default");
   }
 
   return (
@@ -148,6 +153,11 @@ export default function UpdateBMRScreen({ navigation }) {
               }
             />
           )}
+          <MeasureItem
+            title={"Water Intake Volume"}
+            value={`${waterIntake.waterIntakeVolume} ml`}
+            onPress={() => {}}
+          />
           {measureItemList.map((item, index) => (
             <MeasureItem
               key={index}
@@ -164,6 +174,7 @@ export default function UpdateBMRScreen({ navigation }) {
           fitnessParameter={fitnessParameter}
           defaultValue={defaultValue}
           defaultObj={{ user, dailyNutrition, waterIntake }}
+          keyboardType={keyboardType}
         />
       </SafeAreaView>
     </KeyboardAvoidingWrapper>

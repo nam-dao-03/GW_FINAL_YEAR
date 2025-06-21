@@ -1,7 +1,6 @@
 import { useToast } from "react-native-toast-notifications";
 import { appActions } from "../../context/app";
 import useAppContext from "../../hooks/useAppContext";
-import { getLocalDate } from "../../utils/Date";
 import Spacing from "../../utils/Spacing";
 import WorkoutItem from "../WorkoutListScreen/WorkoutItem";
 import HeadingContainer from "./HeadingContainer";
@@ -11,7 +10,7 @@ export default function WorkoutContainer({ onPressWorkoutItem }) {
   const [state, dispatch] = useAppContext();
   const { workoutList } = state;
   const workoutListToday = workoutList.filter(
-    (item) => item.workoutDate === getLocalDate()
+    (item) => item.workoutDate === state.selectedDay
   );
   const toast = useToast();
   const totalCalories = workoutListToday.reduce(

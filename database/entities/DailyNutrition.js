@@ -9,10 +9,6 @@ class DailyNutrition {
   static TARGET_CARBS_COLUMN = "targetCarbs";
   static TARGET_FAT_COLUMN = "targetFat";
   static TARGET_PROTEIN_COLUMN = "targetProtein";
-  static CONSUMED_CALORIES_COLUMN = "consumedCalories";
-  static CONSUMED_CARBS_COLUMN = "consumedCarbs";
-  static CONSUMED_FAT_COLUMN = "consumedFat";
-  static CONSUMED_PROTEIN_COLUMN = "consumedProtein";
   static DATE_COLUMN = "dateDailyNutrition";
   static CREATE_DAILY_NUTRITION_TABLE_QUERY = `
     CREATE TABLE IF NOT EXISTS ${DailyNutrition.TABLE_NAME} (
@@ -52,90 +48,44 @@ class DailyNutrition {
     this.targetProtein = targetProtein;
     this.dateDailyNutrition = dateDailyNutrition;
   }
-  // Getters và Setters
   getDailyNutritionId() {
     return this.dailyNutritionId;
-  }
-  setDailyNutritionId(value) {
-    this.dailyNutritionId = value;
   }
 
   getUserId() {
     return this.userId;
   }
-  setUserId(value) {
-    this.userId = value;
-  }
 
   getWeight() {
     return this.weight;
-  }
-  setWeight(value) {
-    this.weight = value;
   }
 
   getHeight() {
     return this.height;
   }
-  setHeight(value) {
-    this.height = value;
-  }
 
   getBmi() {
     return this.bmi;
-  }
-  setBmi(value) {
-    this.bmi = value;
   }
 
   getTargetCalories() {
     return this.targetCalories;
   }
-  setTargetCalories(value) {
-    this.targetCalories = value;
-  }
 
   getTargetCarbs() {
     return this.targetCarbs;
-  }
-  setTargetCarbs(value) {
-    this.targetCarbs = value;
   }
 
   getTargetFat() {
     return this.targetFat;
   }
-  setTargetFat(value) {
-    this.targetFat = value;
-  }
 
   getTargetProtein() {
     return this.targetProtein;
   }
-  setTargetProtein(value) {
-    this.targetProtein = value;
-  }
+
   getDate() {
     return this.dateDailyNutrition;
-  }
-  setDate(dateDailyNutrition) {
-    this.dateDailyNutrition = dateDailyNutrition;
-  }
-  toString() {
-    return `
-      DailyNutrition {
-        dailyNutritionId: ${this.dailyNutritionId},
-        userId: ${this.userId},
-        weight: ${this.weight},
-        height: ${this.height},
-        bmi: ${this.bmi},
-        targetCalories: ${this.targetCalories},
-        targetCarbs: ${this.targetCarbs},
-        targetFat: ${this.targetFat},
-        targetProtein: ${this.targetProtein},
-        date: ${this.dateDailyNutrition}
-      }
-    `;
   }
 }
 

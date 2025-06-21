@@ -90,9 +90,7 @@ export default function DishScreen({ navigation, route }) {
         style={styles.flatList}
         initialScrollIndex={0}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: Spacing.BIG_70,
-        }}
+        contentContainerStyle={{ paddingBottom: Spacing.BIG_70 * 1.5 }}
         ListHeaderComponentStyle={{ zIndex: 10 }}
         keyboardShouldPersistTaps="handled"
       />

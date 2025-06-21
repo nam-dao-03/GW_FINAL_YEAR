@@ -15,6 +15,8 @@ function KeyboardAvoidingWrapper({ children, style }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: "relative",
+    zIndex: 1001,
   },
 });
 

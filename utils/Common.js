@@ -1,6 +1,7 @@
 import { Alert } from "react-native";
 import Sizes from "./Size";
 import Typography from "./Typography";
+import uuid from "react-native-uuid";
 import { FontAwesome6, Ionicons, MaterialIcons } from "@expo/vector-icons";
 const bottomTabStyle = {
   tabBarLabelPosition: "below-icon",
@@ -62,13 +63,14 @@ function convertToNumber(input) {
   return isNaN(numberValue) ? NaN : parseFloat(numberValue.toFixed(2));
 }
 function generateRandomString() {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < 8; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
+  // const characters =
+  //   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  // let result = "";
+  // for (let i = 0; i < 8; i++) {
+  //   result += characters.charAt(Math.floor(Math.random() * characters.length));
+  // }
+  // return result;
+  return uuid.v4();
 }
 
 function calTotalCupsArr(

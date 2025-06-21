@@ -23,11 +23,7 @@ import { calculateMacronutrientNeeded } from "../utils/Nutrition";
 import { alertNotification, generateRandomString } from "../utils/Common";
 import useAppContext from "../hooks/useAppContext";
 import { appActions } from "../context/app";
-import {
-  dailyNutritionListFakeData,
-  foodList,
-  foodListDefault,
-} from "../utils/FakeData";
+
 import { WaterIntake } from "../database/entities/WaterIntake";
 import Spacing from "../utils/Spacing";
 import { Meal } from "../database/entities/Meal";
@@ -185,19 +181,6 @@ export default function IndicatorsOverviewScreen({ navigation }) {
     await scheduleDailyNotification(times);
   }
 
-  // function workWithDBFakeData() {
-  //   if (state.userList.length > 0) {
-  //     alertNotification("none", "data đã tồn tại");
-  //     return;
-  //   }
-  //   const user = new User("1234", "", "", "", "age", "gender", "target");
-  //   dispatch(appActions.createUser(user));
-  //   dailyNutritionListFakeData.forEach((item) =>
-  //     dispatch(appActions.createDailyNutrition(item))
-  //   );
-  //   alertNotification("done", "add data success");
-  // }
-
   function handleNavigateScreen() {
     workWithDB();
     navigation.navigate("MainScreens");
@@ -227,11 +210,6 @@ export default function IndicatorsOverviewScreen({ navigation }) {
         onPress={handleNavigateScreen}
         extraStyle={styles.continueButton}
       />
-
-      {/* <ContinueButton
-        onPress={workWithDBFakeData}
-        extraStyle={[styles.continueButton, { backgroundColor: "black" }]}
-      /> */}
     </ScrollView>
   );
 }

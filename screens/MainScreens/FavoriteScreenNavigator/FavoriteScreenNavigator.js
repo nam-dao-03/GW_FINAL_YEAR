@@ -19,18 +19,30 @@ export default function FavoriteScreenNavigator() {
         <Stack.Screen
           name="AddDishScreenNavigator"
           component={AddDishScreenNavigator}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name="AddFoodScreenNavigator"
           component={AddFoodScreenNavigator}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name="FoodScreenNavigator"
           component={FoodScreenNavigator}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name="DishScreenNavigator"
           component={DishScreenNavigator}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     </DishProvider>

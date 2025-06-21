@@ -1,6 +1,7 @@
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const Typography = {
+  XXS: wp("2%"), // ~8px
   XS: wp("3%"), // ~12px
   REGULAR: wp("3.5%"), // ~14px
   SM: wp("4%"), // ~16px

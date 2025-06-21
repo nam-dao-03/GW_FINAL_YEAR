@@ -121,8 +121,6 @@ export default function WaterReminderSettingScreen({ navigation, route }) {
     setNotificationList(times);
   }, [bedTime, wakeUpTime, reminderTime, user, isDirty]);
 
-  console.log("notificationList", notificationList);
-
   const toast = useToast();
   function handleChangeTime(type) {
     DateTimePickerAndroid.open({
@@ -143,7 +141,6 @@ export default function WaterReminderSettingScreen({ navigation, route }) {
       }
     }
   }
-
   function handleChangeReminderTime(value) {
     setReminderTime(value);
     setIsDirty(true);

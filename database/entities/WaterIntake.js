@@ -35,19 +35,9 @@ class WaterIntake {
     return this.waterIntakeId;
   }
 
-  // Phương thức đặt giá trị waterIntakeId
-  setWaterIntakeId(waterIntakeId) {
-    this.waterIntakeId = waterIntakeId;
-  }
-
   // Phương thức lấy giá trị userId
   getUserId() {
     return this.userId;
-  }
-
-  // Phương thức đặt giá trị userId
-  setUserId(userId) {
-    this.userId = userId;
   }
 
   // Phương thức lấy giá trị waterIntakeDate
@@ -55,25 +45,12 @@ class WaterIntake {
     return this.waterIntakeDate;
   }
 
-  // Phương thức đặt giá trị waterIntakeDate
-  setDate(waterIntakeDate) {
-    this.waterIntakeDate = waterIntakeDate;
-  }
-
   getWaterPerCup() {
     return this.waterPerCup;
   }
 
-  setWaterPerCup(waterPerCup) {
-    this.waterPerCup = waterPerCup;
-  }
-
   getWaterIntakeVolume() {
     return this.waterIntakeVolume;
-  }
-
-  setWaterIntakeVolume(waterIntakeVolume) {
-    this.waterIntakeVolume = waterIntakeVolume;
   }
 }
 

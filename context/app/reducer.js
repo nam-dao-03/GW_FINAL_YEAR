@@ -27,14 +27,22 @@ import {
   updateCupDrunk,
   createWaterReminderNotification,
   deleteWaterReminderNotificationById,
+  updateDailyNutrition,
+  deleteAllTable,
 } from "../../database/databaseHelper";
 import { User } from "../../database/entities/User";
 import { WaterIntake } from "../../database/entities/WaterIntake";
-import { Meal } from "../../database/entities/Meal";
-import { Dish } from "../../database/entities/Dish";
-import { Food } from "../../database/entities/Food";
-import { Workout } from "../../database/entities/Workout";
-import { DailyNutrition } from "../../database/entities/DailyNutrition";
+import { createMealInstance, Meal } from "../../database/entities/Meal";
+import { createDishInstance, Dish } from "../../database/entities/Dish";
+import { createFoodInstance, Food } from "../../database/entities/Food";
+import {
+  createWorkoutInstance,
+  Workout,
+} from "../../database/entities/Workout";
+import {
+  createDailyNutritionInstance,
+  DailyNutrition,
+} from "../../database/entities/DailyNutrition";
 import { CupDrunk } from "../../database/entities/CupDrunk";
 import {
   CREATE_CUP_DRUNK,
@@ -53,7 +61,6 @@ import {
   DELETE_DISH_FOOD,
   UPDATE_DISH,
   CREATE_MEAL_FOOD,
-  UPDATE_MEAL_FOOD,
   DELETE_MEAL_FOOD,
   SET_TRUE_SHOW_FAB,
   SET_FALSE_SHOW_FAB,
@@ -69,6 +76,8 @@ import {
   DELETE_WATER_REMINDER_NOTIFICATION,
   DELETE_WATER_REMINDER_NOTIFICATION_LIST,
   UPDATE_DAILY_NUTRITION,
+  SET_SELECTED_DAY,
+  DELETE_ALL_DATA,
 } from "./constants";
 import * as SQLite from "expo-sqlite";
 import {
@@ -87,9 +96,10 @@ import {
   createWaterReminderNotificationInstance,
   WaterReminderNotification,
 } from "../../database/entities/WaterReminderNotification";
-console.log(SQLite.deleteDatabaseSync("nutrition-app"));
+import { getLocalDate } from "../../utils/Date";
+// console.log(SQLite.deleteDatabaseSync("nutrition-app"));
 const db = setUpDatabase();
-// console.log(db);
+// console.log("db", db);
 const userList = getAllDataFormTable(db, User.TABLE_NAME).map((item) =>
   Object.assign(new User(), item)
 );
@@ -107,25 +117,25 @@ const waterReminderNotificationList = getAllDataFormTable(
 ).map((item) => createWaterReminderNotificationInstance(item));
 
 const mealList = getAllDataFormTable(db, Meal.TABLE_NAME).map((item) =>
-  Object.assign(new Meal(), item)
+  createMealInstance(item)
 );
 
 const dishList = getAllDataFormTable(db, Dish.TABLE_NAME).map((item) =>
-  Object.assign(new Dish(), item)
+  createDishInstance(item)
 );
 
 const foodList = getAllDataFormTable(db, Food.TABLE_NAME).map((item) =>
-  Object.assign(new Food(), item)
+  createFoodInstance(item)
 );
 
 const workoutList = getAllDataFormTable(db, Workout.TABLE_NAME).map((item) =>
-  Object.assign(new Workout(), item)
+  createWorkoutInstance(item)
 );
 
 const dailyNutritionList = getAllDataFormTable(
   db,
   DailyNutrition.TABLE_NAME
-).map((item) => Object.assign(new DailyNutrition(), item));
+).map((item) => createDailyNutritionInstance(item));
 
 const dishFoodList = getAllDataFormTable(db, DishFood.TABLE_NAME).map((item) =>
   createDishFoodInstance(item)
@@ -153,12 +163,20 @@ const initialState = {
   mealFoodList,
   mealDishList,
   showFAB: true,
+  selectedDay: getLocalDate(),
 };
 
-console.log("user state in reducer", initialState);
+// console.log("user state in reducer", initialState);
 
 function reducer(state, action) {
   switch (action.type) {
+    case SET_SELECTED_DAY: {
+      return {
+        ...state,
+        selectedDay: action.payload,
+      };
+    }
+
     case CREATE_USER: {
       //db
       createUser(db, action.payload);
@@ -250,6 +268,7 @@ function reducer(state, action) {
 
     case UPDATE_DAILY_NUTRITION: {
       //db
+      updateDailyNutrition(db, action.payload);
       const updatedDailyNutritionList = state.dailyNutritionList.map((item) => {
         if (
           item.getDailyNutritionId() === action.payload.getDailyNutritionId()
@@ -523,6 +542,28 @@ function reducer(state, action) {
       return {
         ...state,
         showFAB: false,
+      };
+    }
+
+    case DELETE_ALL_DATA: {
+      //db
+      deleteAllTable(db);
+      return {
+        ...state,
+        userList: [],
+        waterIntakeList: [],
+        cupDrunkList: [],
+        waterReminderNotificationList: [],
+        mealList: [],
+        dishList: [],
+        foodList: [],
+        workoutList: [],
+        dailyNutritionList: [],
+        dishFoodList: [],
+        mealFoodList: [],
+        mealDishList: [],
+        showFAB: true,
+        selectedDay: getLocalDate(),
       };
     }
     default: {

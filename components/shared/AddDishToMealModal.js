@@ -22,9 +22,9 @@ export default function AddDishToMealModal({
   mealName,
 }) {
   const [appState, appDispatch] = useAppContext();
-  const { mealList } = appState;
+  const { mealList, selectedDay } = appState;
   const mealListToday = mealList.filter(
-    (meal) => meal.getDate() === getLocalDate()
+    (meal) => meal.getDate() === selectedDay
   );
   const toast = useToast();
   const [dropdown, setDropdown] = useState({

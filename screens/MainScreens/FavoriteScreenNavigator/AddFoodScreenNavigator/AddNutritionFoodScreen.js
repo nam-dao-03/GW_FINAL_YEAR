@@ -15,11 +15,30 @@ import {
 import useAppContext from "../../../../hooks/useAppContext";
 import { appActions } from "../../../../context/app";
 import { Food } from "../../../../database/entities/Food";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, useFocusEffect } from "@react-navigation/native";
 import { useToast } from "react-native-toast-notifications";
 import { DEFAULT_AVERAGE_NUTRITIONAL } from "../../../../utils/constants";
 import KeyboardAvoidingWrapper from "../../../../components/shared/KeyboardAvoidingWrapper";
+import { useCallback } from "react";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import HeaderNavigation from "../../../../components/shared/HeaderNavigation";
+import Sizes from "../../../../utils/Size";
 export default function AddNutritionFoodScreen({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      navigation.setOptions({
+        header: () => (
+          <HeaderNavigation
+            title="Add new Food"
+            iconRight={
+              <Ionicons name="scan" size={Sizes.MD} color={colors.whiteColor} />
+            }
+            actionRight={handleNavigateToImagePickerScreen}
+          />
+        ),
+      });
+    }, [])
+  );
   const toast = useToast();
   const [state, dispatch] = useFoodContext();
   const [_, appDispatch] = useAppContext();
@@ -34,6 +53,11 @@ export default function AddNutritionFoodScreen({ navigation }) {
     measurement,
     servingSize,
   } = state;
+
+  function handleNavigateToImagePickerScreen() {
+    navigation.navigate("NutritionFoodImagePickerScreen");
+  }
+
   function changeAverageNutritionalInput(value) {
     const validValue = value.trim();
     dispatch(foodActions.changeAverageNutritional(validValue));
@@ -99,7 +123,7 @@ export default function AddNutritionFoodScreen({ navigation }) {
       {
         condition:
           !averageNutritional ||
-          convertToNumber(averageNutritional) < 0 ||
+          convertToNumber(averageNutritional) < 100 ||
           convertToNumber(averageNutritional) > 1000 ||
           !isValidNumber(averageNutritional),
         title: "Invalid Average Nutritional",

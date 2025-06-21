@@ -24,29 +24,17 @@ class Meal {
   getMealId() {
     return this.mealId;
   }
-  setMealId(value) {
-    this.mealId = value;
-  }
 
   getUserId() {
     return this.userId;
-  }
-  setUserId(value) {
-    this.userId = value;
   }
 
   getName() {
     return this.nameMeal;
   }
-  setName(value) {
-    this.nameMeal = value;
-  }
 
   getDate() {
     return this.dateMeal;
-  }
-  setDate(value) {
-    this.dateMeal = value;
   }
 }
 

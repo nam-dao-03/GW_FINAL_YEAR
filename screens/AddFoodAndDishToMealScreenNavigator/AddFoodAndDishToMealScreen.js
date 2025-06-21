@@ -25,11 +25,12 @@ import { getLocalDate } from "../../utils/Date";
 import { MealFood } from "../../database/entities/MealFood";
 import { MealDish } from "../../database/entities/MealDish";
 import KeyboardAvoidingWrapper from "../../components/shared/KeyboardAvoidingWrapper";
+import EmptySection from "../../components/shared/EmptySection";
 
 export default function AddFoodAndDishToMealScreen({ navigation, route }) {
   const toast = useToast();
   const [appState, appDispatch] = useAppContext();
-  const { foodList, dishList, dishFoodList, mealList } = appState;
+  const { foodList, dishList, dishFoodList, mealList, selectedDay } = appState;
   const [searchValue, setSearchValue] = useState("");
   const [dropdown, setDropdown] = useState({
     meal: "",
@@ -37,7 +38,7 @@ export default function AddFoodAndDishToMealScreen({ navigation, route }) {
   });
   const { mealName } = route.params;
   const mealListToday = mealList.filter(
-    (meal) => meal.getDate() === getLocalDate()
+    (meal) => meal.getDate() === selectedDay
   );
   // Sắp xếp yêu thích lên đầu nhưng giữ nguyên nhóm
   function sortFavoritesFirst(list) {
@@ -208,17 +209,21 @@ export default function AddFoodAndDishToMealScreen({ navigation, route }) {
           onChangeMeal={changeDropdownMeal}
           onChangeFoodDishOption={changeDropdownFoodDishOption}
         />
-        <SectionList
-          sections={sections}
-          keyExtractor={(item) => item.getDishId?.() || item.getFoodId?.()}
-          renderItem={renderItem}
-          renderSectionHeader={({ section: { title } }) =>
-            headerFlatList(title)
-          }
-          style={styles.sectionList}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: Spacing.BIG_70 }}
-        />
+        {sections.length === 0 ? (
+          <EmptySection description="Empty List" />
+        ) : (
+          <SectionList
+            sections={sections}
+            keyExtractor={(item) => item.getDishId?.() || item.getFoodId?.()}
+            renderItem={renderItem}
+            renderSectionHeader={({ section: { title } }) =>
+              headerFlatList(title)
+            }
+            style={styles.sectionList}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: Spacing.BIG_70 }}
+          />
+        )}
       </SafeAreaView>
     </KeyboardAvoidingWrapper>
   );

@@ -10,13 +10,13 @@ import {
   generateRandomString,
   showConfirmationDialog,
 } from "../../utils/Common";
-import { generateLocalDateAndTime } from "../../utils/Date";
+import { generateLocalDateAndTime, getLocalTime } from "../../utils/Date";
 import Sizes from "../../utils/Size";
 import Typography from "../../utils/Typography";
 import Spacing from "../../utils/Spacing";
 const volumeOptions = ["", 100, 200, 300, 400, 500, ""];
 export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
-  const [_, dispatch] = useAppContext();
+  const [state, dispatch] = useAppContext();
   const indexDefaultWaterPerCup = volumeOptions.findIndex(
     (item) => item === waterIntake.waterPerCup
   );
@@ -54,7 +54,7 @@ export default function ProgressBoard({ consumedWater = 1, waterIntake }) {
           };
           dispatch(appActions.updateWaterIntake(newWaterIntake));
           const cupDrunkId = generateRandomString();
-          const cupDrunkDate = generateLocalDateAndTime();
+          const cupDrunkDate = `${state.selectedDay} ${getLocalTime()}`;
           const cupDrunk = {
             cupDrunkId,
             waterIntakeId: waterIntake.getWaterIntakeId(),

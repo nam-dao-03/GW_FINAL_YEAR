@@ -20,12 +20,14 @@ import { useToast } from "react-native-toast-notifications";
 import useAppContext from "../../hooks/useAppContext";
 import { appActions } from "../../context/app";
 import { calculationMeasure } from "../../utils/Indicators";
+import { isValidNumber } from "../../utils/Common";
 export default function ModalUpdateBMRMeasure({
   isVisible,
   onBackdropPress,
   defaultValue,
   fitnessParameter,
   defaultObj,
+  keyboardType = "number-pad",
 }) {
   const [measure, setMeasure] = useState(1);
   const [_, appDispatch] = useAppContext();
@@ -53,10 +55,17 @@ export default function ModalUpdateBMRMeasure({
   function handleChangeMeasure(value) {
     setMeasure(value);
   }
-
+  console.log("measure", measure);
   function handleSubmit() {
     switch (fitnessParameter) {
       case FITNESS_PARAMETERS.TARGET_WEIGHT: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (Number(dailyNutrition.weight) > measure) {
           toast.show("target weight can not be smaller than weight", {
             type: "danger",
@@ -75,6 +84,13 @@ export default function ModalUpdateBMRMeasure({
         }
       }
       case FITNESS_PARAMETERS.HEIGHT: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (measure < 100 || measure > 250) {
           toast.show("Try again with Height", {
             type: "danger",
@@ -96,6 +112,13 @@ export default function ModalUpdateBMRMeasure({
         }
       }
       case FITNESS_PARAMETERS.WEIGHT: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (measure < 30 || measure > 120) {
           toast.show("Try again with weight", {
             type: "danger",
@@ -117,6 +140,13 @@ export default function ModalUpdateBMRMeasure({
         }
       }
       case FITNESS_PARAMETERS.AGE: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (measure < 10 || measure > 80) {
           toast.show("Try again with age", {
             type: "danger",
@@ -155,6 +185,13 @@ export default function ModalUpdateBMRMeasure({
         return;
       }
       case FITNESS_PARAMETERS.MINS_EXER_PER_DAY: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (measure < 0 || measure > 300) {
           toast.show("Try again with exercise minutes per day", {
             type: "danger",
@@ -172,13 +209,19 @@ export default function ModalUpdateBMRMeasure({
           appDispatch(appActions.updateUser(updatedUser));
           appDispatch(appActions.updateDailyNutrition(updatedDailyNutrition));
           appDispatch(appActions.updateWaterIntake(updatedWaterIntake));
-          console.log("updatedWaterIntake", updatedWaterIntake);
           toast.show("Exercise minutes per day updated", { type: "success" });
           onBackdropPress(false);
           return;
         }
       }
       case FITNESS_PARAMETERS.DAY_EXER_PER_WEEK: {
+        if (!isValidNumber(measure)) {
+          toast.show("Invalid Number", {
+            type: "danger",
+          });
+          onBackdropPress(false);
+          return;
+        }
         if (measure < 0 || measure > 7) {
           toast.show("Try again with exercise days per week", {
             type: "danger",
@@ -192,7 +235,6 @@ export default function ModalUpdateBMRMeasure({
           };
           const { updatedDailyNutrition, updatedWaterIntake } =
             calculationMeasure(updatedUser, dailyNutrition, waterIntake);
-          console.log("updatedWaterIntake", updatedWaterIntake);
           appDispatch(appActions.updateUser(updatedUser));
           appDispatch(appActions.updateDailyNutrition(updatedDailyNutrition));
           appDispatch(appActions.updateWaterIntake(updatedWaterIntake));
@@ -209,23 +251,30 @@ export default function ModalUpdateBMRMeasure({
           });
           onBackdropPress(false);
           return;
-        } else {
-          const updatedUser = {
-            ...user,
-            target: targetValue,
-            targetWeight: Number(dailyNutrition.weight) + 5,
-          };
-          const { updatedDailyNutrition, updatedWaterIntake } =
-            calculationMeasure(updatedUser, dailyNutrition, waterIntake);
-
-          appDispatch(appActions.updateUser(updatedUser));
-          appDispatch(appActions.updateDailyNutrition(updatedDailyNutrition));
-          appDispatch(appActions.updateWaterIntake(updatedWaterIntake));
-
-          toast.show("Target updated", { type: "success" });
+        }
+        if (user.target === targetValue) {
+          toast.show("Please select other target", {
+            type: "danger",
+          });
           onBackdropPress(false);
           return;
         }
+
+        const updatedUser = {
+          ...user,
+          target: targetValue,
+          targetWeight: Number(dailyNutrition.weight) + 5,
+        };
+        const { updatedDailyNutrition, updatedWaterIntake } =
+          calculationMeasure(updatedUser, dailyNutrition, waterIntake);
+
+        appDispatch(appActions.updateUser(updatedUser));
+        appDispatch(appActions.updateDailyNutrition(updatedDailyNutrition));
+        appDispatch(appActions.updateWaterIntake(updatedWaterIntake));
+
+        toast.show("Target updated", { type: "success" });
+        onBackdropPress(false);
+        return;
       }
     }
   }
@@ -261,14 +310,9 @@ export default function ModalUpdateBMRMeasure({
             onChangeNumber={handleChangeMeasure}
             onReduceNumber={handleReduceMeasure}
             onIncreaseNumber={handleIncreaseMeasure}
+            keyboardType={keyboardType}
           />
         )}
-        {/* {fitnessParameter === FITNESS_PARAMETERS.TARGET && (
-          <DropdownTarget
-            defaultValue={targetValue}
-            onChange={(value) => setTargetValue(value)}
-          />
-        )} */}
         <ContinueButton onPress={handleSubmit} />
       </View>
     </Modal>
@@ -318,6 +362,13 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: Typography.MD,
   },
+  itemTextStyle: {
+    fontSize: Typography.MD,
+  },
+  iconStyle: {
+    width: Sizes.MD, // Tăng kích thước icon
+    height: Sizes.MD, // Tăng kích thước icon
+  },
 });
 
 const DropdownGender = ({ defaultValue, onChange }) => {
@@ -339,7 +390,7 @@ const DropdownGender = ({ defaultValue, onChange }) => {
         ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        itemTextStyle={styles.itemTextStyle}
         iconStyle={styles.iconStyle}
         data={data}
         maxHeight={Sizes.MASSIVE * 2.5}
@@ -382,7 +433,7 @@ const DropdownTarget = ({ defaultValue, onChange }) => {
         ]}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        itemTextStyle={styles.itemTextStyle}
         iconStyle={styles.iconStyle}
         data={data}
         maxHeight={Sizes.MASSIVE * 2.5}

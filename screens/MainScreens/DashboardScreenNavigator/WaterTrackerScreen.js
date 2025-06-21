@@ -57,7 +57,7 @@ export default function WaterTrackerScreen({ navigation }) {
   const [cupDrunk, setCupDrunk] = useState({});
   const [state, dispatch] = useAppContext();
   const { waterIntakeList, cupDrunkList } = state;
-  const today = getLocalDate();
+  const today = state.selectedDay;
   const waterIntake = waterIntakeList.find((item) => item.getDate() === today);
   const cupDrunkListToday = cupDrunkList.filter(
     (item) => extractDate(item.getDate()) === today

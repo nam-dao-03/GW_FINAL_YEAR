@@ -40,16 +40,6 @@ export default function FavoriteScreen({ navigation }) {
   );
   return (
     <SafeAreaView style={styles.screenContainer}>
-      {/* <View style={styles.header}>
-        <Text style={styles.heading}>Favorites</Text>
-        <PressableIcon
-          onPress={() => {
-            setIsVisibleModal(true);
-          }}
-        >
-          <Ionicons name="add" size={Typography.LG} color={colors.whiteColor} />
-        </PressableIcon>
-      </View> */}
       <ModalAdd
         isVisible={isVisibleModal}
         onBackdropPress={() => setIsVisibleModal(false)}

@@ -38,19 +38,9 @@ class WaterReminderNotification {
     return this.waterReminderNotificationId;
   }
 
-  // Phương thức đặt giá trị waterReminderNotificationId
-  setWaterReminderNotificationId(waterReminderNotificationId) {
-    this.waterReminderNotificationId = waterReminderNotificationId;
-  }
-
   // Phương thức lấy giá trị userId
   getUserId() {
     return this.userId;
-  }
-
-  // Phương thức đặt giá trị userId
-  setUserId(userId) {
-    this.userId = userId;
   }
 
   // Phương thức lấy giá trị title
@@ -58,29 +48,14 @@ class WaterReminderNotification {
     return this.title;
   }
 
-  // Phương thức đặt giá trị title
-  setTitle(title) {
-    this.title = title;
-  }
-
   // Phương thức lấy giá trị body
   getBody() {
     return this.body;
   }
 
-  // Phương thức đặt giá trị body
-  setBody(body) {
-    this.body = body;
-  }
-
   // Phương thức lấy giá trị notificationTime
   getNotificationTime() {
     return this.notificationTime;
-  }
-
-  // Phương thức đặt giá trị notificationTime
-  setNotificationTime(notificationTime) {
-    this.notificationTime = notificationTime;
   }
 }
 

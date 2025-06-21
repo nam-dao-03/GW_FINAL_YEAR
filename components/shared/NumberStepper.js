@@ -1,48 +1,53 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import colors from "../../utils/Colors";
 import Spacing from "../../utils/Spacing";
 import { useEffect, useState } from "react";
 import Sizes from "../../utils/Size";
 import Typography from "../../utils/Typography";
 import Ionicons from "@expo/vector-icons/Ionicons";
+
 export default function NumberStepper({
   defaultNumber,
   onReduceNumber,
   onIncreaseNumber,
   onChangeNumber,
+  keyboardType = "decimal-pad",
   style = {},
 }) {
-  const [number, setNumber] = useState(0);
+  const [inputValue, setInputValue] = useState("0");
+
   useEffect(() => {
-    setNumber(defaultNumber);
+    setInputValue(defaultNumber.toString());
   }, [defaultNumber]);
+
+  function parseNumberOrZero(value) {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+
   function reduceNumber() {
-    if (number <= 1) return; // Prevent negative numbers
-    const newNumber = number - 1;
-    setNumber(newNumber);
+    const currentNumber = parseNumberOrZero(inputValue);
+    if (currentNumber <= 0) return;
+    const newNumber = parseFloat((currentNumber - 1).toFixed(2));
+    setInputValue(newNumber.toString());
     if (onReduceNumber) {
       onReduceNumber(newNumber);
     }
   }
 
   function increaseNumber() {
-    const newNumber = number + 1;
-    setNumber(newNumber);
+    const currentNumber = parseNumberOrZero(inputValue);
+    const newNumber = parseFloat((currentNumber + 1).toFixed(2));
+    setInputValue(newNumber.toString());
     if (onIncreaseNumber) {
       onIncreaseNumber(newNumber);
     }
   }
 
-  function handleChangeNumber(text) {
-    const parsedNumber = parseInt(text, 10);
-    if (!isNaN(parsedNumber)) {
-      setNumber(parsedNumber);
-      if (onChangeNumber) {
-        onChangeNumber(parsedNumber);
-      }
-    } else {
-      setNumber(0);
-    }
+  function handleChangeText(text) {
+    setInputValue(text);
+
+    onChangeNumber(text);
   }
 
   return (
@@ -58,13 +63,15 @@ export default function NumberStepper({
         >
           <Ionicons name="remove" size={Sizes.MD} color="black" />
         </Pressable>
+
         <TextInput
           style={styles.textInput}
-          keyboardType="numeric"
+          keyboardType={keyboardType}
           maxLength={4}
-          value={number.toString()}
-          onChangeText={handleChangeNumber}
+          value={inputValue}
+          onChangeText={handleChangeText}
         />
+
         <Pressable
           style={({ pressed }) =>
             pressed

@@ -7,6 +7,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import useAppContext from "../../../../hooks/useAppContext";
 import { appActions } from "../../../../context/app";
+import NutritionFoodImagePickerScreen from "./NutritionFoodImagePickerScreen";
+import NutritionFoodCameraScreen from "./NutrtionFoodCameraScreen";
 
 const Stack = createNativeStackNavigator();
 export default function AddFoodScreenNavigator({ navigation }) {
@@ -31,7 +33,14 @@ export default function AddFoodScreenNavigator({ navigation }) {
         <Stack.Screen
           name="AddNutritionFoodScreen"
           component={AddNutritionFoodScreen}
-          options={{ header: () => <HeaderNavigation title="Add New Food" /> }}
+        />
+        <Stack.Screen
+          name="NutritionFoodImagePickerScreen"
+          component={NutritionFoodImagePickerScreen}
+        />
+        <Stack.Screen
+          name="NutritionFoodCameraScreen"
+          component={NutritionFoodCameraScreen}
         />
       </Stack.Navigator>
     </FoodProvider>

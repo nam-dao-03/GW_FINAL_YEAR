@@ -23,9 +23,16 @@ export default function MealsContainer({ dailyNutrition }) {
   const route = useRoute();
   const toast = useToast();
   const [appState, appDispatch] = useAppContext();
-  const { mealList, foodList, dishList, mealFoodList, mealDishList } = appState;
+  const {
+    mealList,
+    foodList,
+    dishList,
+    mealFoodList,
+    mealDishList,
+    selectedDay,
+  } = appState;
   const mealListToday = mealList.filter(
-    (meal) => meal.getDate() === getLocalDate()
+    (meal) => meal.getDate() === selectedDay
   );
   const { targetCalories } = dailyNutrition;
   // Lấy các mealId cho từng bữa ăn

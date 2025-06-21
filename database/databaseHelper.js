@@ -11,6 +11,7 @@ import { Dish } from "./entities/Dish";
 import { CupDrunk } from "./entities/CupDrunk";
 import { DishFood } from "./entities/DishFood";
 import { WaterReminderNotification } from "./entities/WaterReminderNotification";
+import { testDataQuery } from "../utils/TestData";
 const DATABASE_NAME = "nutrition-app";
 const TABLE_CREATION_QUERIES = [
   User.CREATE_USER_TABLE_QUERY,
@@ -31,17 +32,41 @@ function setUpDatabase() {
   const db = SQLite.openDatabaseSync(DATABASE_NAME);
   db.execSync(`PRAGMA journal_mode = WAL; PRAGMA foreign_keys = ON;`);
   TABLE_CREATION_QUERIES.forEach((query) => db.execSync(query));
+  // db.execSync(testDataQuery);
   return db;
 }
 
 function openDatabase() {
   const db = SQLite.openDatabaseSync(DATABASE_NAME);
+  console.log("db", db);
   return db;
 }
 
 function getAllDataFormTable(db, table) {
   const data = db.getAllSync(`SELECT * FROM ${table}`);
   return data;
+}
+
+function deleteTable(db, table) {
+  db.getAllSync(`DELETE FROM ${table}`);
+}
+
+function deleteAllTable(db) {
+  const tableNames = [
+    MealFood.TABLE_NAME,
+    MealDish.TABLE_NAME,
+    DishFood.TABLE_NAME,
+    WaterReminderNotification.TABLE_NAME,
+    CupDrunk.TABLE_NAME,
+    WaterIntake.TABLE_NAME,
+    Meal.TABLE_NAME,
+    Dish.TABLE_NAME,
+    Food.TABLE_NAME,
+    Workout.TABLE_NAME,
+    DailyNutrition.TABLE_NAME,
+    User.TABLE_NAME,
+  ];
+  tableNames.forEach((tableName) => deleteTable(db, tableName));
 }
 
 function insertData(db, tableName, columns, values) {
@@ -618,4 +643,5 @@ export {
   updateFood,
   createDishFood,
   deleteDishFoodById,
+  deleteAllTable,
 };

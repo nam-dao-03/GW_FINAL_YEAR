@@ -33,19 +33,6 @@ class DishFood {
   getFoodId() {
     return this.foodId;
   }
-
-  // Setter
-  setDishFoodId(dishFoodId) {
-    this.dishFoodId = dishFoodId;
-  }
-
-  setDishId(dishId) {
-    this.dishId = dishId;
-  }
-
-  setFoodId(foodId) {
-    this.foodId = foodId;
-  }
 }
 function createDishFoodInstance(dishFood) {
   return Object.assign(new DishFood(), dishFood);

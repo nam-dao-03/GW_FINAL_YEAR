@@ -2639,4 +2639,231 @@ const workoutExercise = [
   },
 ];
 
-export { vietnameseIngredientsByRegion, workoutExercise };
+const knowledgeData = [
+  {
+    id: 1,
+    question: "Did you know?",
+    heading: "Cold Water Burns Calories",
+    description:
+      "Drinking cold water helps burn extra calories as your body uses energy to warm the water to body temperature. Research suggests that drinking 500ml of cold water can burn an additional 25 calories. This process, called thermogenesis, requires your body to expend energy to maintain its core temperature of 98.6°F (37°C).\n\nBenefits of drinking cold water:\n• Drinking 2 liters of cold water daily could burn up to 100 extra calories\n• Combined with other healthy habits, it adds up over time\n• Optimal water temperature for this effect is 42°F (5.5°C)",
+  },
+  {
+    id: 2,
+    question: "Nutrition Facts",
+    heading: "Plant vs Animal Protein",
+    description:
+      "Animal proteins typically contain all essential amino acids, while plant proteins often lack some. That's why vegetarians need to combine different food sources to ensure they get complete protein profiles. This concept, called protein complementation, involves pairing foods like rice with beans or hummus with whole grain bread.\n\nKey differences:\n• Animal proteins have higher bioavailability for amino acid utilization\n• Plant proteins provide fiber, antioxidants, and lower saturated fat\n• Plant protein consumption is linked to lower risks of heart disease and certain cancers\n• For optimal health, get protein from diverse sources",
+  },
+  {
+    id: 3,
+    question: "Food Knowledge",
+    heading: "Turmeric Benefits",
+    description:
+      "Turmeric contains curcumin, a compound with powerful anti-inflammatory properties. Studies show it may help reduce pain, improve brain function, and lower risk of heart disease.\n\nHealth benefits:\n• May inhibit the growth of cancer cells\n• Helps prevent Alzheimer's by clearing amyloid plaques\n• Contains essential oils that improve digestion and immunity\n\nOptimizing absorption:\n• Combine with black pepper to enhance absorption by up to 2,000%\n• Take with a fat source for better bioavailability\n• Aim for 500-1,000mg daily for therapeutic effects",
+  },
+  {
+    id: 4,
+    question: "Heart Health",
+    heading: "Omega-3 and Your Heart",
+    description:
+      "Omega-3 fatty acids found in fatty fish, chia seeds and flaxseeds help reduce inflammation, lower blood pressure and decrease stroke risk. Try to eat oily fish at least twice a week to improve heart health.\n\nTypes of omega-3s:\n• EPA and DHA — found in marine sources\n• ALA — found in plant sources (converts to EPA/DHA at only 5-15%)\n\nCardiovascular benefits:\n• Reduces blood clotting by making platelets less sticky\n• Improves artery elasticity\n• Decreases triglycerides\n• Raises HDL (good) cholesterol\n• Maintains normal heart rhythm\n\nRecommendation: 250-500mg combined EPA and DHA daily",
+  },
+  {
+    id: 5,
+    question: "Healthy Habits",
+    heading: "Sleep and Weight",
+    description:
+      "Lack of sleep affects hormones that control hunger and satiety, increasing the risk of weight gain. Research shows that well-rested people tend to consume fewer calories and maintain better weight control.\n\nEffects of poor sleep on weight:\n• Increases ghrelin (hunger hormone) while decreasing leptin (satiety hormone)\n• Triggers cravings for calorie-dense foods\n• Impairs decision-making and weakens impulse control\n• Increases obesity risk by 55% for those sleeping less than 7 hours\n• Reduces resting metabolic rate and daily calorie burn\n\nRecommendation: 7-9 hours of quality sleep nightly in a cool, dark environment",
+  },
+  {
+    id: 10,
+    question: "Food Science",
+    heading: "Cooking Tomatoes",
+    description: [
+      "Cooking tomatoes actually increases the bioavailability of lycopene, a powerful antioxidant. While raw tomatoes are nutritious, cooked tomatoes in pasta sauce, soup, or salsa may provide more health benefits.",
+      "Lycopene belongs to the carotenoid family and gives tomatoes their red color.",
+      "Benefits of cooking tomatoes:",
+      "• Breaks down plant cell walls",
+      "• Releases lycopene from cell structures",
+      "• Transforms trans-lycopene to cis-lycopene (2.5 times better absorption)",
+      "Adding healthy fats like olive oil during cooking further enhances lycopene absorption since it's fat-soluble.",
+      "Research links higher lycopene levels to reduced risks of:",
+      "• Prostate cancer",
+      "• Cardiovascular disease",
+      "• Sunburn",
+      "Processed tomato products like paste and sauce contain more concentrated lycopene than fresh tomatoes—a tablespoon of tomato paste provides more lycopene than a whole raw tomato.",
+      "However, cooking reduces vitamin C content, so including both raw and cooked tomatoes in your diet provides complementary nutritional benefits.",
+    ],
+  },
+  {
+    id: 11,
+    question: "Nutrient Absorption",
+    heading: "Fat-Soluble Vitamins",
+    description:
+      "Vitamins A, D, E, and K are fat-soluble, meaning they need fat to be properly absorbed. For maximum nutrition, add some healthy fats like olive oil, avocado, or nuts when consuming foods rich in these vitamins. Unlike water-soluble vitamins that exit the body relatively quickly, fat-soluble vitamins can be stored in liver and fatty tissues for extended periods.\n\nBenefits of specific vitamins:\n• Vitamin A supports vision, immune function, and cellular growth\n• Vitamin D regulates calcium absorption and bone health\n• Vitamin E acts as a powerful antioxidant protecting cells from damage\n• Vitamin K is essential for blood clotting and bone metabolism\n\nResearch shows that consuming as little as 3-5 grams of fat with these vitamins can increase absorption by 3-5 times. For example, adding avocado to a spinach salad significantly improves absorption of vitamin K and carotenoids. Low-fat diets can inadvertently lead to deficiencies in these vital nutrients over time. However, balance is key—these vitamins can accumulate in the body, and excessive supplementation (particularly vitamins A and D) can reach toxic levels.\n\nPractical pairings for optimal absorption:\n• Carrots with hummus\n• Leafy greens with olive oil dressing\n• Sweet potatoes with a small amount of butter",
+  },
+  {
+    id: 12,
+    question: "Brain Health",
+    heading: "Coffee and Brain",
+    description:
+      "Coffee contains antioxidants that may help protect brain cells. Some studies suggest regular coffee consumption (in moderation) is associated with lower risk of Alzheimer's, Parkinson's disease, and cognitive decline.\n\nKey neuroprotective compounds in coffee:\n• Chlorogenic acids\n• Trigonelline\n• Melanoidins\n• Caffeine\n\nThese compounds work through multiple mechanisms:\n• Reducing inflammation\n• Preventing protein aggregation\n• Protecting neurons from oxidative stress\n\nResearch following large populations over decades found that people who drink 3-5 cups daily had a 65% decreased risk of developing dementia compared to non-drinkers. Caffeine blocks adenosine receptors, improving attention and alertness, but coffee's long-term cognitive benefits appear to come from its other bioactive compounds. Beyond immediate cognitive enhancement, regular coffee consumption has been linked to increased levels of brain-derived neurotrophic factor (BDNF), which promotes neuronal growth and connectivity.\n\nPractical considerations:\n• Freshly ground coffee contains more beneficial compounds than instant varieties\n• The optimal 'dose' appears to be 3-4 cups (24-32 oz) daily\n• Coffee should be consumed earlier in the day to avoid sleep disruption\n• People with anxiety disorders, certain heart conditions, or caffeine sensitivity should consult healthcare providers about their coffee intake",
+  },
+  {
+    id: 13,
+    question: "Eating Psychology",
+    heading: "Mindful Eating",
+    description:
+      "Mindful eating—paying full attention to your food without distractions—can help improve digestion, reduce overeating, and increase enjoyment of meals. Try eating without screens to better recognize hunger and fullness cues. This practice involves engaging all senses—noticing colors, smells, textures, flavors, and even sounds of your food.\n\nBenefits of mindful eating:\n• Fewer calories consumed while reporting greater meal satisfaction\n• Improved digestion through the cephalic phase\n• Better nutrient processing and absorption\n• Enhanced awareness of hunger and fullness cues\n\nStudies using MRI scans reveal that mindful eating activates different brain regions than distracted eating, including areas associated with sensory integration and body awareness.\n\nPractical strategies:\n• Eating slowly (taking 20-30 minutes per meal)\n• Chewing thoroughly (30+ times per bite)\n• Putting utensils down between bites\n• Eliminating screens during meals\n• Pausing mid-meal to assess hunger levels\n\nAdditionally, mindful eating helps identify emotional triggers for overeating by creating space between cravings and response. Programs teaching mindful eating show promising results for weight management, eating disorders, digestive disorders, and food-related anxiety.",
+  },
+  {
+    id: 14,
+    question: "Hydration Science",
+    heading: "Dehydration Effects",
+    description:
+      "Even mild dehydration (1-2% of body weight) can impair cognitive function, mood, and physical performance. By the time you feel thirsty, you're already slightly dehydrated. Stay ahead by drinking water regularly throughout the day.\n\nImpacts of dehydration:\n• Reduced brain volume and increased neural effort for simple tasks\n• Decreased attention, working memory, and executive function\n• More severe mood disturbances in women\n• Reduced athletic performance by up to 20% at 2% dehydration\n• Decreased work capacity by 30% at 5% dehydration\n\nProper hydration benefits:\n• Improved mitochondrial function\n• Better toxin clearance via the lymphatic system\n• Enhanced joint cushioning\n\nChronic mild dehydration has been linked to increased risk of:\n• Kidney stones\n• Urinary tract infections\n• Constipation\n\nIndividual water needs vary based on activity level, climate, diet, and body size, but monitoring urine color (pale yellow indicates good hydration) provides a practical assessment tool. For most adults, 2.7-3.7 liters of total water daily (including food sources) is recommended, though active individuals and those in hot environments need considerably more.",
+  },
+  {
+    id: 15,
+    question: "Nutrient Spotlight",
+    heading: "Magnesium Magic",
+    description:
+      "Magnesium is involved in over 300 biochemical reactions in your body but many people are deficient. Dark chocolate, avocados, nuts, seeds, and leafy greens are excellent sources of this essential mineral.\n\nKey functions of magnesium:\n• Regulates calcium, potassium and sodium as an electrolyte\n• Serves as a cofactor in the creation of ATP (cellular energy)\n• Improves glucose availability to muscles during exercise\n• Enhances removal of lactate during physical activity\n• Helps regulate neurotransmitters involved in mood\n\nResearch-backed benefits:\n• May reduce migraine frequency by 41%\n• Decreases severity in chronic migraine sufferers\n• Potentially enhances endurance and strength\n• Lowers risk of type 2 diabetes by improving insulin sensitivity\n• May help reduce depression and anxiety rates\n\nModern challenges to magnesium status:\n• Agricultural practices and food processing reducing magnesium content in foods\n• Stress increasing magnesium excretion\n• Certain medications depleting magnesium levels\n• Alcohol consumption increasing excretion\n\nApproximately 50% of Americans don't meet the RDA (310-420mg daily). For supplementation:\n• Magnesium glycinate and citrate are more bioavailable forms\n• Magnesium oxide works better for constipation relief\n• Take supplements with food for best absorption\n• Avoid taking with calcium supplements",
+  },
+  {
+    id: 16,
+    question: "Food Myths",
+    heading: "Eggs and Cholesterol",
+    description: `Despite previous warnings, dietary cholesterol from eggs has minimal impact on blood cholesterol for most people. Eggs are highly nutritious, providing high-quality protein, vitamins, minerals, and compounds beneficial for eye health.
+
+The shift in scientific understanding came from distinguishing between dietary cholesterol and blood cholesterol, which are regulated by different mechanisms.
+
+Key findings:
+• For approximately 70% of people, consuming eggs doesn't significantly affect blood cholesterol levels
+• The body reduces internal cholesterol production when dietary intake increases
+• Large population studies found no association between egg consumption and heart disease risk in healthy individuals
+
+Nutritional benefits:
+• Rich source of high-quality protein
+• Among the best sources of choline—essential for brain development, cellular membrane function, and methylation processes
+• The yolk contains lutein and zeaxanthin, carotenoids that protect against age-related macular degeneration
+
+Effects on cholesterol profile:
+• Eggs can increase HDL (good) cholesterol
+• They can change LDL particles to a less harmful, larger subtype
+
+For most healthy adults, 1-2 eggs daily can be part of a heart-healthy diet. However, individuals with familial hypercholesterolemia, diabetes, or established heart disease may need to be more cautious and should consult healthcare providers about egg consumption.`,
+  },
+  {
+    id: 17,
+    question: "Muscle Building",
+    heading: "Protein Timing",
+    description: `While overall daily protein intake is most important, consuming protein within 2 hours after exercise may help maximize muscle repair and growth. Aim for 20-30g of high-quality protein post-workout for optimal results.
+
+This timing takes advantage of the anabolic window—a period of enhanced muscle protein synthesis following resistance training.
+
+Post-workout benefits:
+• Exercise-induced increase in blood flow
+• Heightened insulin sensitivity leads to greater amino acid delivery to muscle tissue
+
+Protein recommendations:
+• Ideal post-workout protein contains all essential amino acids
+• Include approximately 2.5-3g of leucine, which acts as a metabolic trigger for muscle protein synthesis
+• Whey protein digests rapidly, making it ideal immediately post-exercise
+• Casein provides a slower release of amino acids that can sustain muscle repair overnight
+
+Protein timing strategies:
+• Distribute protein intake evenly throughout the day (25-40g per meal)
+• Older adults require more protein (up to 0.4g/lb of body weight per meal) to overcome anabolic resistance
+• Consuming carbohydrates with post-workout protein enhances glycogen replenishment
+• Carb-protein combination creates an insulin response that supports protein uptake`,
+  },
+  {
+    id: 18,
+    question: "Spice Benefits",
+    heading: "Cinnamon for Blood Sugar",
+    description: `Regular consumption of cinnamon may help improve insulin sensitivity and lower blood sugar levels. Adding just half a teaspoon to your daily diet could have significant benefits for metabolic health.
+
+Active compounds:
+• Cinnamaldehyde
+• Cinnamic acid
+• Cinnamate - these mimic insulin by enhancing glucose uptake by cells
+
+Research findings:
+• Studies show that consuming 1-6 grams daily can reduce fasting blood glucose by 10-29% in people with type 2 diabetes
+• Ceylon cinnamon (true cinnamon) contains lower levels of coumarin compared to Cassia cinnamon
+
+Mechanisms of action:
+• Slows carbohydrate digestion by inhibiting digestive enzymes
+• Improves cell receptor response to insulin
+• Increases glycogen synthesis in the liver
+
+Additional benefits:
+• Reduces LDL cholesterol and triglycerides
+• Raises HDL cholesterol
+• Possesses antimicrobial properties effective against bacteria, fungi, and viruses
+
+For those with prediabetes or insulin resistance, adding cinnamon to carbohydrate-rich foods may help blunt post-meal blood sugar spikes. The benefits appear cumulative, with greater improvements observed after 12+ weeks of regular consumption.`,
+  },
+  {
+    id: 19,
+    question: "Meal Planning",
+    heading: "Fiber First",
+    description: `Starting meals with fiber-rich foods can help slow digestion and minimize blood sugar spikes. Consider beginning lunch or dinner with a salad or vegetable soup before consuming the more calorie-dense portions.
+
+This approach takes advantage of the incretin effect—hormonal signals released from the intestine that enhance insulin release in response to food.
+
+Research-backed benefits:
+• Consuming vegetables before carbohydrates can reduce post-meal blood glucose by 29-37%
+• Insulin levels can be reduced by 15-30% in people with type 2 diabetes
+• Creates greater satiety, potentially reducing overall calorie intake by 12-20%
+
+How it works:
+• Soluble fiber forms a gel-like substance that slows gastric emptying
+• Creates a barrier affecting carbohydrate absorption
+• Phytonutrients may temporarily inhibit certain digestive enzymes
+
+For maximum benefit:
+• Include both soluble fiber (found in vegetables like Brussels sprouts and asparagus)
+• Add insoluble fiber (found in leafy greens)
+• Consuming just 7 grams of fiber before a meal significantly improves glycemic response
+
+This simple strategy can be particularly beneficial for people with insulin resistance, metabolic syndrome, or diabetes, but offers health benefits for everyone by promoting more consistent energy levels and reducing oxidative stress caused by blood sugar fluctuations.`,
+  },
+  {
+    id: 20,
+    question: "Nutrient Synergy",
+    heading: "Iron Absorption",
+    description: `Vitamin C significantly enhances iron absorption from plant sources. Pairing iron-rich foods like spinach or lentils with vitamin C sources such as bell peppers, citrus fruits, or tomatoes can help prevent iron deficiency.
+
+This synergy is especially important for vegetarians and vegans since plant-based (non-heme) iron has a bioavailability of only 5-12%, compared to 15-35% for animal (heme) iron.
+
+How it works:
+• Vitamin C converts iron from its ferric (Fe3+) to ferrous (Fe2+) form
+• Ferrous iron is more readily absorbed in the intestines
+• Studies show adding just 75-100mg of vitamin C (the amount in one orange) to an iron-rich meal can increase absorption by 300-400%
+
+Factors that inhibit iron absorption:
+• Tannins in tea and coffee can reduce absorption by 50-60%
+• Phytates in whole grains and legumes reduce absorption by 50%
+• Calcium supplements can decrease absorption by 30-50%
+
+Recommendations:
+• Consume vitamin C and iron together in the same meal
+• Avoid tea, coffee, or calcium supplements within 1-2 hours
+• People with hereditary hemochromatosis (iron overload disorder) should avoid this combination
+
+Iron needs:
+• Menstruating women require 18mg daily
+• Men need only 8mg
+
+Deficiency symptoms:
+• Fatigue
+• Weakness
+• Pale skin
+• Brittle nails
+• Impaired cognitive function - often developing gradually as iron stores deplete over months`,
+  },
+];
+
+export { vietnameseIngredientsByRegion, workoutExercise, knowledgeData };

@@ -43,7 +43,16 @@ import {
   CREATE_WATER_REMINDER_NOTIFICATION_LIST,
   DELETE_WATER_REMINDER_NOTIFICATION,
   DELETE_WATER_REMINDER_NOTIFICATION_LIST,
+  SET_SELECTED_DAY,
+  DELETE_ALL_DATA,
 } from "./constants";
+
+function setSelectedDay(selectedDay) {
+  return {
+    type: SET_SELECTED_DAY,
+    payload: selectedDay,
+  };
+}
 
 function createUser(user) {
   return {
@@ -271,7 +280,16 @@ function setFalseShowFAB() {
   };
 }
 
+//DELETE_ALL_DATA
+
+function deleteAllData() {
+  return {
+    type: DELETE_ALL_DATA,
+  };
+}
+
 export {
+  setSelectedDay,
   createUser,
   updateUser,
   createWaterReminderNotification,
@@ -303,4 +321,5 @@ export {
   createWorkout,
   updateWorkout,
   deleteWorkoutById,
+  deleteAllData,
 };

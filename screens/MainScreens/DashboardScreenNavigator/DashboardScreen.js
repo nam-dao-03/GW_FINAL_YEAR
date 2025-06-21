@@ -17,14 +17,16 @@ import {
   generateRandomString,
   showConfirmationDialog,
 } from "../../../utils/Common";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useState } from "react";
 import {
   calculateDatePerDay,
   extractDate,
+  formatDateToLocalVN,
   formatShortDate,
   formattedISODate,
   generateLocalDateAndTime,
   getLocalDate,
+  getLocalTime,
   getRelativeDate,
 } from "../../../utils/Date";
 import { appActions } from "../../../context/app";
@@ -93,7 +95,6 @@ const initialStateDashboard = {
 export default function DashboardScreen({ navigation }) {
   const [state, dispatch] = useAppContext();
   const [isModalAddWorkout, setIsModalAddWorkout] = useState(false);
-
   const [workout, setWorkout] = useState({});
   const bottomTabNavigation = navigation.getParent("MainScreensBottomTab");
   useFocusEffect(
@@ -106,13 +107,13 @@ export default function DashboardScreen({ navigation }) {
     reducerDashboard,
     initialStateDashboard
   );
-  const today = getLocalDate();
   const {
     dailyNutritionList,
     waterIntakeList,
     cupDrunkList,
     waterReminderNotificationList,
     userList,
+    selectedDay,
   } = state;
   const user = userList[0];
   //lấy giá trị đầu tiên của dailyNutritionList
@@ -121,19 +122,33 @@ export default function DashboardScreen({ navigation }) {
   //nếu có thì trả về, nếu không có thì gán giá trị mặc định bên trên, tránh lỗi xảy ra khi truy cập vào
   const dailyNutrition =
     stateDashboard.selectedDailyNutrition ||
-    dailyNutritionList.find((item) => item.getDate() === today) ||
+    dailyNutritionList.find((item) => item.getDate() === selectedDay) ||
     defaultDailyNutrition;
+  useEffect(() => {
+    const dailyNutrition = dailyNutritionList.find(
+      (item) => item.getDate() === selectedDay
+    );
+    dispatchDashboard({
+      type: SET_SELECTED_DAILY_NUTRITION,
+      payload: dailyNutrition,
+    });
+  }, [dailyNutritionList]);
   const waterIntake =
     stateDashboard.selectedWaterIntake ||
-    waterIntakeList.find((item) => item.getDate() === today) ||
+    waterIntakeList.find((item) => item.getDate() === selectedDay) ||
     defaultWaterIntake;
-  const cupDrunkListToday = cupDrunkList.filter(
-    (item) => extractDate(item.getDate()) === today
-  );
-  const consumedWater = cupDrunkListToday.reduce(
-    (consumed, cupDrunk) => consumed + cupDrunk.waterPerCup,
-    0
-  );
+  const cupDrunkListToday = useMemo(() => {
+    return cupDrunkList.filter(
+      (item) => extractDate(item.getDate()) === state.selectedDay
+    );
+  }, [cupDrunkList, dailyNutrition.dateDailyNutrition]);
+
+  const consumedWater = useMemo(() => {
+    return cupDrunkListToday.reduce(
+      (consumed, cupDrunk) => consumed + cupDrunk.waterPerCup,
+      0
+    );
+  }, [cupDrunkListToday]);
   const toast = useToast();
   useEffect(() => {
     (async () => {
@@ -145,10 +160,6 @@ export default function DashboardScreen({ navigation }) {
       const notificationList = await getAllScheduledNotifications();
       if (notificationList.length > 0) return;
       await scheduleDailyNotification(waterReminderNotificationList);
-      console.log(
-        "getAllNotificationbutotn",
-        (await getAllScheduledNotifications()).length
-      );
     })();
   }, [user.isActiveWaterNotification]);
   useEffect(() => {
@@ -160,65 +171,31 @@ export default function DashboardScreen({ navigation }) {
         //Hủy tất cả các thông báo trước đó
         await cancelAllNotifications();
       }
-      console.log(
-        "getAllNotificationwater",
-        (await getAllScheduledNotifications()).length
-      );
     })();
   }, [consumedWater, waterIntake.waterIntakeVolume]);
-
-  // useEffect(() => {
-  //   function createNewestDailyNutrition() {
-  //     //Nếu là giá trị mặc định thì date sẽ là đối tượng của ngày ban đầu tạo, sẽ khác với hôm mới truy cập và chạy vào
-  //     if (dailyNutrition.getDate() === today) return;
-  //     const id = generateRandomString();
-  //     const newDailyNutrition = {
-  //       ...defaultDailyNutrition,
-  //       dailyNutritionId: id,
-  //       consumedCalories: 0,
-  //       consumedCarbs: 0,
-  //       consumedProtein: 0,
-  //       consumedFat: 0,
-  //       dateDailyNutrition: today,
-  //     };
-  //     // Tạo lại instance của DailyNutrition từ dữ liệu lấy từ database
-  //     const instanceDailyNutrition = Object.assign(
-  //       new DailyNutrition(),
-  //       newDailyNutrition
-  //     );
-  //     dispatch(appActions.createDailyNutrition(instanceDailyNutrition));
-  //   }
-  //   function createNewestWaterIntake() {
-  //     if (waterIntake.getDate() === today) return;
-  //     const id = generateRandomString();
-  //     const newWaterIntake = {
-  //       ...defaultWaterIntake,
-  //       waterIntakeId: id,
-  //       dateWaterIntake: today,
-  //     };
-  //     dispatch(appActions.createWaterIntake(newWaterIntake));
-  //   }
-  //   createNewestDailyNutrition();
-  //   createNewestWaterIntake();
-  // }, [dailyNutritionList, waterIntakeList, dispatch]);
-  const handleSelectedDate = useCallback(
-    (selectedDate) => {
-      const date = formattedISODate(selectedDate);
-      const selectedDailyNutrition = dailyNutritionList.find(
-        (item) => item.getDate() === date
-      );
-      if (selectedDailyNutrition) {
-        dispatchDashboard({
-          type: SET_SELECTED_DAILY_NUTRITION,
-          payload: selectedDailyNutrition,
-        });
-      } else {
-        alertNotification("No data", `No data for ${formatShortDate(date)}`);
-      }
-    },
-    [dailyNutritionList]
-  );
-  const handleLeftBtnCalendar = useCallback(() => {
+  const handleSelectedDate = (selectedDate) => {
+    const date = formattedISODate(selectedDate);
+    const selectedDailyNutrition = dailyNutritionList.find(
+      (item) => item.getDate() === date
+    );
+    const selectedWaterIntake = waterIntakeList.find(
+      (item) => item.getDate() === date
+    );
+    if (selectedDailyNutrition) {
+      dispatchDashboard({
+        type: SET_SELECTED_DAILY_NUTRITION,
+        payload: selectedDailyNutrition,
+      });
+      dispatchDashboard({
+        type: SET_SELECTED_WATER_INTAKE,
+        payload: selectedWaterIntake,
+      });
+      dispatch(appActions.setSelectedDay(date));
+    } else {
+      alertNotification("No data", `No data for ${formatShortDate(date)}`);
+    }
+  };
+  const handleLeftBtnCalendar = () => {
     const previousDay = calculateDatePerDay(
       dailyNutrition.dateDailyNutrition,
       -1
@@ -226,21 +203,33 @@ export default function DashboardScreen({ navigation }) {
     const previousDailyNutrition = dailyNutritionList.find(
       (item) => item.getDate() === previousDay
     );
+    const previousWaterIntake = waterIntakeList.find(
+      (item) => item.getDate() === previousDay
+    );
     if (previousDailyNutrition) {
       dispatchDashboard({
         type: SET_SELECTED_DAILY_NUTRITION,
         payload: previousDailyNutrition,
       });
+      dispatchDashboard({
+        type: SET_SELECTED_WATER_INTAKE,
+        payload: previousWaterIntake,
+      });
+      dispatch(appActions.setSelectedDay(previousDay));
     } else {
       alertNotification(
         "No data",
         `No data for ${formatShortDate(previousDay)}`
       );
     }
-  }, [dailyNutritionList]);
-  const handleRightBtnCalendar = useCallback(() => {
+  };
+
+  const handleRightBtnCalendar = () => {
     const nextDay = calculateDatePerDay(dailyNutrition.dateDailyNutrition, 1);
     const nextDailyNutrition = dailyNutritionList.find(
+      (item) => item.getDate() === nextDay
+    );
+    const nextWaterIntake = waterIntakeList.find(
       (item) => item.getDate() === nextDay
     );
     if (nextDailyNutrition) {
@@ -248,10 +237,15 @@ export default function DashboardScreen({ navigation }) {
         type: SET_SELECTED_DAILY_NUTRITION,
         payload: nextDailyNutrition,
       });
+      dispatchDashboard({
+        type: SET_SELECTED_WATER_INTAKE,
+        payload: nextWaterIntake,
+      });
+      dispatch(appActions.setSelectedDay(nextDay));
     } else {
       alertNotification("No data", `No data for ${formatShortDate(nextDay)}`);
     }
-  }, [dailyNutritionList]);
+  };
   function handleOpenCalendar() {
     dispatchDashboard({ type: SET_MODAL_VISIBLE_TRUE });
   }
@@ -269,7 +263,9 @@ export default function DashboardScreen({ navigation }) {
         onConfirm
       );
     } else {
-      const localDateAndTime = generateLocalDateAndTime();
+      const localDateAndTime = formatDateToLocalVN(
+        new Date(`${selectedDay} ${getLocalTime()}`)
+      );
       const cupDrunkId = generateRandomString();
       const cupDrunk = new CupDrunk(
         cupDrunkId,
@@ -287,6 +283,12 @@ export default function DashboardScreen({ navigation }) {
   function handlePressWorkoutItem(workout) {
     setWorkout(workout);
     setIsModalAddWorkout(true);
+  }
+
+  function handleNavigateToSettingWeightScreen() {
+    bottomTabNavigation.navigate("UserScreenNavigator", {
+      screen: "UpdateBMRScreen",
+    });
   }
 
   return (
@@ -334,7 +336,7 @@ export default function DashboardScreen({ navigation }) {
           />
           <HeadingContainer
             title="Target weight"
-            onPress={() => {}}
+            onPress={handleNavigateToSettingWeightScreen}
             consumedValue={dailyNutrition?.weight || 0}
             targetValue={
               user?.target === MAINTAIN_WEIGHT

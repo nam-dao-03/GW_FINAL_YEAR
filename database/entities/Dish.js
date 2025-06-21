@@ -1,4 +1,3 @@
-import { Meal } from "./Meal";
 class Dish {
   static TABLE_NAME = "Dish";
   static ID_COLUMN = "dishId";
@@ -45,56 +44,33 @@ class Dish {
   getDishId() {
     return this.dishId;
   }
-  setDishId(value) {
-    this.dishId = value;
-  }
+
   getName() {
     return this.nameDish;
-  }
-  setName(value) {
-    this.nameDish = value;
   }
 
   getCalories() {
     return this.calories;
   }
-  setCalories(value) {
-    this.calories = value;
-  }
 
   getCarbs() {
     return this.carbs;
-  }
-  setCarbs(value) {
-    this.carbs = value;
   }
 
   getFat() {
     return this.fat;
   }
-  setFat(value) {
-    this.fat = value;
-  }
 
   getProtein() {
     return this.protein;
-  }
-  setProtein(value) {
-    this.protein = value;
   }
 
   getIsFavorite() {
     return this.isFavorite;
   }
-  setIsFavorite(isFavorite) {
-    this.isFavorite = isFavorite;
-  }
 
   getIsCreatedByUser() {
     return this.isCreatedByUser;
-  }
-  setIsCreatedByUser(isCreatedByUser) {
-    this.isCreatedByUser = isCreatedByUser;
   }
 }
 

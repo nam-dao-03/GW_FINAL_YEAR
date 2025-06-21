@@ -140,7 +140,7 @@ export default function UpdateDishScreen({ navigation, route }) {
     }
     const updatedDish = {
       ...dish,
-      name: nameDish,
+      nameDish: nameDish,
       calories: calculatedNutritionObj.calories,
       carbs: calculatedNutritionObj.carbs,
       fat: calculatedNutritionObj.fat,

@@ -10,7 +10,6 @@ import { bottomTabStyle } from "../../../utils/Common";
 import { appActions } from "../../../context/app";
 import KeyboardAvoidingWrapper from "../../../components/shared/KeyboardAvoidingWrapper";
 import BodyMassBoard from "../../../components/IndicatorsOverviewScreen/BodyMassBoard";
-import useIndicators from "../../../hooks/useIndicators";
 import PressableIcon from "../../../components/shared/PressableIcon";
 import Spacing from "../../../utils/Spacing";
 import Typography from "../../../utils/Typography";
@@ -46,19 +45,17 @@ export default function UserScreen({ navigation }) {
       appDispatch(appActions.setTrueShowFAB());
     }, [navigation])
   );
-  const { dailyNutritionList, waterIntakeList } = appState;
+  const { dailyNutritionList, waterIntakeList, selectedDay } = appState;
   const waterIntake = waterIntakeList.find(
-    (item) => item.getDate() === getLocalDate()
+    (item) => item.getDate() === selectedDay
   );
   const dailyNutrition = dailyNutritionList.find(
-    (item) => item.getDate() === getLocalDate()
+    (item) => item.getDate() === selectedDay
   );
   const statusBMI = classifyBMI(dailyNutrition?.bmi || "1");
   function handleNavigateUpdateBMRScreen() {
     navigation.navigate("UpdateBMRScreen");
   }
-
-  function handleNavigateToWaterIntakeScreen() {}
 
   function handleNavigateToWaterNotificationScreen() {
     navigation.navigate("WaterReminderSettingScreen");
@@ -80,7 +77,7 @@ export default function UserScreen({ navigation }) {
             height={dailyNutrition?.height || 1}
             weight={dailyNutrition?.weight || 1}
             statusBMI={statusBMI}
-            date={formatToMonthDayYear(new Date(getLocalDate()))}
+            date={formatToMonthDayYear(new Date(selectedDay))}
           />
           <Heading
             title="Water Intake Board"
@@ -94,17 +91,7 @@ export default function UserScreen({ navigation }) {
             iconActionRight={handleNavigateToWaterNotificationScreen}
           />
           <WaterIntakeBoard waterIntake={waterIntake?.waterIntakeVolume || 1} />
-          <Heading
-            title="Weight and Height Tracker"
-            iconRight={
-              <Foundation
-                name="indent-more"
-                size={Sizes.SM * 1.2}
-                color={colors.textColor}
-              />
-            }
-            iconActionRight={() => {}}
-          />
+          <Heading title="Weight and Height Tracker" />
           <MeasureBoard />
           <BottomExtraPaddingScreen />
         </ScrollView>

@@ -6,7 +6,7 @@ import UpdateBMRScreen from "./UpdateBMRScreen";
 const Stack = createNativeStackNavigator();
 export default function UserScreenNavigator() {
   return (
-    <Stack.Navigator initialRouteName="UserScreen">
+    <Stack.Navigator initialRouteName="UserScreen" name="UserScreenNavigator">
       <Stack.Screen name="UserScreen" component={UserScreen} />
       <Stack.Screen name="SettingScreen" component={SettingScreen} />
       <Stack.Screen
